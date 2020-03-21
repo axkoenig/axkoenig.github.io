@@ -1,0 +1,60 @@
+#photos {
+    position: relative;
+    width: 65vw;
+    height: 75vh;
+    margin: 15px auto 15px;
+    /* border: 1px solid green; */
+}
+
+#photos img {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    transition: opacity 0.5s ease-in-out;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    cursor: pointer;
+}
+
+#photos img.opaque {
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+    filter: alpha(opacity=1);
+}
+
+#under_photos {
+    position: relative;
+    width: 65vw;
+    margin: 0 auto 10px;
+}
+
+#description span {
+    display: none;
+}
+
+#description span.show {
+    position: absolute;
+    text-align: right;
+    color: black;
+    top: 0;
+    right: 0;
+    width: 50%;
+    display: inline-block;
+}
+
+#photos_controls {
+    position: relative;
+    width: 40%;
+    display: inline-block;
+}
+
+#photos_controls span {
+    padding-right: 2em;
+    cursor: pointer;
+    color: black;
+    text-align: center;
+}
+
+#photos_controls span.selected {
+    font-style: italic;
+}
