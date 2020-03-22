@@ -4,7 +4,7 @@
     --width: 90%;
     --max-width: 900px;
     --switch-width: 600px; 
-    --min-pic-size: 300px;
+    --min-pic-size: 290px;
 }
 
 /* BODY */
@@ -91,6 +91,11 @@ header #branding h2 {
 
 /* header for big screens */
 @media screen and (min-width: 600px) {
+
+    header li {
+        float: left;
+        padding: 0 20px 0 20px;
+    }
     .container {
         width: 90%;
         margin: auto;
@@ -109,6 +114,12 @@ header #branding h2 {
 
 /* header for small screens */
 @media screen and (max-width: 600px) {
+
+    header li {
+        float: left;
+        padding: 0 10px 0 10px;
+    }
+
     .container {
         width: 100%;
         margin: auto;
@@ -166,6 +177,6 @@ footer {
 
 /* DEBUGGING */
 
-div, a, nav, li, header, h2 {
+/* div, a, nav, li, header, h2 {
     outline: 1px solid red;
-}
+} */
