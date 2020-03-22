@@ -1,3 +1,11 @@
+/* VARIABLES */
+
+:root {
+    --width: 90%;
+    --max-width: 1000px;
+    --switch-width: 600px; 
+}
+
 /* BODY */
 
 body {
@@ -20,7 +28,8 @@ header {
     margin-left: auto;
     margin-top: -40px;
     z-index: 1;
-    width: 1000px;
+    width: var(--width);
+    max-width: var(--max-width);
     background: #0D0D0D;
     color: white;
     padding: 15px 0 15px 0;
@@ -29,7 +38,7 @@ header {
 }
 
 .container {
-    width: 900px;
+    width: 90%;
     margin: auto;
     overflow: hidden;
 }
@@ -66,7 +75,7 @@ header nav {
     margin-top: 5px;
 }
 
-.dot {
+.bar {
     position: relative;
     height: 2px;
     width: 15px;
@@ -76,11 +85,21 @@ header nav {
     display: inline-block;
 }
 
+@media (max-width: 600px) {
+    #branding {
+        display: none;
+    }
+    header nav {
+        text-align: center;
+    }
+}
+
 /* ENTRIES */
 
 .entry-wrapper {
     display: grid;
-    grid-template-columns: 1000px;
+    /* max-width: var(--max-width); */
+    grid-template-columns: var(--width);
     gap: 2em;
     justify-content:center;
     padding: 50px;
