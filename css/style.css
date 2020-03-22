@@ -33,14 +33,14 @@ header {
     background: #0D0D0D;
     color: white;
     padding: 15px 0 15px 0;
-    min-height: 25px;
-    line-height: 1.5;
 }
 
 .container {
     width: 90%;
     margin: auto;
     overflow: hidden;
+    min-height: 40px;
+    text-align: center;
 }
 
 header ul {
@@ -61,18 +61,9 @@ header li {
     padding: 0 20px 0 20px;
 }
 
-header #branding {
-    float: left;
-}
-
 header #branding h2 {
-    margin: 0;
     font-weight: 400;
-}
-
-header nav {
-    float: right;
-    margin-top: 5px;
+    line-height: 1.6;
 }
 
 .bar {
@@ -85,12 +76,26 @@ header nav {
     display: inline-block;
 }
 
-@media (max-width: 600px) {
+/* header for big screens */
+@media screen and (min-width: 600px) {
+    #branding {
+        float: left;
+    }
+    nav {
+        float: right;
+        margin-top: 5px;
+    }
+}
+
+/* header for small screens */
+@media screen and (max-width: 600px) {
     #branding {
         display: none;
     }
-    header nav {
-        text-align: center;
+    nav {
+        display: inline-block;
+        margin-top: 5px;
+        margin-bottom: -10px;
     }
 }
 
@@ -115,6 +120,7 @@ header nav {
 .description {
     padding: 20px;
 }
+
 /* FOOTER */
 
 footer {
@@ -123,4 +129,10 @@ footer {
     color: white;
     background-color: red;
     text-align: center;
+}
+
+/* DEBUGGING */
+
+div, a, nav, li, header {
+    outline: 1px solid red;
 }
