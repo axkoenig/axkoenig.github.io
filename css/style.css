@@ -91,6 +91,13 @@ header #branding h2 {
 
 /* header for big screens */
 @media screen and (min-width: 600px) {
+    .container {
+        width: 90%;
+        margin: auto;
+        overflow: hidden;
+        min-height: 40px;
+        text-align: center;
+    }
     #branding {
         float: left;
     }
@@ -102,6 +109,13 @@ header #branding h2 {
 
 /* header for small screens */
 @media screen and (max-width: 600px) {
+    .container {
+        width: 100%;
+        margin: auto;
+        overflow: hidden;
+        min-height: 40px;
+        text-align: center;
+    }
     #branding {
         display: none;
     }
@@ -151,7 +165,7 @@ footer {
 }
 
 /* DEBUGGING */
-/* 
+
 div, a, nav, li, header, h2 {
     outline: 1px solid red;
-} */
+}
