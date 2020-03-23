@@ -12,11 +12,11 @@
     --max-width: 900px;
     --switch-width: 600px; 
     --min-pic-size: 290px;
-    /* atonal blau #031432, grau: #c6d2d9*/
     --color-backgr: #f0f0f0;
-    --color-foregr: #031432;
+    --color-foregr: white;
     --color-header: #031432;
     --color-text: white;
+    --color-branding-hover: red;
 }
 
 /* BODY */
@@ -77,6 +77,16 @@ header #branding h2 {
     padding-top: 2px;
     font-weight: 400;
     line-height: 1.6;
+
+    -o-transition:.5s;
+    -ms-transition:.5s;
+    -moz-transition:.5s;
+    -webkit-transition:.5s;
+    transition:.5s;
+}
+
+header #branding:hover h2 {
+    color: var(--color-branding-hover);
 }
 
 .current {
@@ -159,7 +169,7 @@ header #branding h2 {
 }
 
 .entry-nested {
-    background: var(--color-foregr);
+    background: var(--color-header);
     cursor: pointer;
 }
 
