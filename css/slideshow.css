@@ -1,19 +1,47 @@
+:root {
+    --max-width-image: 700px;
+}
+
+.slideshow-wrapper {
+    display: grid;
+    width: var(--width);
+    max-width: var(--max-width);
+    grid-template-columns: repeat(1, 1fr);
+    gap: 25px;
+    justify-content: center;
+    padding: 40px 0;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.slideshow-container {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    max-width: var(--max-width-image);
+    background-color: var(--color-foregr);
+}
+
 #photos {
     position: relative;
-    width: 65vw;
-    height: 75vh;
-    margin: 15px auto 15px;
-    /* border: 1px solid green; */
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    max-width: 700px;
 }
 
 #photos img {
     position: absolute;
-    left: 0;
-    width: 100%;
     transition: opacity 0.5s ease-in-out;
     opacity: 0;
     filter: alpha(opacity=0);
     cursor: pointer;
+}
+
+.spacer {
+    /* spacer with same aspect ratio as images to 
+    fill space of absolutely positioned images */
+    padding-bottom: calc(1000/1500 * 100%);
 }
 
 #photos img.opaque {
@@ -23,38 +51,39 @@
 }
 
 #under_photos {
-    position: relative;
-    width: 65vw;
-    margin: 0 auto 10px;
-}
-
-#description span {
-    display: none;
-}
-
-#description span.show {
-    position: absolute;
-    text-align: right;
-    color: black;
-    top: 0;
-    right: 0;
-    width: 50%;
-    display: inline-block;
+    width: 95%;
+    height: 75px;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: space-between;
+    color: var(--color-dark-text);
 }
 
 #photos_controls {
-    position: relative;
-    width: 40%;
-    display: inline-block;
+    width: 200px;
 }
 
 #photos_controls span {
-    padding-right: 2em;
+    padding-right: 25px;
     cursor: pointer;
-    color: black;
-    text-align: center;
 }
 
 #photos_controls span.selected {
     font-style: italic;
+}
+
+#description {
+    width: 350px;
+    vertical-align: top;
+    text-align: right;
+}
+
+#description span.show {
+    display: grid;
+}
+
+#description span {
+    display: none;
 }
