@@ -204,6 +204,6 @@ img {
 
 /* DEBUGGING */
 
-/* div, a, nav, li, header, h2, span {
+div, a, nav, li, header, h2, span {
     outline: 1px solid red;
-} */
+}
