@@ -10,12 +10,12 @@
 :root {
     --width: 90%;
     --max-width: 900px;
-    --switch-width: 600px; 
     --min-pic-size: 290px;
     --color-backgr: #f0f0f0;
     --color-foregr: white;
     --color-header: #031432;
-    --color-text: white;
+    --color-light-text: #f0f0f0;
+    --color-dark-text: #031432;
     --color-branding-hover: red;
 }
 
@@ -28,7 +28,7 @@ body {
     padding: 0;
     margin-top: 40px;
     background: var(--color-backgr);
-    color: var(--color-text);
+    color: var(--color-light-text);
 }
 
 /* HEADER */
@@ -62,7 +62,7 @@ header ul {
 }
 
 header a {
-    color: white;
+    color: var(--color-light-text);
     text-decoration: none;
     text-transform: lowercase;
     font-size: 16px;
@@ -187,8 +187,9 @@ img {
 
 .entry-wrapper a {
     text-align: center;
-    color: var(--color-foregr);
-    background-color: white;
+    color: var(--color-dark-text);
+    background-color: var(--color-foregr);
+    padding: 50px 0;
 }
 
 /* FOOTER */
