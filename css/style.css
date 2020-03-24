@@ -169,15 +169,20 @@ header #branding:hover h2 {
 }
 
 .entry-nested {
-    background: var(--color-header);
+    background: var(--color-foregr);
     cursor: pointer;
+    text-align: center;
 }
 
-.entry-nested h2 {
-    padding-left: 15px;
-    padding-top: 1px;
-    font-weight: 300;
-    font-size: 20px;
+.entry-nested:hover {
+    font-style: italic;
+}
+
+.entry-nested span {
+    text-transform: lowercase;
+    display: inline-block;
+    margin: 5px 0;
+    color: var(--color-dark-text);
 }
 
 img {
