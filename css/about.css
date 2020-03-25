@@ -1,0 +1,49 @@
+.about-wrapper {
+    width: var(--width);
+    max-width: var(--max-width);
+    padding: 40px 0;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+#me {
+    padding-bottom: 20px;
+}
+
+.page-heading {
+    font-style: italic;
+    text-transform: uppercase;
+}
+/* content for big screens */
+@media screen and (min-width: 600px) {
+
+    .about-nested {
+        display: inline-grid;
+        grid-template-columns: 2fr 3fr;
+        grid-gap: 40px;
+        background: var(--color-foregr);
+        padding: 40px;
+    }
+    
+}
+
+.description a {
+    color: var(--color-link);
+    text-decoration: none;
+}
+
+.description a:hover {
+    font-style: italic;
+}
+
+
+/* content for small screens */
+@media screen and (max-width: 600px) {
+
+    .about-nested {
+        display: inline-grid;
+        grid-gap: 40px;
+        background: var(--color-foregr);
+        padding: 40px;
+    }
+}

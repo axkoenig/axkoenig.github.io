@@ -17,6 +17,7 @@
     --color-light-text: white;
     --color-dark-text: #031432;
     --color-branding-hover: red;
+    --color-link: #0366d6;
 }
 
 /* BODY */
@@ -28,7 +29,7 @@ body {
     padding: 0;
     margin-top: 40px;
     background: var(--color-backgr);
-    color: var(--color-light-text);
+    color: var(--color-dark-text);
 }
 
 /* HEADER */
@@ -74,6 +75,7 @@ header #branding h2 {
     -moz-transition:.5s;
     -webkit-transition:.5s;
     transition:.5s;
+    color: var(--color-light-text);
 }
 
 header #branding:hover h2 {
@@ -180,6 +182,8 @@ img {
     width: 100%;
     display: block;
 }
+
+/* PLACEHOLDER ON EMPTY PAGES */
 
 .entry-wrapper a {
     text-align: center;
