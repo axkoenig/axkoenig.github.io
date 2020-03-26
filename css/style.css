@@ -32,6 +32,13 @@ body {
     color: var(--color-dark-text);
 }
 
+br {
+    content: "";
+    margin: 2em;
+    display: block;
+    font-size: 70%;
+}
+
 /* HEADER */
 
 header {
@@ -147,7 +154,7 @@ header #branding:hover h2 {
     }
 }
 
-/* ENTRIES */
+/* ENTRIES IN "VISUAL" PAGE*/
 
 .entry-wrapper {
     display: grid;
@@ -181,6 +188,34 @@ header #branding:hover h2 {
 img {
     width: 100%;
     display: block;
+}
+
+/* ENTRIES IN "RESEARCH" PAGE */
+.post-wrapper {
+    width: var(--width);
+    max-width: var(--max-width);
+    padding: 40px 0;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.post-nested {
+    background: var(--color-foregr);
+    padding: 40px;    
+}
+
+#video-wrapper {
+    position: relative;
+    height: 0;
+    padding-bottom: 56.25%;
+}
+
+.video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
 
 /* PLACEHOLDER ON EMPTY PAGES */
