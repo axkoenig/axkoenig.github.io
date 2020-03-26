@@ -77,8 +77,3 @@ $(document).ready(function () {
         $("#photos_controls span").eq(nextIndex).addClass("selected");
     }
 });
-
-$("body").on("contextmenu", "img", function(e) {
-    // prevent easy minded people from saving images
-    return false;
-});
