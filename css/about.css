@@ -7,13 +7,22 @@
 }
 
 #me {
-    padding-bottom: 20px;
+    padding-bottom: 40px;
 }
 
 .page-heading {
     font-style: italic;
     text-transform: uppercase;
+    /* margin-bottom: 20px;
+    display: block; */
 }
+br {
+    content: "";
+    margin: 2em;
+    display: block;
+    font-size: 70%;
+}
+
 /* content for big screens */
 @media screen and (min-width: 600px) {
 
@@ -27,12 +36,12 @@
     
 }
 
-.description a {
+.link {
     color: var(--color-link);
     text-decoration: none;
 }
 
-.description a:hover {
+.link:hover {
     font-style: italic;
 }
 
