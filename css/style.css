@@ -191,17 +191,54 @@ img {
 }
 
 /* ENTRIES IN "RESEARCH" PAGE */
-.post-wrapper {
-    width: var(--width);
-    max-width: var(--max-width);
-    padding: 40px 0;
-    margin-right: auto;
-    margin-left: auto;
+
+/* post wrapper for big screens */
+@media screen and (min-width: 900px) {
+    .post-wrapper {
+        width: 700px;
+        padding: 40px 0;
+        margin-right: auto;
+        margin-left: auto;
+    }
+}
+
+/* post wrapper for small screens */
+@media screen and (max-width: 900px) {
+    .post-wrapper {
+        width: var(--width);
+        padding: 40px 0;
+        margin-right: auto;
+        margin-left: auto;
+    }
 }
 
 .post-nested {
     background: var(--color-foregr);
-    padding: 40px;    
+    padding: 40px;
+}
+
+.post-container {
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+}
+
+.post-heading {
+    font-style: italic;
+    text-transform: uppercase;
+    font-size: larger;
+    text-decoration: underline;
+}
+
+.post-heading br {
+    content: "";
+    margin: 2em;
+    display: block;
+    font-size: 20%;
+}
+
+.post-description {
+    padding-top: 30px;
 }
 
 #video-wrapper {

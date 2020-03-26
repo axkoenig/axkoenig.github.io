@@ -2,11 +2,17 @@
     padding-bottom: 40px;
 }
 
+.about-wrapper {
+    width: var(--width);
+    max-width: var(--max-width);
+    padding: 40px 0;
+    margin-right: auto;
+    margin-left: auto;
+}
+
 .page-heading {
     font-style: italic;
     text-transform: uppercase;
-    /* margin-bottom: 20px;
-    display: block; */
 }
 
 /* content for big screens */
