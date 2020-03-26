@@ -222,12 +222,19 @@ img {
     margin-right: auto;
     width: 70%;
 }
-
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid black;
+    margin: 1em 0;
+}
+.post-header {
+    margin-bottom: 20px;
+}
 .post-heading {
     font-style: italic;
     text-transform: uppercase;
-    font-size: larger;
-    text-decoration: underline;
 }
 
 .post-heading br {
