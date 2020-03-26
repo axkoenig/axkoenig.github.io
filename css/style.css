@@ -32,13 +32,6 @@ body {
     color: var(--color-dark-text);
 }
 
-br {
-    content: "";
-    margin: 2em;
-    display: block;
-    font-size: 70%;
-}
-
 /* HEADER */
 
 header {
