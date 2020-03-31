@@ -141,8 +141,12 @@ hr {
     position: relative;
 }
 
-.card:hover {
+.card:hover #card-head{
     font-style: italic;
+}
+
+.card:hover {
+    cursor: pointer;
 }
 
 /* timeline for small screens */
@@ -153,7 +157,7 @@ hr {
     left: 3px;
     }
     
-    /* Full-width containers */
+    /* containers are now full width */
     .card {
     width: 100%;
     padding-left: 30px;
@@ -165,7 +169,7 @@ hr {
         margin-bottom: 30px;
     }
     
-    /* Make sure all circles are at the same spot */
+    /* left align ticks */
     .left::after, .right::after {
     left: 3px;
     }
@@ -174,4 +178,4 @@ hr {
     .right {
         left: 0%;
     }
-  }
+}
