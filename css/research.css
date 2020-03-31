@@ -70,3 +70,108 @@ hr {
     width: 100%;
     height: 100%;
 }
+
+/* RESEARCH LANDING PAGE - TIMELINE */
+/* timeline inspiration: https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_timeline */
+
+* {
+    box-sizing: border-box;
+}
+
+/* timeline container */
+.timeline {
+    position: relative;
+    margin: 0 auto;
+}
+
+/* actual timeline */
+.timeline::after {
+    content: '';
+    position: absolute;
+    width: 8px;
+    background-color: white;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    margin-left: -3px;
+}
+  
+.card {
+    position: relative;
+    background-color: inherit;
+    width: 50%;
+}
+
+@media screen and (min-width: 700px) {
+    /* shift cards upwards */
+    .card:not(:first-of-type) {
+    margin-top: -150px; 
+    }
+}
+
+/* ticks on the timeline */
+.card::after {
+    content: '';
+    position: absolute;
+    width: 30px;
+    height: 16px;
+    right: 0px;
+    background-color: white;
+    top: 0px;
+}
+
+/* style of left and right containers */
+.left {
+    left: 0;
+    padding-right: 25px;
+}
+.right {
+    left: 50%;
+    padding-left: 25px;
+}
+
+/* align circle for containers on the right side */
+.right::after {
+    left: 0px;
+}
+  
+.card-content {
+    padding: 20px 30px;
+    background-color: white;
+    position: relative;
+}
+
+.card:hover {
+    font-style: italic;
+}
+
+/* timeline for small screens */
+@media screen and (max-width: 700px) {
+
+    /* align timeline left */
+    .timeline::after {
+    left: 3px;
+    }
+    
+    /* Full-width containers */
+    .card {
+    width: 100%;
+    padding-left: 30px;
+    padding-right: 0;
+    }
+
+    /* add space between cards */
+    .card:not(:last-of-type) {
+        margin-bottom: 30px;
+    }
+    
+    /* Make sure all circles are at the same spot */
+    .left::after, .right::after {
+    left: 3px;
+    }
+    
+    /* Make all right containers behave like the left ones */
+    .right {
+        left: 0%;
+    }
+  }
