@@ -1,0 +1,8 @@
+/* "AUDIO" LANDING PAGE */
+
+.content-wrapper a {
+    text-align: center;
+    color: var(--color-dark-text);
+    background-color: var(--color-foregr);
+    padding: 50px 0;
+}

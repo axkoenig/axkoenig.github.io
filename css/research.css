@@ -1,90 +1,15 @@
-/* ENTRIES IN "RESEARCH" PAGE */
-
-/* post wrapper for big screens */
-@media screen and (min-width: 900px) {
-    .post-wrapper {
-        width: 700px;
-        padding: 40px 0;
-        margin-right: auto;
-        margin-left: auto;
-    }
-}
-
-/* post wrapper for small screens */
-@media screen and (max-width: 900px) {
-    .post-wrapper {
-        width: var(--width);
-        padding: 40px 0;
-        margin-right: auto;
-        margin-left: auto;
-    }
-}
-
-.post-nested {
-    background: var(--color-foregr);
-    padding: 40px;
-}
-
-.post-container {
-    margin-left: auto;
-    margin-right: auto;
-    width: 70%;
-}
-
-hr {
-    display: block;
-    height: 1px;
-    border: 0;
-    border-top: 1px solid black;
-    margin: 1em 0;
-}
-.post-header {
-    margin-bottom: 20px;
-}
-.post-heading {
-    font-style: italic;
-    text-transform: uppercase;
-}
-
-.post-heading br {
-    content: "";
-    margin: 2em;
-    display: block;
-    font-size: 20%;
-}
-
-.post-description {
-    padding-top: 30px;
-}
-
-#video-wrapper {
-    position: relative;
-    height: 0;
-    padding-bottom: 56.25%;
-}
-
-.video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-
-/* RESEARCH LANDING PAGE - TIMELINE */
+/* "RESEARCH" LANDING PAGE */
 /* timeline inspiration: https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_timeline */
 
 * {
     box-sizing: border-box;
 }
 
-/* timeline container */
 .timeline {
     position: relative;
     margin: 0 auto;
 }
 
-/* actual timeline */
 .timeline::after {
     content: '';
     position: absolute;
@@ -130,11 +55,10 @@ hr {
     padding-left: 25px;
 }
 
-/* align circle for containers on the right side */
 .right::after {
     left: 0px;
 }
-  
+
 .card-content {
     padding: 20px 30px;
     background-color: white;
@@ -174,8 +98,77 @@ hr {
     left: 3px;
     }
     
-    /* Make all right containers behave like the left ones */
+    /* make all right containers behave like left ones */
     .right {
         left: 0%;
     }
+}
+
+/* "RESEARCH" BLOG POSTS */
+
+/* post wrapper for big screens */
+@media screen and (min-width: 900px) {
+    .post-wrapper {
+        width: 700px;
+        padding: 40px 0;
+        margin-right: auto;
+        margin-left: auto;
+    }
+}
+
+/* post wrapper for small screens */
+@media screen and (max-width: 900px) {
+    .post-wrapper {
+        width: var(--width);
+        padding: 40px 0;
+        margin-right: auto;
+        margin-left: auto;
+    }
+}
+
+.post-nested {
+    background: var(--color-foregr);
+    padding: 40px;
+}
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid black;
+    margin: 1em 0;
+}
+
+.post-header {
+    margin-bottom: 20px;
+}
+
+.post-heading {
+    font-style: italic;
+    text-transform: uppercase;
+}
+
+.post-heading br {
+    content: "";
+    margin: 2em;
+    display: block;
+    font-size: 20%;
+}
+
+.post-description {
+    padding-top: 30px;
+}
+
+#video-wrapper {
+    position: relative;
+    height: 0;
+    padding-bottom: 56.25%;
+}
+
+.video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }

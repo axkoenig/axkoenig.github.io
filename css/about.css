@@ -1,13 +1,7 @@
+/* "ABOUT" LANDING PAGE */
+
 #me {
     padding-bottom: 40px;
-}
-
-.about-wrapper {
-    width: var(--width);
-    max-width: var(--max-width);
-    padding: 40px 0;
-    margin-right: auto;
-    margin-left: auto;
 }
 
 .page-heading {
@@ -34,16 +28,6 @@
     }
     
 }
-
-.link {
-    color: var(--color-link);
-    text-decoration: none;
-}
-
-.link:hover {
-    font-style: italic;
-}
-
 
 /* content for small screens */
 @media screen and (max-width: 600px) {

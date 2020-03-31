@@ -32,6 +32,20 @@ body {
     color: var(--color-dark-text);
 }
 
+img {
+    width: 100%;
+    display: block;
+}
+
+.link {
+    color: var(--color-link);
+    text-decoration: none;
+}
+
+.link:hover {
+    font-style: italic;
+}
+
 /* HEADER */
 
 header {
@@ -147,9 +161,9 @@ header #branding:hover h2 {
     }
 }
 
-/* ENTRIES IN "VISUAL" PAGE*/
+/* WRAPPER FOR ALL PAGES */
 
-.entry-wrapper {
+.content-wrapper {
     display: grid;
     width: var(--width);
     max-width: var(--max-width);
@@ -160,47 +174,6 @@ header #branding:hover h2 {
     margin-right: auto;
     margin-left: auto;
 }
-
-.entry-nested {
-    background: var(--color-foregr);
-    cursor: pointer;
-    text-align: center;
-}
-
-.entry-nested:hover {
-    font-style: italic;
-}
-
-.entry-nested span {
-    text-transform: lowercase;
-    display: inline-block;
-    margin: 5px 0;
-    color: var(--color-dark-text);
-}
-
-img {
-    width: 100%;
-    display: block;
-}
-
-/* PLACEHOLDER ON EMPTY PAGES */
-
-.entry-wrapper a {
-    text-align: center;
-    color: var(--color-dark-text);
-    background-color: var(--color-foregr);
-    padding: 50px 0;
-}
-
-/* FOOTER */
-
-/* footer {
-    padding: 20px;
-    margin-top: 20px;
-    color: white;
-    background-color: red;
-    text-align: center;
-} */
 
 /* DEBUGGING */
 

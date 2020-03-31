@@ -2,6 +2,27 @@
     --max-width-image: 700px;
 }
 
+/* "VISUAL" LANDING PAGE */
+
+.series-wrapper {
+    background: var(--color-foregr);
+    cursor: pointer;
+    text-align: center;
+}
+
+.series-wrapper:hover {
+    font-style: italic;
+}
+
+.series-wrapper span {
+    text-transform: uppercase;
+    display: inline-block;
+    margin: 5px 0;
+    color: var(--color-dark-text);
+}
+
+/* "VISUAL" SLIDESHOW */
+
 .slideshow-wrapper {
     display: grid;
     width: var(--width);
