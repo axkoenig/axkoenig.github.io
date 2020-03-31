@@ -18,25 +18,25 @@ $(document).ready(function () {
         $(this).addClass("selected");
     });
 
-    $("#photos").click(function (e){
+    $("#photos").click(function (e) {
         // CONTROL OF SLIDESHOW THROUGH CLICKING ON IMAGE
-        
+
         var element = $(this);
         var xPos = e.pageX - element.offset().left;
-        
+
         // current index 
         var curIndex = $("#photos img.opaque").index();
         var nextIndex = curIndex;
-        
-        if((element.width() / 2) >= xPos && curIndex > 0) {
+
+        if ((element.width() / 2) >= xPos && curIndex > 0) {
             // left click, going left
             nextIndex = curIndex - 1;
-        } 
+        }
         else if ((element.width() / 2) < xPos && curIndex < 4) {
             // right click, going right
             nextIndex = curIndex + 1;
         }
-        
+
         // adjust classes accordingly
         $("#photos img").removeClass("opaque");
         $("#photos img").eq(nextIndex).addClass("opaque");
@@ -50,15 +50,15 @@ $(document).ready(function () {
 
     function checkKey(e) {
         // CONTROL OF SLIDESHOW THROUGH ARROWS
-        
+
         // be nice to internet explorer
         e = e || window.event;
-    
+
         // get key and current index
         var key = e.which
         var curIndex = $("#photos img.opaque").index();
         var nextIndex = curIndex;
-        
+
         if (key == '37' && curIndex > 0) {
             // left arrow, going left
             nextIndex = curIndex - 1;
@@ -67,7 +67,7 @@ $(document).ready(function () {
             // right arrow, going right
             nextIndex = curIndex + 1;
         }
-            
+
         // adjust classes accordingly
         $("#photos img").removeClass("opaque");
         $("#photos img").eq(nextIndex).addClass("opaque");

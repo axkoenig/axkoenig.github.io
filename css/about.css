@@ -17,8 +17,8 @@
 }
 
 /* content for big screens */
-@media screen and (min-width: 600px) {
 
+@media screen and (min-width: 600px) {
     .about-nested {
         display: inline-grid;
         grid-template-columns: 2fr 3fr;
@@ -26,12 +26,11 @@
         background: var(--color-foregr);
         padding: 40px;
     }
-    
 }
 
 /* content for small screens */
-@media screen and (max-width: 600px) {
 
+@media screen and (max-width: 600px) {
     .about-nested {
         display: inline-grid;
         grid-gap: 40px;

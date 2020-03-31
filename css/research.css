@@ -1,4 +1,5 @@
 /* "RESEARCH" LANDING PAGE */
+
 /* timeline inspiration: https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_timeline */
 
 * {
@@ -20,7 +21,7 @@
     left: 50%;
     margin-left: -3px;
 }
-  
+
 .card {
     position: relative;
     background-color: inherit;
@@ -30,11 +31,12 @@
 @media screen and (min-width: 700px) {
     /* shift cards upwards */
     .card:not(:first-of-type) {
-    margin-top: -150px; 
+        margin-top: -150px;
     }
 }
 
 /* ticks on the timeline */
+
 .card::after {
     content: '';
     position: absolute;
@@ -46,10 +48,12 @@
 }
 
 /* style of left and right containers */
+
 .left {
     left: 0;
     padding-right: 25px;
 }
+
 .right {
     left: 50%;
     padding-left: 25px;
@@ -65,7 +69,7 @@
     position: relative;
 }
 
-.card:hover #card-head{
+.card:hover #card-head {
     font-style: italic;
 }
 
@@ -74,30 +78,26 @@
 }
 
 /* timeline for small screens */
-@media screen and (max-width: 700px) {
 
+@media screen and (max-width: 700px) {
     /* align timeline left */
     .timeline::after {
-    left: 3px;
+        left: 3px;
     }
-    
     /* containers are now full width */
     .card {
-    width: 100%;
-    padding-left: 30px;
-    padding-right: 0;
+        width: 100%;
+        padding-left: 30px;
+        padding-right: 0;
     }
-
     /* add space between cards */
     .card:not(:last-of-type) {
         margin-bottom: 30px;
     }
-    
     /* left align ticks */
     .left::after, .right::after {
-    left: 3px;
+        left: 3px;
     }
-    
     /* make all right containers behave like left ones */
     .right {
         left: 0%;
@@ -107,6 +107,7 @@
 /* "RESEARCH" BLOG POSTS */
 
 /* post wrapper for big screens */
+
 @media screen and (min-width: 900px) {
     .post-wrapper {
         width: 700px;
@@ -117,6 +118,7 @@
 }
 
 /* post wrapper for small screens */
+
 @media screen and (max-width: 900px) {
     .post-wrapper {
         width: var(--width);

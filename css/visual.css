@@ -72,6 +72,7 @@
 }
 
 /* under_photos for big screens */
+
 @media screen and (min-width: 600px) {
     #under_photos {
         width: 95%;
@@ -80,20 +81,16 @@
         justify-content: space-between;
         color: var(--color-dark-text);
     }
-
     #photos_controls {
         width: 200px;
     }
-    
     #photos_controls span {
         padding-right: 25px;
         cursor: pointer;
     }
-    
     #photos_controls span.selected {
         font-style: italic;
     }
-    
     #description {
         width: 350px;
         vertical-align: top;
@@ -102,6 +99,7 @@
 }
 
 /* under_photos for small screens */
+
 @media screen and (max-width: 600px) {
     #under_photos {
         width: 100%;
@@ -113,11 +111,9 @@
     #photos_controls {
         display: none;
     }
-    
     #photos_controls span {
         display: none;
     }
-
     #description {
         width: 100%;
         vertical-align: top;
