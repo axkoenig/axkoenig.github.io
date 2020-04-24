@@ -9,8 +9,7 @@
 
 :root {
     --width: 90%;
-    --max-width: 900px;
-    --min-pic-size: 290px;
+    --max-width: 1000px;
     --color-backgr: #f0f0f0;
     --color-foregr: white;
     --color-header: #031432;
@@ -62,22 +61,11 @@ header {
     padding: 7px 0 10px 0;
 }
 
-header ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
-
 header a {
     color: var(--color-light-text);
     text-decoration: none;
     text-transform: lowercase;
     font-size: 16px;
-}
-
-header li {
-    float: left;
-    padding: 0 20px 0 20px;
 }
 
 header #branding h2 {
@@ -92,8 +80,13 @@ header #branding h2 {
     color: var(--color-light-text);
 }
 
+header li {
+    list-style: none;
+}
+
 header #branding:hover h2 {
     color: var(--color-branding-hover);
+    cursor: pointer;
 }
 
 .current {
@@ -118,7 +111,7 @@ header #branding:hover h2 {
 @media screen and (min-width: 600px) {
     header li {
         float: left;
-        padding: 0 20px 0 20px;
+        padding-left: 40px;
     }
     .container {
         width: 90%;
@@ -160,15 +153,10 @@ header #branding:hover h2 {
     }
 }
 
-/* WRAPPER FOR ALL PAGES */
-
 .content-wrapper {
     display: grid;
     width: var(--width);
     max-width: var(--max-width);
-    grid-template-columns: repeat(auto-fit, minmax(var(--min-pic-size), 1fr));
-    gap: 25px;
-    justify-content: center;
     padding: 40px 0;
     margin-right: auto;
     margin-left: auto;
