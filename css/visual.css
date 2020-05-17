@@ -1,6 +1,5 @@
 :root {
     --max-width-image: 800px;
-    --min-pic-size: 350px;
 }
 
 /* "VISUAL" LANDING PAGE */
@@ -26,12 +25,18 @@
     display: grid;
     width: var(--width);
     max-width: var(--max-width);
-    grid-template-columns: repeat(auto-fit, minmax(var(--min-pic-size), 1fr));
     gap: 25px;
     justify-content: center;
     padding: 40px 0;
     margin-right: auto;
     margin-left: auto;
+}
+
+/* 2 columns on large screens */
+@media screen and (min-width: 600px) {
+    .visual-wrapper {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 /* "VISUAL" SLIDESHOW */
