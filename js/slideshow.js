@@ -23,7 +23,8 @@ $(document).ready(function () {
 
         var element = $(this);
         var xPos = e.pageX - element.offset().left;
-
+        var num_pics = document.getElementById("photos_controls").childElementCount;
+        
         // current index 
         var curIndex = $("#photos img.opaque").index();
         var nextIndex = curIndex;
@@ -32,7 +33,7 @@ $(document).ready(function () {
             // left click, going left
             nextIndex = curIndex - 1;
         }
-        else if ((element.width() / 2) < xPos && curIndex < 4) {
+        else if ((element.width() / 2) < xPos && curIndex < num_pics-1) {
             // right click, going right
             nextIndex = curIndex + 1;
         }
@@ -58,12 +59,13 @@ $(document).ready(function () {
         var key = e.which
         var curIndex = $("#photos img.opaque").index();
         var nextIndex = curIndex;
-
+        var num_pics = document.getElementById("photos_controls").childElementCount;
+        
         if (key == '37' && curIndex > 0) {
             // left arrow, going left
             nextIndex = curIndex - 1;
         }
-        else if (key == '39' && curIndex < 4) {
+        else if (key == '39' && curIndex < num_pics-1) {
             // right arrow, going right
             nextIndex = curIndex + 1;
         }
