@@ -69,9 +69,21 @@
     position: relative;
 }
 
-.card:hover #card-head {
+.card:hover #title {
     font-style: italic;
 }
+
+.card-head {
+    margin-bottom: 5px;
+}
+
+#time {
+    float: right;
+}
+
+/* .card-body {
+    text-align: justify;
+} */
 
 .card:hover {
     cursor: pointer;

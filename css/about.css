@@ -1,7 +1,7 @@
 /* "ABOUT" LANDING PAGE */
 
 #me {
-    padding-bottom: 40px;
+    padding-bottom: 30px;
 }
 
 .page-heading {
@@ -13,7 +13,7 @@
     content: "";
     margin: 2em;
     display: block;
-    font-size: 70%;
+    font-size: 65%;
 }
 
 /* content for big screens */
@@ -22,7 +22,7 @@
     .about-nested {
         display: inline-grid;
         grid-template-columns: 2fr 3fr;
-        grid-gap: 40px;
+        grid-gap: 50px;
         background: var(--color-foregr);
         padding: 40px;
     }
