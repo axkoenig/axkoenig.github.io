@@ -162,6 +162,10 @@ header #branding:hover h2 {
     margin-left: auto;
 }
 
+.clickable:hover {
+    cursor: pointer;
+}
+
 /* DEBUGGING */
 
 /* div, a, nav, li, header, h2, span {

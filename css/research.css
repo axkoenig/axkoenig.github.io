@@ -81,14 +81,6 @@
     float: right;
 }
 
-/* .card-body {
-    text-align: justify;
-} */
-
-.card:hover {
-    cursor: pointer;
-}
-
 /* timeline for small screens */
 
 @media screen and (max-width: 700px) {
