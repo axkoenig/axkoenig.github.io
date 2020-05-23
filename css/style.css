@@ -19,6 +19,12 @@
     --color-link: #0366d6;
 }
 
+@media screen and (min-width: 1300px) {
+    :root {
+        --max-width: 1200px;
+    }
+}
+
 /* BODY */
 
 body {
