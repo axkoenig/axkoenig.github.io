@@ -1,8 +1,67 @@
 /* "AUDIO" LANDING PAGE */
 
-.content-wrapper a {
-    text-align: center;
-    color: var(--color-dark-text);
-    background-color: var(--color-foregr);
-    padding: 50px 0;
+/* audio wrapper for big screens */
+
+@media screen and (min-width: 900px) {
+    .audio-wrapper {
+        width: 700px;
+        padding: 40px 0;
+        margin-right: auto;
+        margin-left: auto;
+    }
+}
+
+/* post wrapper for small screens */
+
+@media screen and (max-width: 900px) {
+    .audio-wrapper {
+        width: var(--width);
+        padding: 40px 0;
+        margin-right: auto;
+        margin-left: auto;
+    }
+}
+
+.audio-nested {
+    background: var(--color-foregr);
+    padding: 40px;
+}
+
+table {
+    margin-top: 10px;
+    text-align: left;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* padding for all columns except first */
+tbody>tr>:nth-child(n+2), thead>tr>:nth-child(n+2) {
+    padding-left: 10px;
+}
+
+iframe {
+    padding-top: 25px;
+    padding-bottom: 10px;
+}
+
+.audio-header {
+    margin-bottom: 15px;
+}
+
+#time {
+    float: right;
+}
+
+/* show smaller table on mobile devices */
+
+@media screen and (min-width: 600px) {
+    .table-mobile {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .table-desktop {
+        display: none;
+    }
 }
