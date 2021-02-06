@@ -5,7 +5,7 @@
 @media screen and (min-width: 900px) {
     .audio-wrapper {
         width: 700px;
-        padding: 40px 0;
+        padding-top: 40px;
         margin-right: auto;
         margin-left: auto;
     }
@@ -16,7 +16,7 @@
 @media screen and (max-width: 900px) {
     .audio-wrapper {
         width: var(--width);
-        padding: 40px 0;
+        padding-top: 40px;
         margin-right: auto;
         margin-left: auto;
     }
@@ -28,10 +28,19 @@
 }
 
 table {
+    border-collapse: collapse;
+    width: 100%;
     margin-top: 10px;
     text-align: left;
     margin-left: auto;
     margin-right: auto;
+}
+tr {
+    border-bottom: 1px solid lightgray;
+}
+
+thead tr {
+    border-bottom: 2px solid lightgray;
 }
 
 /* padding for all columns except first */
