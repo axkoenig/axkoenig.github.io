@@ -16,7 +16,6 @@
     --color-light-text: white;
     --color-dark-text: #031432;
     --color-branding-hover: red;
-    --color-underline: rgb(0,0,255, 0.2);
     --color-link: #0366d6;
 }
 
@@ -175,7 +174,7 @@ header #branding:hover h2 {
 .german-heading {
     text-transform: uppercase;
     text-decoration-line: underline;
-    text-decoration-color: var(--color-underline);
+    text-decoration-color: var(--color-backgr);
     text-decoration-thickness: 8px;
     text-underline-offset: 4px;
 }
