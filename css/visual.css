@@ -10,14 +10,11 @@
     text-align: center;
 }
 
-.series-wrapper:hover {
-    font-style: italic;
-}
-
 .series-wrapper span {
     text-transform: uppercase;
     display: inline-block;
     margin: 5px 0;
+    padding-bottom: 5px;
     color: var(--color-dark-text);
 }
 

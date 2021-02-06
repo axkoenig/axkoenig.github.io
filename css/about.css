@@ -4,16 +4,20 @@
     padding-bottom: 30px;
 }
 
-.page-heading {
-    text-transform: uppercase;
-}
-
-.page-heading br {
+.german-heading br {
     content: "";
     margin: 2em;
     display: block;
     font-size: 65%;
 }
+
+#contact-list{ 
+    list-style: none; 
+} 
+
+#contact-list li::before{ 
+    content: "\00BB"; 
+} 
 
 /* content for big screens */
 

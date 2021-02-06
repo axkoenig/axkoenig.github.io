@@ -69,12 +69,8 @@
     position: relative;
 }
 
-.card:hover #title {
-    font-style: italic;
-}
-
 .card-head {
-    margin-bottom: 5px;
+    margin-bottom: 15px;
 }
 
 #time {
