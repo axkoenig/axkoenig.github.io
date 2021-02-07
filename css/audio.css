@@ -27,6 +27,10 @@
     padding: 40px;
 }
 
+.audio-wrapper:last-of-type {
+    padding-bottom: 40px;
+}
+
 table {
     border-collapse: collapse;
     width: 100%;
