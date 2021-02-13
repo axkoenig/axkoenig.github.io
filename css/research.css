@@ -28,6 +28,22 @@
     width: 50%;
 }
 
+.resources {
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+.resource-link {
+    outline: 1px solid lightgray;
+    padding: 8px 10px 8px 10px;
+    margin-right: 10px;
+    color: var(--color-link);
+    text-decoration: none;
+}
+
+.resource-link:hover {
+    cursor: pointer;
+}
 @media screen and (min-width: 700px) {
     /* shift cards upwards */
     .card:not(:first-of-type) {
@@ -102,75 +118,4 @@
     .right {
         left: 0%;
     }
-}
-
-/* "RESEARCH" BLOG POSTS */
-
-/* post wrapper for big screens */
-
-@media screen and (min-width: 900px) {
-    .post-wrapper {
-        width: 700px;
-        padding: 40px 0;
-        margin-right: auto;
-        margin-left: auto;
-    }
-}
-
-/* post wrapper for small screens */
-
-@media screen and (max-width: 900px) {
-    .post-wrapper {
-        width: var(--width);
-        padding: 40px 0;
-        margin-right: auto;
-        margin-left: auto;
-    }
-}
-
-.post-nested {
-    background: var(--color-foregr);
-    padding: 40px;
-}
-
-hr {
-    display: block;
-    height: 1px;
-    border: 0;
-    border-top: 1px solid black;
-    margin: 1em 0;
-}
-
-.post-header {
-    margin-bottom: 20px;
-}
-
-.post-heading {
-    font-style: italic;
-    text-transform: uppercase;
-}
-
-.post-heading br {
-    content: "";
-    margin: 2em;
-    display: block;
-    font-size: 20%;
-}
-
-.post-description {
-    padding-top: 30px;
-}
-
-#video-wrapper {
-    position: relative;
-    height: 0;
-    padding-bottom: 56.25%;
-}
-
-.video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
 }
