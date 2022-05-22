@@ -39,6 +39,7 @@
     margin-right: 10px;
     color: var(--color-link);
     text-decoration: none;
+    text-transform: capitalize;
 }
 
 .resource-link:hover {
