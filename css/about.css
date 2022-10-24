@@ -20,6 +20,9 @@
     margin-bottom: 20px;
     margin-top: 5px;
 }
+.paper-resources {
+    margin-top: 10px;
+}
 
 #contact-list li::before{ 
     content: "\00BB"; 

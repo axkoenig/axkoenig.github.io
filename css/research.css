@@ -33,18 +33,6 @@
     line-height: 2.8;
 }
 
-.resource-link {
-    outline: 1px solid lightgray;
-    padding: 8px 10px 8px 10px;
-    margin-right: 10px;
-    color: var(--color-link);
-    text-decoration: none;
-    text-transform: capitalize;
-}
-
-.resource-link:hover {
-    cursor: pointer;
-}
 @media screen and (min-width: 700px) {
     /* shift cards upwards */
     .card:not(:first-of-type) {

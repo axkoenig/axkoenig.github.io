@@ -184,3 +184,17 @@ header #branding:hover h2 {
 /* div, a, nav, li, header, h2, span {
     outline: 1px solid red;
 } */
+
+.resource-link {
+    outline: 1px solid lightgray;
+    padding: 8px 10px 8px 10px;
+    margin-right: 10px;
+    color: var(--color-link);
+    text-decoration: none;
+    text-transform: capitalize;
+    white-space: nowrap
+}
+
+.resource-link:hover {
+    cursor: pointer;
+}
