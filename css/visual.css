@@ -101,16 +101,20 @@
         justify-content: space-between;
         color: var(--color-dark-text);
     }
+
     #photos_controls {
         width: 200px;
     }
+
     #photos_controls span {
         padding-right: 25px;
         cursor: pointer;
     }
+
     #photos_controls span.selected {
         font-style: italic;
     }
+
     #description {
         width: 350px;
         vertical-align: top;
@@ -128,12 +132,15 @@
         text-align: center;
         color: var(--color-dark-text);
     }
+
     #photos_controls {
         display: none;
     }
+
     #photos_controls span {
         display: none;
     }
+
     #description {
         width: 100%;
         vertical-align: top;
