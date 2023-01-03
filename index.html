@@ -6,9 +6,10 @@
     <meta name="viewport" content="width=device-width">
     <meta name="keywords" content="photography, music, audio, visual, architecture, research">
     <meta name="author" content="Alexander Koenig">
-    <title>koenig</title>
+    <title>Alexander Koenig</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/visual.css">
+    <link rel="stylesheet" href="css/index.css">
     <meta name="google-site-verification" content="3fNhSnRURomrLL4r_g32STwN6O09JBvGvwAXsbL57I4" />
 </head>
 
@@ -24,12 +25,7 @@
             </div>
             <nav>
                 <ul>
-                    <li>
-                        <div class="current">
-                            <div class="bar"></div>
-                            <a href="index.html">visual</a>
-                        </div>
-                    </li>
+                    <li><a href="html/visual.html">visual</a> </li>
                     <li><a href="html/audio.html">audio</a></li>
                     <li><a href="html/research.html">research</a></li>
                     <li><a href="html/about.html">about</a></li>
@@ -38,43 +34,11 @@
         </div>
     </header>
 
-    <div class="visual-wrapper">
+    <video id="video-sphere" class="video" src="images/index/sphere_breathing_compressed.mp4" autoplay playsinline muted
+        loop></video>
+    <video id="video-torus" class="video" src="images/index/torus_breathing_compressed.mp4" autoplay playsinline muted
+        loop></video>
 
-        <div onclick="location.href='html/visual/serie_01.html'">
-            <div class="series-wrapper">
-                <img src="images/visual/monoliths/1.jpeg" />
-                <span class="german-heading">Serie 01</span>
-            </div>
-        </div>
-
-        <div onclick="location.href='html/visual/serie_02.html'">
-            <div class="series-wrapper">
-                <img src="images/visual/facades/1.jpeg" />
-                <span class="german-heading">Serie 02</span>
-            </div>
-        </div>
-
-        <div onclick="location.href='html/visual/serie_03.html'">
-            <div class="series-wrapper">
-                <img src="images/visual/sakral/1.jpeg" />
-                <span class="german-heading">Serie 03</span>
-            </div>
-        </div>
-
-        <div onclick="location.href='html/visual/serie_04.html'">
-            <div class="series-wrapper">
-                <img src="images/visual/round_steel/1.jpeg" />
-                <span class="german-heading">Serie 04</span>
-            </div>
-        </div>
-
-        <div onclick="location.href='html/visual/serie_05.html'">
-            <div class="series-wrapper">
-                <img src="images/visual/industry/1.jpeg" />
-                <span class="german-heading">Serie 05</span>
-            </div>
-        </div>
-    </div>
 </body>
 
 </html>
