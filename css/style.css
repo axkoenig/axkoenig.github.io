@@ -28,15 +28,15 @@
 /* BODY */
 
 body {
-    font-family:'Helvetica', 'Arial';
+    font-family: 'Helvetica Neue', 'Helvetica', 'Arial';
     font-size: 17px;
     line-height: 2;
     padding: 0;
     margin-top: 40px;
     background: var(--color-backgr);
     color: var(--color-dark-text);
-	text-rendering: optimizeLegibility; 
-    -webkit-font-smoothing: antialiased; 
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
@@ -118,6 +118,7 @@ header #branding:hover h2 {
         float: left;
         padding-left: 40px;
     }
+
     .container {
         width: 90%;
         margin: auto;
@@ -125,9 +126,11 @@ header #branding:hover h2 {
         min-height: 40px;
         text-align: center;
     }
+
     #branding {
         float: left;
     }
+
     nav {
         float: right;
         margin-top: 5px;
@@ -141,6 +144,7 @@ header #branding:hover h2 {
         float: left;
         padding: 0 10px 0 10px;
     }
+
     .container {
         width: 100%;
         margin: auto;
@@ -148,9 +152,11 @@ header #branding:hover h2 {
         min-height: 40px;
         text-align: center;
     }
+
     #branding {
         display: none;
     }
+
     nav {
         display: inline-block;
         margin-top: 5px;
