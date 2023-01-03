@@ -7,8 +7,8 @@ header {
 }
 
 .video {
-    width: var(--width);
-    max-width: var(--max-width);
+    width: calc(1.4 * var(--width));
+    max-width: calc(1.4 * var(--max-width));
     position: fixed;
     top: 50%;
     left: 50%;
@@ -17,12 +17,6 @@ header {
 
 /* video for large screens */
 @media screen and (min-width: 600px) {
-
-    /* reposition torus slightly */
-    .video {
-        width: calc(1.4 * var(--width));
-        max-width: calc(1.4 * var(--max-width));
-    }
 
     #video-sphere {
         display: none;
