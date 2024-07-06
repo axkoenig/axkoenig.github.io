@@ -14,6 +14,7 @@
             --border-color: #000;
             --row-min-height: 150px;
             --default-padding: 10px;
+            --color-link: gray;
         }
 
         body {
@@ -50,7 +51,7 @@
 
         .sidebar .row {
             display: flex;
-            padding: var(--default-padding);
+            padding: 30px 10px;
             border-bottom: 1px solid var(--border-color);
             min-height: var(--row-min-height);
         }
@@ -89,9 +90,11 @@
         }
 
         .content .row {
-            display: flex;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px 60px;
             border-bottom: 1px solid var(--border-color);
-            padding: var(--default-padding);
+            padding: 30px 20px;
             flex-wrap: wrap;
             min-height: var(--row-min-height);
             /* Ensure minimum height */
@@ -102,18 +105,14 @@
             word-wrap: break-word;
         }
 
-        .about-span {
-            max-width: 60%;
-            margin-bottom: 40px;
-        }
 
         .resource-link {
-            outline: 1px solid lightgray;
+            outline: 1px solid gray;
             padding: var(--default-padding);
             color: var(--color-link);
 
             margin-right: 10px;
-            margin-top: 10px;
+            margin-top: 15px;
 
             text-decoration: none;
             text-transform: capitalize;
@@ -124,6 +123,14 @@
             display: flex;
             flex-wrap: wrap;
         }
+
+        .link {
+            color: var(--color-link);
+            text-decoration: none;
+        }
+
+
+
 
         /* Media query for mobile devices */
         @media (max-width: 768px) {
@@ -164,6 +171,17 @@
             .main-content {
                 margin-top: var(--header-height);
             }
+
+            .content .row {
+                display: grid;
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Ensure the image is automatically sized */
+        .content .row img {
+            max-width: 100%;
+            height: auto;
         }
     </style>
 </head>
@@ -175,7 +193,7 @@
             <div class="row">Bio</div>
             <div class="row">Papers</div>
             <div class="row">Talks</div>
-            <div class="row">Contact</div>
+            <div class="row">Details</div>
         </div>
         <div class="vertical-line"></div>
         <div class="main-content">
@@ -187,20 +205,78 @@
             </div>
             <div class="content">
                 <div class="row">
-                    <div>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ducimus eveniet a facilis reiciendis
-                        minus velit suscipit! Mollitia accusamus saepe ab non consequatur quia suscipit numquam autem
-                        esse! Architecto, nihil qui!.</div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
+                    <div>
+                        <img src="https://via.placeholder.com/300" alt="Profile Picture">
+
+                        <div class="paper-resources">
+                            <a class="resource-link" href="https://www.linkedin.com/in/alexander-koenig-95b9a0134"
+                                target="blank">LinkedIn</a>
+                            <a class="resource-link" href="https://ra.co/dj/aquaveen" target="blank">Resident
+                                Advisor</a>
+                            <a class="resource-link" href="https://soundcloud.com/alexander-koenig"
+                                target="blank">Soundcloud</a>
+                            <a class="resource-link" href="mailto:awckoenig@gmail" target="blank">E-Mail</a>
+                            <a class="resource-link"
+                                href="https://scholar.google.de/citations?user=IKDoQE0AAAAJ&hl=de&oi=sra"
+                                target="blank">Google Scholar</a>
+                            <a class="resource-link" href="https://github.com/axkoenig" target="blank">GitHub</a>
+
+                        </div>
+                    </div>
+
+                    <span>
+                        I am an artist and researcher based in Berlin. I’m currently pursing my PhD in Oliver
+                        Brock’s
+                        Robotics and Biology Laboratory at TU Berlin. My research focuses on the algorithmic
+                        foundations
+                        of embodied artificial intelligence. I use dextrous robotics manipulation with soft robotic
+                        hands as my research platform, to gain insights into the role of embodiment in learning
+                        systems.
+                        <br><br>
+                        Previously, I worked at <a class="link" href="http://merantix-momentum.com">Merantix
+                            Momentum</a> as a Machine Learning Researcher, where I
+                        mainly work on self-supervised approaches for computer vision. I also host the monthly paper
+                        discussion
+                        group at the <a class="link" href="https://www.aicampus.berlin/">AI Campus Berlin</a>.
+                        I completed my master's in <a class="link"
+                            href="https://www.in.tum.de/en/for-prospective-students/masters-programs/robotics-cognition-intelligence-msc/">Robotics,
+                            Cognition, Intelligence</a> at the Technical University of Munich (TUM).
+                        During my studies, I was a Research Fellow in the <a class="link"
+                            href="http://biorobotics.harvard.edu">Harvard Biorobotics Lab</a> and the
+                        <a class="link" href="http://www.imperial.ac.uk/mechatronics-in-medicine">Mechatronics in
+                            Medicine
+                            Lab</a> at Imperial College
+                        London.
+                        I hold a B.Sc. in <a class="link"
+                            href="https://www.mse.tum.de/en/prospective-students/engineering-science/#c3206">Engineering
+                            Science</a>, an interdisciplinary engineering program from TUM.
+                        <br><br>
+                        I am involved in various art projects. For example, I am one half of Aqua Veen. Aqua Veen is
+                        a
+                        DJ and music production duo from Berlin. In our DJ sets we often blend warm and driving
+                        house
+                        with more scientific soundscapes. We are about to release our first EP, called “Bleedig EP”
+                        which features some ambient, experimental and vertical sounds. I’m also an avid
+                        photographer,
+                        coming mostly from architectural photography, now moving to more human and intimate
+                        photography.
+
+                        <br><br>
+                        Why am I doing what I am doing? While machine learning and robotics certainly have their
+                        merits
+                        and will benefit society in some way, my goal is not to replace humans with general purpose
+                        robots. Much rather, I am interested in the technical challenges of autonomy in the real
+                        world,
+                        and from these insight we can learn a great deal about us. We’re going full circle.
+
+                    </span>
                 </div>
                 <div class="row">
-
-                    <span class="about-span">
+                    <div class="about-div">
                         A. Koenig, M. Schambach, and J. Otterbach "Uncovering the Inner Workings of STEGO for Safe
                         Unsupervised Semantic Segmentation" In: Workshop on Safe Artificial Intelligence for All Domains
                         at
-                        IEEE/CVF Computer Vision and Pattern Recognition Conference (CVPR), 2023 <br>
+                        IEEE/CVF Computer Vision and Pattern Recognition Conference (CVPR), 2023.
                         <div class="paper-resources">
                             <a class="resource-link" href="https://arxiv.org/abs/2304.07314" target="blank">Paper</a>
                             <a class="resource-link" href="https://www.youtube.com/watch?v=vKadn3MF5BY"
@@ -210,12 +286,12 @@
                             <a class="resource-link" href="../downloads/research/cvpr23_poster.pdf"
                                 target="blank">Poster</a>
                         </div>
-                    </span>
+                    </div>
 
-                    <span class="about-span">
+                    <div class="about-div">
                         A. Koenig, Z. Liu, L. Janson and R. Howe "The Role of Tactile Sensing in Learning
                         and Deploying Grasp Refinement Algorithms" In: IEEE/RSJ International Conference on Intelligent
-                        Robots and Systems (IROS), 2022 <br>
+                        Robots and Systems (IROS), 2022.
                         <div class="paper-resources">
                             <a class="resource-link" href="https://arxiv.org/abs/2109.11234" target="blank">Paper</a>
                             <a class="resource-link" href="https://www.youtube.com/watch?v=ko4iZgjomvY"
@@ -223,27 +299,27 @@
                             <a class="resource-link" href="https://www.youtube.com/watch?v=WKhmOKPEYPc"
                                 target="blank">demo</a>
                         </div>
-                    </span>
+                    </div>
 
-                    <span class="about-span">
+                    <div class="about-div">
                         A. Koenig, Z. Liu, L. Janson and R. Howe "Tactile Sensing and its
                         Role in Learning and
                         Deploying Robotic Grasping Controllers" In:
                         Workshop on Reinforcement Learning for Contact-Rich Manipulation at IEEE International
                         Conference on
-                        Robotics and Automation (ICRA), 2022<br>
+                        Robotics and Automation (ICRA), 2022.
                         <div class="paper-resources">
                             <a class="resource-link" href="https://openreview.net/forum?id=OqmWRIsvA4O"
                                 target="blank">Paper</a>
                             <a class="resource-link" href="../downloads/research/icra22_workshop_poster.pdf"
                                 target="blank">Poster</a>
                         </div>
-                    </span>
+                    </div>
 
-                    <span class="about-span">
+                    <div class="about-div">
                         A. Koenig, F. Rodriguez y Baena and R. Secoli "Gesture-Based Teleoperated Grasping
                         for Educational Robotics" In: IEEE International Symposium on Robot and Human Interactive
-                        Communication (RO-MAN), 2021. <br>
+                        Communication (RO-MAN), 2021.
                         <div class="paper-resources">
                             <a class="resource-link" href="https://ieeexplore.ieee.org/document/9515390"
                                 target="blank">Paper</a>
@@ -253,13 +329,41 @@
                                 target="blank">demo</a>
                         </div>
 
-                    </span>
+                    </div>
                 </div>
                 <div class="row">
-                    <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
+
+
+                    <div class="about-div">
+                        "Recent Advances in Unsupervised Semantic Segmentation" at <a class="link"
+                            href="https://maincampus.ch/">Switzerland Innovation Park Basel</a>, 2023.
+                        <div class="paper-resources">
+                            <a class="resource-link" href="bad link" target="blank">Slides</a>
+                        </div>
+
+                    </div>
+
+                    <div class="about-div">
+                        "CVPR 2023 Conference Retrospective" at <a class="link" href="https://www.aicampus.berlin/">AI
+                            Campus Berlin</a>, 2023.
+                        <div class="paper-resources">
+                            <a class="resource-link" href="https://www.youtube.com/watch?v=yhXnf-Sz0pA"
+                                target="blank">Talk</a>
+                            <a class="resource-link" href="../downloads/research/cvpr23_retro.pdf"
+                                target="blank">Slides</a>
+                        </div>
+                    </div>
+
+                    <div class="about-div">
+                        "High-Performance Data Loading for Machine Learning Workloads with Squirrel</a>"
+                        at <a class="link" href="https://safetrain-projekt.de/en/">Siemens AI Colloquium</a>, 2022.
+                        <div class="paper-resources">
+                            <a class="resource-link" href="https://www.youtube.com/watch?v=Z7ziAp0mb-o"
+                                target="blank">Talk</a>
+                            <a class="resource-link" href="../downloads/research/squirrel_slides.pdf"
+                                target="blank">Slides</a>
+                        </div>
+                    </div>
                 </div>
                 <div class="row">
                     <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
