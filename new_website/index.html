@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alexander Koenig</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #fff;
+            color: #000;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            width: 100%;
+            position: relative;
+        }
+
+        .navbar-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background-color: transparent; /* Transparent background */
+            z-index: 10; /* Make sure it's in front of the canvas */
+            position: relative;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            width: 100%;
+            max-width: 1200px; /* Maximum width to keep the navbar from stretching too much */
+            padding: 0;
+            margin: 0;
+            justify-content: space-between; /* Equally space elements across the entire width */
+        }
+
+        nav ul li {
+            flex: 1; /* Ensure elements take up equal space */
+            text-align: center; /* Center the text within each element */
+            padding: 10px;
+            border: 1px solid #000; /* Black border around each element */
+            background-color: white; /* White background for the boxes */
+            opacity: 0.9; /* Slightly transparent */
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #333; /* Off-black color */
+            font-size: 16px;
+            font-weight: normal; /* Non-bold */
+            text-transform: uppercase; /* All caps */
+        }
+
+        nav ul li a:hover {
+            color: #007BFF; /* Darker blue on hover */
+        }
+
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1; /* Make sure canvas is behind other elements */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar-container">
+            <nav>
+                <ul>
+                    <li><a href="#visual">Visual</a></li>
+                    <li><a href="#audio">Audio</a></li>
+                    <li><a href="#research">Research</a></li>
+                    <li><a href="#about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <canvas id="particleCanvas"></canvas>
+    <script src="particles.js"></script>
+</body>
+</html>
