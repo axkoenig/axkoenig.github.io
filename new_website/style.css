@@ -16,6 +16,22 @@ body {
 }
 
 
+.header a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.header a:hover {
+    background-color: var(--color-primary);
+    color: inherit;
+    text-decoration: none;
+}
+
+.hidden {
+    display: none;
+}
+
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -98,6 +114,15 @@ body {
     flex-wrap: wrap;
     min-height: var(--row-min-height);
     /* Ensure minimum height */
+}
+
+
+.expandable-row .img-description {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-content: flex-end;
+    height: 100%;
+    align-items: end;
 }
 
 .content .row div {

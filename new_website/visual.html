@@ -8,15 +8,15 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
+
 <body>
     <script type="text/javascript" src="scripts.js"></script>
     <div class="container">
         <div class="sidebar">
             <div class="row" id="home">O</div>
-            <div class="row">Serie 1</div>
-            <div class="row">Serie 2</div>
-            <div class="row">Serie 3</div>
-            <div class="row">Graphics</div>
+            <div class="row">Bio</div>
+            <div class="row">Publications</div>
+            <div class="row">Talks</div>
         </div>
         <div class="vertical-line"></div>
         <div class="main-content">
@@ -28,39 +28,47 @@
             </div>
             <div class="content">
                 <div class="row">
-                    <div>
+                    <div class="grid-item">
                         <img src="https://via.placeholder.com/1500x1000" alt="Profile Picture">
-                    </div>
-                    <span>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias, debitis sit? Ducimus
-                        nihil facilis saepe minima ut? Sunt amet deleniti, adipisci dolore labore veniam odio, nemo
-                        eligendi reiciendis corporis minus.
-                    </span>
-                </div>
-                <div class="row">
-                    <div>
-                        <img src="https://via.placeholder.com/300" alt="Profile Picture">
 
                     </div>
-                </div>
-                <div class="row">
-                    <div>
-                        <img src="https://via.placeholder.com/300" alt="Profile Picture">
+                    <div class="grid-item">
+                        <div class="description">Image description 1</div>
+                    </div>
+                    <div class="grid-item hidden">
+                        <img src="https://via.placeholder.com/1500x1000" alt="Profile Picture">
 
                     </div>
-                </div>
-                <div class="row">
-                    <div>
-                        <img src="https://via.placeholder.com/300" alt="Profile Picture">
+                    <div class="grid-item hidden">
+                        <div class="description">Image description 2</div>
+                    </div>
+                    <div class="grid-item hidden">
+                        <img src="https://via.placeholder.com/1500x1000" alt="Profile Picture">
 
                     </div>
+                    <div class="grid-item hidden">
+                        <div class="description">Image description 3</div>
+                    </div>
+                    <div class="grid-item hidden">
+                        <img src="https://via.placeholder.com/1500x1000" alt="Profile Picture">
+
+                    </div>
+                    <div class="grid-item hidden">
+                        <div class="description">Image description 4</div>
+                    </div>
+                    <div class="grid-item hidden">
+                        <img src="https://via.placeholder.com/1500x1000" alt="Profile Picture">
+
+                    </div>
+                    <div class="grid-item hidden">
+                        <div class="description">Image description 5</div>
+                    </div>
+                    <button id="expandButton" onclick="expandRows()">Expand</button>
+                    <button id="collapseButton" onclick="collapseRows()" class="hidden">Collapse</button>
                 </div>
 
             </div>
-
         </div>
-    </div>
-    </div>
     </div>
 </body>
 
