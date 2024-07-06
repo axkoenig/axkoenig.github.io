@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample Website</title>
+    <style>
+        /* div,
+        a,
+        nav,
+        li,
+        header,
+        h2,
+        span {
+            outline: 1px solid red;
+        } */
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        .container {
+            display: flex;
+            width: 100%;
+        }
+
+        .sidebar {
+            flex: 0 0 150px;
+            border-right: 1px solid #000;
+        }
+
+        .sidebar .row {
+            display: flex;
+            padding: 10px;
+            border-bottom: 1px solid #000;
+            height: 100px;
+            /* Ensure height matches content rows */
+        }
+
+        #home {
+            padding: 10px;
+            height: 20px;
+        }
+
+        .main-content {
+            flex: 1;
+        }
+
+        .header {
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #000;
+        }
+
+        .header div {
+            flex: 1;
+            text-align: center;
+            height: 20px;
+        }
+
+        .content .row {
+            display: flex;
+            border-bottom: 1px solid #000;
+            height: 100px;
+            padding: 10px;
+        }
+
+        .content .row div {
+            flex: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="row" , id="home">O</div>
+            <div class="row">Biografie</div>
+            <div class="row">Publications</div>
+            <div class="row">Contact</div>
+        </div>
+        <div class="main-content">
+            <div class="header">
+                <div>AUDIO</div>
+                <div>VISUAL</div>
+                <div>RESEARCH</div>
+                <div>ABOUT</div>
+            </div>
+            <div class="content">
+                <div class="row">
+                    <div>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ducimus eveniet a facilis reiciendis
+                        minus velit suscipit! Mollitia accusamus saepe ab non consequatur quia suscipit numquam autem
+                        esse! Architecto, nihil qui!.</div>
+
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+                <div class="row">
+                    <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+                <div class="row">
+                    <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
