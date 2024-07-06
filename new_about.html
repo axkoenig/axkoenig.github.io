@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sample Website</title>
     <style>
-        div,
+        /* div,
         a,
         nav,
         li,
@@ -14,7 +14,7 @@
         h2,
         span {
             outline: 1px solid red;
-        }
+        } */
 
         body {
             font-family: Arial, sans-serif;
@@ -24,7 +24,8 @@
         }
 
         * {
-            box-sizing: border-box; /* Include padding and border in the element's total width and height */
+            box-sizing: border-box;
+            /* Include padding and border in the element's total width and height */
         }
 
         .container {
@@ -41,12 +42,13 @@
             display: flex;
             padding: 10px;
             border-bottom: 1px solid #000;
-            min-height: 150px; /* Ensure minimum height */
+            min-height: 150px;
         }
 
         #home {
             padding: 10px;
-            min-height: initial; /* Reset min-height for home */
+            min-height: initial;
+            /* Reset min-height for home */
         }
 
         .main-content {
@@ -70,12 +72,40 @@
             border-bottom: 1px solid #000;
             padding: 10px;
             flex-wrap: wrap;
-            min-height: 150px; /* Ensure minimum height */
+            min-height: 150px;
+            /* Ensure minimum height */
         }
 
         .content .row div {
             flex: 1;
             word-wrap: break-word;
+        }
+
+        /* Media query for mobile devices */
+        @media (max-width: 768px) {
+            .sidebar {
+                flex: 0 0 30px;
+            }
+
+            .sidebar .row {
+                writing-mode: vertical-rl;
+                transform: rotate(180deg);
+                width: 40px;
+                justify-content: flex-start;
+                align-items: flex-start;
+                text-align: left;
+                border-top: 1px solid #000;
+                border-bottom: none;
+            }
+
+            #home {
+                writing-mode: horizontal-tb;
+                transform: none;
+                min-height: initial;
+                border-top: none;
+                border-bottom: 1px solid #000;
+
+            }
         }
     </style>
 </head>
