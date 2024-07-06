@@ -6,6 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sample Website</title>
     <style>
+        :root {
+            --sidebar-width: 150px;
+            --header-height: 40px;
+            --line-width: 1px;
+            --mobile-sidebar-width: 40px;
+            --border-color: #000;
+            --row-min-height: 150px;
+            --default-padding: 10px;
+        }
+
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -24,51 +34,51 @@
         }
 
         .sidebar {
-            flex: 0 0 150px;
-            padding-top: 40px;
+            flex: 0 0 var(--sidebar-width);
+            padding-top: var(--header-height);
         }
 
         .vertical-line {
             position: fixed;
             top: 0;
-            left: 150px;
+            left: var(--sidebar-width);
             height: 100%;
-            width: 1px;
-            background-color: #000;
+            width: var(--line-width);
+            background-color: var(--border-color);
             z-index: 2;
         }
 
         .sidebar .row {
             display: flex;
-            padding: 10px;
-            border-bottom: 1px solid #000;
-            min-height: 150px;
+            padding: var(--default-padding);
+            border-bottom: 1px solid var(--border-color);
+            min-height: var(--row-min-height);
         }
 
         #home {
-            padding: 10px;
+            padding: var(--default-padding);
             min-height: initial;
             /* Reset min-height for home */
             position: fixed;
             top: 0;
-            width: calc(100% - 150px);
+            width: calc(100% - var(--sidebar-width));
             /* Adjust this value if the sidebar width changes */
             background-color: white;
         }
 
         .main-content {
             flex: 1;
-            margin-top: 40px;
+            margin-top: var(--header-height);
         }
 
         .header {
-            padding: 10px;
+            padding: var(--default-padding);
             display: flex;
             justify-content: space-between;
-            border-bottom: 1px solid #000;
+            border-bottom: 1px solid var(--border-color);
             position: fixed;
             top: 0;
-            width: calc(100% - 150px);
+            width: calc(100% - var(--sidebar-width));
             background-color: white;
             z-index: 1;
         }
@@ -80,10 +90,10 @@
 
         .content .row {
             display: flex;
-            border-bottom: 1px solid #000;
-            padding: 10px;
+            border-bottom: 1px solid var(--border-color);
+            padding: var(--default-padding);
             flex-wrap: wrap;
-            min-height: 150px;
+            min-height: var(--row-min-height);
             /* Ensure minimum height */
         }
 
@@ -94,22 +104,22 @@
 
         /* Media query for mobile devices */
         @media (max-width: 768px) {
-            .sidebar {
-                flex: 0 0 40px;
+            :root {
+                --sidebar-width: var(--mobile-sidebar-width);
             }
 
             .vertical-line {
-                left: 40px;
+                left: var(--mobile-sidebar-width);
             }
 
             .sidebar .row {
                 writing-mode: vertical-rl;
                 transform: rotate(180deg);
-                width: 40px;
+                width: var(--mobile-sidebar-width);
                 justify-content: flex-start;
                 align-items: flex-start;
                 text-align: left;
-                border-top: 1px solid #000;
+                border-top: 1px solid var(--border-color);
                 border-bottom: none;
             }
 
@@ -118,16 +128,16 @@
                 transform: none;
                 min-height: initial;
                 border-top: none;
-                border-bottom: 1px solid #000;
+                border-bottom: 1px solid var(--border-color);
             }
 
             .header {
-                width: calc(100% - 30px);
+                width: calc(100% - var(--mobile-sidebar-width));
                 /* Adjust this value if the sidebar width changes */
             }
 
             .main-content {
-                margin-top: 40px;
+                margin-top: var(--header-height);
             }
         }
     </style>
@@ -189,7 +199,7 @@
             for (let i = 1; i < sidebarRows.length; i++) { // Start from 1 to skip the #home row
                 if (contentRows[i - 1]) { // Match the index offset
                     const contentHeight = contentRows[i - 1].offsetHeight;
-                    sidebarRows[i].style.height = contentHeight < 150 ? '150px' : contentHeight + 'px';
+                    sidebarRows[i].style.height = contentHeight < parseInt(getComputedStyle(document.documentElement).getPropertyValue('--row-min-height')) ? '150px' : contentHeight + 'px';
                 }
             }
         }
