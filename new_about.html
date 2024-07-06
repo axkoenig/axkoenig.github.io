@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sample Website</title>
     <style>
-        /* div,
+        div,
         a,
         nav,
         li,
@@ -14,13 +14,17 @@
         h2,
         span {
             outline: 1px solid red;
-        } */
+        }
 
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             display: flex;
+        }
+
+        * {
+            box-sizing: border-box; /* Include padding and border in the element's total width and height */
         }
 
         .container {
@@ -37,13 +41,12 @@
             display: flex;
             padding: 10px;
             border-bottom: 1px solid #000;
-            height: 100px;
-            /* Ensure height matches content rows */
+            min-height: 150px; /* Ensure minimum height */
         }
 
         #home {
             padding: 10px;
-            height: 20px;
+            min-height: initial; /* Reset min-height for home */
         }
 
         .main-content {
@@ -60,18 +63,19 @@
         .header div {
             flex: 1;
             text-align: center;
-            height: 20px;
         }
 
         .content .row {
             display: flex;
             border-bottom: 1px solid #000;
-            height: 100px;
             padding: 10px;
+            flex-wrap: wrap;
+            min-height: 150px; /* Ensure minimum height */
         }
 
         .content .row div {
             flex: 1;
+            word-wrap: break-word;
         }
     </style>
 </head>
@@ -79,7 +83,7 @@
 <body>
     <div class="container">
         <div class="sidebar">
-            <div class="row" , id="home">O</div>
+            <div class="row" id="home">O</div>
             <div class="row">Biografie</div>
             <div class="row">Publications</div>
             <div class="row">Contact</div>
@@ -96,7 +100,6 @@
                     <div>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ducimus eveniet a facilis reiciendis
                         minus velit suscipit! Mollitia accusamus saepe ab non consequatur quia suscipit numquam autem
                         esse! Architecto, nihil qui!.</div>
-
                     <div></div>
                     <div></div>
                     <div></div>
@@ -116,6 +119,23 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function adjustSidebarHeight() {
+            const sidebarRows = document.querySelectorAll('.sidebar .row');
+            const contentRows = document.querySelectorAll('.content .row');
+
+            for (let i = 1; i < sidebarRows.length; i++) { // Start from 1 to skip the #home row
+                if (contentRows[i - 1]) { // Match the index offset
+                    const contentHeight = contentRows[i - 1].offsetHeight;
+                    sidebarRows[i].style.height = contentHeight < 150 ? '150px' : contentHeight + 'px';
+                }
+            }
+        }
+
+        window.addEventListener('load', adjustSidebarHeight);
+        window.addEventListener('resize', adjustSidebarHeight);
+    </script>
 </body>
 
 </html>
