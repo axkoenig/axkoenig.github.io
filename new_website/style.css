@@ -1,0 +1,192 @@
+:root {
+    --sidebar-width: 150px;
+    --header-height: 40px;
+    --line-width: 1px;
+    --mobile-sidebar-width: 40px;
+    --border-color: #000;
+    --row-min-height: 150px;
+    --default-padding: 10px;
+    --color-link: gray;
+    --color-primary: rgb(255, 255, 218);
+}
+
+html,
+body {
+    overscroll-behavior: none;
+}
+
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    line-height: 1.4;
+}
+
+* {
+    box-sizing: border-box;
+    /* Include padding and border in the element's total width and height */
+}
+
+.container {
+    display: flex;
+    width: 100%;
+}
+
+.sidebar {
+    flex: 0 0 var(--sidebar-width);
+    padding-top: var(--header-height);
+}
+
+.vertical-line {
+    position: fixed;
+    top: 0;
+    left: var(--sidebar-width);
+    height: 100%;
+    width: var(--line-width);
+    background-color: var(--border-color);
+    z-index: 2;
+}
+
+.sidebar .row {
+    display: flex;
+    padding: 30px 10px;
+    border-bottom: 1px solid var(--border-color);
+    min-height: var(--row-min-height);
+}
+
+#home {
+    padding: var(--default-padding);
+    min-height: initial;
+    /* Reset min-height for home */
+    position: fixed;
+    top: 0;
+    width: calc(100% - var(--sidebar-width));
+    /* Adjust this value if the sidebar width changes */
+    background-color: white;
+}
+
+.main-content {
+    flex: 1;
+    margin-top: var(--header-height);
+}
+
+.header {
+    padding: var(--default-padding);
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border-color);
+    position: fixed;
+    top: 0;
+    width: calc(100% - var(--sidebar-width));
+    background-color: white;
+    z-index: 1;
+}
+
+.header div {
+    flex: 1;
+    text-align: center;
+}
+
+.content .row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px 60px;
+    border-bottom: 1px solid var(--border-color);
+    padding: 30px 20px;
+    flex-wrap: wrap;
+    min-height: var(--row-min-height);
+    /* Ensure minimum height */
+}
+
+.content .row div {
+    flex: 1;
+    word-wrap: break-word;
+}
+
+.resource-link:hover {
+    background-color: var(--color-primary)
+}
+
+.resource-link {
+    outline: 1px solid gray;
+    padding: var(--default-padding);
+    color: var(--color-link);
+
+    margin-right: 15px;
+    margin-top: 15px;
+
+    text-decoration: none;
+    text-transform: capitalize;
+    white-space: nowrap
+}
+
+.paper-resources {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.link:hover {
+    background-color: var(--color-primary)
+}
+
+.link {
+    color: var(--color-link);
+    text-decoration: none;
+}
+
+
+
+
+/* Media query for mobile devices */
+@media (max-width: 768px) {
+    :root {
+        --sidebar-width: var(--mobile-sidebar-width);
+    }
+
+    .vertical-line {
+        left: var(--mobile-sidebar-width);
+    }
+
+    .sidebar .row {
+        writing-mode: vertical-rl;
+        transform: rotate(180deg);
+        width: var(--mobile-sidebar-width);
+        justify-content: flex-start;
+        align-items: flex-start;
+        text-align: left;
+        border-top: 1px solid var(--border-color);
+        border-bottom: none;
+    }
+
+    #home {
+        writing-mode: horizontal-tb;
+        transform: none;
+        min-height: initial;
+        border-top: none;
+        border-bottom: 1px solid var(--border-color);
+        background-color: white;
+        z-index: 1;
+    }
+
+    .header {
+        width: calc(100% - var(--mobile-sidebar-width));
+        /* Adjust this value if the sidebar width changes */
+    }
+
+    .main-content {
+        margin-top: var(--header-height);
+    }
+
+    .content .row {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Ensure the image is automatically sized */
+.content .row img {
+    max-width: 100%;
+    height: auto;
+}
