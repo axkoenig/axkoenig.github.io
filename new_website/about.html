@@ -102,6 +102,29 @@
             word-wrap: break-word;
         }
 
+        .about-span {
+            max-width: 60%;
+            margin-bottom: 40px;
+        }
+
+        .resource-link {
+            outline: 1px solid lightgray;
+            padding: var(--default-padding);
+            color: var(--color-link);
+
+            margin-right: 10px;
+            margin-top: 10px;
+
+            text-decoration: none;
+            text-transform: capitalize;
+            white-space: nowrap
+        }
+
+        .paper-resources {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
         /* Media query for mobile devices */
         @media (max-width: 768px) {
             :root {
@@ -129,6 +152,8 @@
                 min-height: initial;
                 border-top: none;
                 border-bottom: 1px solid var(--border-color);
+                background-color: white;
+                z-index: 1;
             }
 
             .header {
@@ -147,8 +172,8 @@
     <div class="container">
         <div class="sidebar">
             <div class="row" id="home">O</div>
-            <div class="row">Biografie</div>
-            <div class="row">Publications</div>
+            <div class="row">Bio</div>
+            <div class="row">Papers</div>
             <div class="row">Talks</div>
             <div class="row">Contact</div>
         </div>
@@ -170,10 +195,65 @@
                     <div></div>
                 </div>
                 <div class="row">
-                    <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
+
+                    <span class="about-span">
+                        A. Koenig, M. Schambach, and J. Otterbach "Uncovering the Inner Workings of STEGO for Safe
+                        Unsupervised Semantic Segmentation" In: Workshop on Safe Artificial Intelligence for All Domains
+                        at
+                        IEEE/CVF Computer Vision and Pattern Recognition Conference (CVPR), 2023 <br>
+                        <div class="paper-resources">
+                            <a class="resource-link" href="https://arxiv.org/abs/2304.07314" target="blank">Paper</a>
+                            <a class="resource-link" href="https://www.youtube.com/watch?v=vKadn3MF5BY"
+                                target="blank">Talk</a>
+                            <a class="resource-link" href="../downloads/research/cvpr23_slides.pdf"
+                                target="blank">Slides</a>
+                            <a class="resource-link" href="../downloads/research/cvpr23_poster.pdf"
+                                target="blank">Poster</a>
+                        </div>
+                    </span>
+
+                    <span class="about-span">
+                        A. Koenig, Z. Liu, L. Janson and R. Howe "The Role of Tactile Sensing in Learning
+                        and Deploying Grasp Refinement Algorithms" In: IEEE/RSJ International Conference on Intelligent
+                        Robots and Systems (IROS), 2022 <br>
+                        <div class="paper-resources">
+                            <a class="resource-link" href="https://arxiv.org/abs/2109.11234" target="blank">Paper</a>
+                            <a class="resource-link" href="https://www.youtube.com/watch?v=ko4iZgjomvY"
+                                target="blank">Talk</a>
+                            <a class="resource-link" href="https://www.youtube.com/watch?v=WKhmOKPEYPc"
+                                target="blank">demo</a>
+                        </div>
+                    </span>
+
+                    <span class="about-span">
+                        A. Koenig, Z. Liu, L. Janson and R. Howe "Tactile Sensing and its
+                        Role in Learning and
+                        Deploying Robotic Grasping Controllers" In:
+                        Workshop on Reinforcement Learning for Contact-Rich Manipulation at IEEE International
+                        Conference on
+                        Robotics and Automation (ICRA), 2022<br>
+                        <div class="paper-resources">
+                            <a class="resource-link" href="https://openreview.net/forum?id=OqmWRIsvA4O"
+                                target="blank">Paper</a>
+                            <a class="resource-link" href="../downloads/research/icra22_workshop_poster.pdf"
+                                target="blank">Poster</a>
+                        </div>
+                    </span>
+
+                    <span class="about-span">
+                        A. Koenig, F. Rodriguez y Baena and R. Secoli "Gesture-Based Teleoperated Grasping
+                        for Educational Robotics" In: IEEE International Symposium on Robot and Human Interactive
+                        Communication (RO-MAN), 2021. <br>
+                        <div class="paper-resources">
+                            <a class="resource-link" href="https://ieeexplore.ieee.org/document/9515390"
+                                target="blank">Paper</a>
+                            <a class="resource-link" href="https://www.youtube.com/watch?v=fNvErR5eUpc"
+                                target="blank">Talk</a>
+                            <a class="resource-link" href="https://www.youtube.com/watch?v=RDbpd9d7U2k"
+                                target="blank">demo</a>
+                        </div>
+
+                    </span>
                 </div>
                 <div class="row">
                     <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
