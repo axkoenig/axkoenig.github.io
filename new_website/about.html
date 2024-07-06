@@ -6,16 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sample Website</title>
     <style>
-        /* div,
-        a,
-        nav,
-        li,
-        header,
-        h2,
-        span {
-            outline: 1px solid red;
-        } */
-
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -35,7 +25,17 @@
 
         .sidebar {
             flex: 0 0 150px;
-            border-right: 1px solid #000;
+            padding-top: 40px;
+        }
+
+        .vertical-line {
+            position: fixed;
+            top: 0;
+            left: 150px;
+            height: 100%;
+            width: 1px;
+            background-color: #000;
+            z-index: 2;
         }
 
         .sidebar .row {
@@ -49,10 +49,16 @@
             padding: 10px;
             min-height: initial;
             /* Reset min-height for home */
+            position: fixed;
+            top: 0;
+            width: calc(100% - 150px);
+            /* Adjust this value if the sidebar width changes */
+            background-color: white;
         }
 
         .main-content {
             flex: 1;
+            margin-top: 40px;
         }
 
         .header {
@@ -60,6 +66,11 @@
             display: flex;
             justify-content: space-between;
             border-bottom: 1px solid #000;
+            position: fixed;
+            top: 0;
+            width: calc(100% - 150px);
+            background-color: white;
+            z-index: 1;
         }
 
         .header div {
@@ -84,7 +95,11 @@
         /* Media query for mobile devices */
         @media (max-width: 768px) {
             .sidebar {
-                flex: 0 0 30px;
+                flex: 0 0 40px;
+            }
+
+            .vertical-line {
+                left: 40px;
             }
 
             .sidebar .row {
@@ -104,7 +119,15 @@
                 min-height: initial;
                 border-top: none;
                 border-bottom: 1px solid #000;
+            }
 
+            .header {
+                width: calc(100% - 30px);
+                /* Adjust this value if the sidebar width changes */
+            }
+
+            .main-content {
+                margin-top: 40px;
             }
         }
     </style>
@@ -119,6 +142,7 @@
             <div class="row">Talks</div>
             <div class="row">Contact</div>
         </div>
+        <div class="vertical-line"></div>
         <div class="main-content">
             <div class="header">
                 <div>AUDIO</div>
@@ -128,7 +152,6 @@
             </div>
             <div class="content">
                 <div class="row">
-                    <img style="max-height: 100px;" src="imgs/me.jpeg">
                     <div>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ducimus eveniet a facilis reiciendis
                         minus velit suscipit! Mollitia accusamus saepe ab non consequatur quia suscipit numquam autem
                         esse! Architecto, nihil qui!.</div>
