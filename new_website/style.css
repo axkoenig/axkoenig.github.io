@@ -15,7 +15,6 @@ body {
     overscroll-behavior: none;
 }
 
-
 .header a {
     text-decoration: none;
     color: inherit;
@@ -30,7 +29,6 @@ body {
 .hidden {
     display: none;
 }
-
 
 body {
     font-family: Arial, sans-serif;
@@ -116,13 +114,9 @@ body {
     /* Ensure minimum height */
 }
 
-
-.expandable-row .img-description {
-    display: grid;
-    grid-template-columns: 1fr;
-    justify-content: flex-end;
-    height: 100%;
-    align-items: end;
+.expandable-row .grid-item {
+    align-self: end;
+    text-align: left;
 }
 
 .content .row div {
@@ -138,10 +132,8 @@ body {
     outline: 1px solid gray;
     padding: var(--default-padding);
     color: var(--color-link);
-
     margin-right: 15px;
     margin-top: 15px;
-
     text-decoration: none;
     text-transform: capitalize;
     white-space: nowrap
@@ -160,9 +152,6 @@ body {
     color: var(--color-link);
     text-decoration: none;
 }
-
-
-
 
 /* Media query for mobile devices */
 @media (max-width: 768px) {
