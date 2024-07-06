@@ -1,6 +1,6 @@
 :root {
-    --sidebar-width: 150px;
-    --header-height: 40px;
+    --sidebar-width: 15%;
+    --header-height: 44px;
     --line-width: 1px;
     --mobile-sidebar-width: 40px;
     --border-color: #000;
@@ -67,17 +67,20 @@ body {
     display: flex;
     padding: 30px 10px;
     border-bottom: 1px solid var(--border-color);
-    min-height: var(--row-min-height);
+    /* min-height: var(--row-min-height); */
 }
 
 #home {
-    padding: var(--default-padding);
-    min-height: initial;
+    /* padding: var(--default-padding); */
+    /* min-height: initial; */
     /* Reset min-height for home */
     position: fixed;
+    padding-top: 0;
+    padding-bottom: 0;
     top: 0;
-    width: calc(100% - var(--sidebar-width));
-    /* Adjust this value if the sidebar width changes */
+    align-items: center;
+    width: var(--sidebar-width);
+    min-height: var(--header-height);
     background-color: white;
 }
 
@@ -87,6 +90,7 @@ body {
 }
 
 .header {
+    min-height: var(--header-height);
     padding: var(--default-padding);
     display: flex;
     justify-content: space-between;
@@ -113,6 +117,11 @@ body {
     min-height: var(--row-min-height);
     /* Ensure minimum height */
 }
+
+.about-div {
+    margin-bottom: 30px;
+}
+
 
 .expandable-row .grid-item {
     align-self: end;
@@ -192,7 +201,6 @@ button {
     #home {
         writing-mode: horizontal-tb;
         transform: none;
-        min-height: initial;
         border-top: none;
         border-bottom: 1px solid var(--border-color);
         background-color: white;
@@ -218,4 +226,24 @@ button {
 .content .row img {
     max-width: 100%;
     height: auto;
+}
+
+/* Dot animation styles */
+.dot {
+    width: 22px;
+    height: 22px;
+    background-color: blue;
+    border-radius: 50%;
+    filter: blur(5px);
+    animation: colorChange 5s infinite alternate;
+}
+
+@keyframes colorChange {
+    from {
+        background-color: blue;
+    }
+
+    to {
+        background-color: white;
+    }
 }
