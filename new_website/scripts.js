@@ -1,13 +1,13 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const images = document.querySelectorAll('img');
 
     function checkImagesInView() {
+        const images = document.querySelectorAll('img');
         const windowHeight = window.innerHeight;
         let foundInView = false;
 
         images.forEach(image => {
             const rect = image.getBoundingClientRect();
-            const inView = (rect.top >= 0) ;
+            const inView = (rect.top >= windowHeight * 0.001) && (rect.bottom >= 0);
 
             if (inView && !foundInView) {
                 image.classList.add('in-view');
@@ -47,6 +47,7 @@ function expandRows(button) {
     button.classList.add('hidden');
     row.querySelector('.collapse-button').classList.remove('hidden');
     adjustSidebarHeight();
+    checkImagesInView(); // Recheck images in view after expanding
 }
 
 function collapseRows(button) {
@@ -58,4 +59,13 @@ function collapseRows(button) {
     button.classList.add('hidden');
     row.querySelector('.expand-button').classList.remove('hidden');
     adjustSidebarHeight();
+    checkImagesInView(); // Recheck images in view after collapsing
 }
+
+document.querySelectorAll('.expand-button').forEach(button => {
+    button.addEventListener('click', () => expandRows(button));
+});
+
+document.querySelectorAll('.collapse-button').forEach(button => {
+    button.addEventListener('click', () => collapseRows(button));
+});
