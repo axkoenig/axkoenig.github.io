@@ -1,3 +1,28 @@
+document.addEventListener('DOMContentLoaded', function () {
+    const images = document.querySelectorAll('img');
+
+    function checkImagesInView() {
+        const windowHeight = window.innerHeight;
+        let foundInView = false;
+
+        images.forEach(image => {
+            const rect = image.getBoundingClientRect();
+            const inView = (rect.top >= 0) ;
+
+            if (inView && !foundInView) {
+                image.classList.add('in-view');
+                foundInView = true;
+            } else {
+                image.classList.remove('in-view');
+            }
+        });
+    }
+
+    window.addEventListener('scroll', checkImagesInView);
+    window.addEventListener('resize', checkImagesInView);
+    checkImagesInView(); // Initial check
+});
+
 function adjustSidebarHeight() {
     const sidebarRows = document.querySelectorAll('.sidebar .row');
     const contentRows = document.querySelectorAll('.content .row');

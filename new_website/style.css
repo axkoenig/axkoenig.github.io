@@ -92,6 +92,20 @@ body {
     margin-top: var(--header-height);
 }
 
+/* Apply grayscale filter and adjust opacity to make the images more dull */
+img {
+    filter: grayscale(100%);
+    opacity: 0.2;
+    transition: filter 0.5s ease, opacity 0.5s ease;
+}
+
+/* Class to apply color filter and full opacity */
+img.in-view {
+    filter: grayscale(0%);
+    opacity: 1;
+}
+
+
 .header {
     min-height: var(--header-height);
     display: flex;
