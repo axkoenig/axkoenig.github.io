@@ -1,71 +1,93 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', () => {
 
-    function checkImagesInView() {
-        const images = document.querySelectorAll('img');
+    const inViewClass = 'in-view';
+    const greyOutClass = 'grey-out';
+    const hiddenClass = 'hidden';
+    const expandButtonClass = 'expand-button';
+    const collapseButtonClass = 'collapse-button';
+    const expandableRowClass = 'expandable-row';
+    const gridItemClass = 'grid-item';
+
+    function checkElementsInView(elements) {
         const windowHeight = window.innerHeight;
         let foundInView = false;
 
-        images.forEach(image => {
-            const rect = image.getBoundingClientRect();
-            const inView = (rect.top >= windowHeight * 0.001) && (rect.bottom >= 0);
+        elements.forEach(element => {
+            const rect = element.getBoundingClientRect();
+            const inView = (rect.top >= 0) && (rect.bottom <= windowHeight);
 
             if (inView && !foundInView) {
-                image.classList.add('in-view');
+                element.classList.add(inViewClass);
+                element.classList.remove(greyOutClass);
                 foundInView = true;
             } else {
-                image.classList.remove('in-view');
+                element.classList.remove(inViewClass);
+                element.classList.add(greyOutClass);
             }
         });
     }
 
-    window.addEventListener('scroll', checkImagesInView);
-    window.addEventListener('resize', checkImagesInView);
-    checkImagesInView(); // Initial check
-});
+    function checkImagesAndCanvasesInView() {
+        const images = document.querySelectorAll('img');
+        const canvases = document.querySelectorAll('.cover-container canvas');
+        checkElementsInView(images);
+        checkElementsInView(canvases);
+    }
 
-function adjustSidebarHeight() {
-    const sidebarRows = document.querySelectorAll('.sidebar .row');
-    const contentRows = document.querySelectorAll('.content .row');
+    function adjustSidebarHeight() {
+        const sidebarRows = document.querySelectorAll('.sidebar .row');
+        const contentRows = document.querySelectorAll('.content .row');
 
-    for (let i = 1; i < sidebarRows.length; i++) { // Start from 1 to skip the #home row
-        if (contentRows[i - 1]) { // Match the index offset
-            const contentHeight = contentRows[i - 1].getBoundingClientRect().height;
-            const minHeight = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--row-min-height'));
+        for (let i = 1; i < sidebarRows.length; i++) {
+            if (contentRows[i - 1]) {
+                const contentHeight = contentRows[i - 1].getBoundingClientRect().height;
+                const minHeight = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--row-min-height'));
 
-            sidebarRows[i].style.height = contentHeight < minHeight ? '150px' : `${contentHeight}px`;
+                sidebarRows[i].style.height = contentHeight < minHeight ? '150px' : `${contentHeight}px`;
+            }
         }
     }
-}
 
-window.addEventListener('load', adjustSidebarHeight);
-window.addEventListener('resize', adjustSidebarHeight);
-
-function expandRows(button) {
-    const row = button.closest('.expandable-row');
-    const hiddenItems = row.querySelectorAll('.grid-item.hidden');
-    hiddenItems.forEach(item => item.classList.remove('hidden'));
-    button.classList.add('hidden');
-    row.querySelector('.collapse-button').classList.remove('hidden');
-    adjustSidebarHeight();
-    checkImagesInView(); // Recheck images in view after expanding
-}
-
-function collapseRows(button) {
-    const row = button.closest('.expandable-row');
-    const gridItems = row.querySelectorAll('.grid-item');
-    for (let i = 2; i < gridItems.length; i++) {
-        gridItems[i].classList.add('hidden');
+    function expandRows(button) {
+        const row = button.closest(`.${expandableRowClass}`);
+        const hiddenItems = row.querySelectorAll(`.${gridItemClass}.${hiddenClass}`);
+        hiddenItems.forEach(item => item.classList.remove(hiddenClass));
+        button.classList.add(hiddenClass);
+        row.querySelector(`.${collapseButtonClass}`).classList.remove(hiddenClass);
+        adjustSidebarHeight();
+        checkImagesAndCanvasesInView(); // Recheck elements in view after expanding
     }
-    button.classList.add('hidden');
-    row.querySelector('.expand-button').classList.remove('hidden');
-    adjustSidebarHeight();
-    checkImagesInView(); // Recheck images in view after collapsing
-}
 
-document.querySelectorAll('.expand-button').forEach(button => {
-    button.addEventListener('click', () => expandRows(button));
-});
+    function collapseRows(button) {
+        const row = button.closest(`.${expandableRowClass}`);
+        const gridItems = row.querySelectorAll(`.${gridItemClass}`);
+        for (let i = 2; i < gridItems.length; i++) {
+            gridItems[i].classList.add(hiddenClass);
+        }
+        button.classList.add(hiddenClass);
+        row.querySelector(`.${expandButtonClass}`).classList.remove(hiddenClass);
+        adjustSidebarHeight();
+        checkImagesAndCanvasesInView(); // Recheck elements in view after collapsing
+    }
 
-document.querySelectorAll('.collapse-button').forEach(button => {
-    button.addEventListener('click', () => collapseRows(button));
+    function attachExpandCollapseHandlers() {
+        document.querySelectorAll(`.${expandButtonClass}`).forEach(button => {
+            button.addEventListener('click', () => expandRows(button));
+        });
+
+        document.querySelectorAll(`.${collapseButtonClass}`).forEach(button => {
+            button.addEventListener('click', () => collapseRows(button));
+        });
+    }
+
+    window.addEventListener('scroll', checkImagesAndCanvasesInView);
+    window.addEventListener('resize', checkImagesAndCanvasesInView);
+    window.addEventListener('load', () => {
+        adjustSidebarHeight();
+        checkImagesAndCanvasesInView();
+        attachExpandCollapseHandlers();
+    });
+
+    // Initial check when the DOM is fully loaded
+    checkImagesAndCanvasesInView();
 });

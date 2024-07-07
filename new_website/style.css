@@ -94,18 +94,20 @@ body {
 }
 
 /* Apply grayscale filter and adjust opacity to make the images more dull */
-img {
+/* Default state for images and canvases: greyed out */
+img,
+.cover-container canvas {
     filter: grayscale(100%);
     opacity: 0.2;
     transition: filter 0.5s ease, opacity 0.5s ease;
 }
 
-/* Class to apply color filter and full opacity */
-img.in-view {
+/* In-view state: remove greyed-out effect */
+img.in-view,
+.cover-container canvas.in-view {
     filter: grayscale(0%);
     opacity: 1;
 }
-
 
 .header {
     min-height: var(--header-height);
