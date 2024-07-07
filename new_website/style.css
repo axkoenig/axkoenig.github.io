@@ -268,7 +268,7 @@ button {
     background-color: blue;
     border-radius: 50%;
     filter: blur(5px);
-    animation: colorChange 5s infinite alternate;
+    animation: colorChange 3s infinite alternate;
 }
 
 @keyframes colorChange {
@@ -277,6 +277,6 @@ button {
     }
 
     to {
-        background-color: white;
+        background-color: rgba(0, 0, 255, 0.337);
     }
 }

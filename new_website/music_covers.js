@@ -17,14 +17,25 @@ function drawBlurryDots(container) {
     canvas.width = canvasSize;
     canvas.height = canvasSize;
 
+    canvas.style.backgroundColor = '#f5f5f5';
+
     const colors = [
-        `rgba(0, 0, 255, ${opacity})`, 
-        `rgba(255, 0, 0, ${opacity})`, 
-        `rgba(0, 255, 0, ${opacity})`, 
-        `rgba(255, 255, 0, ${opacity})`, 
-        `rgba(255, 192, 203, ${opacity})`, 
-        `rgba(238, 130, 238, ${opacity})`
+        `rgba(255, 255, 0, ${opacity})`,
+        `rgba(255, 192, 203, ${opacity})`,
+        `rgba(238, 130, 238, ${opacity})`,
+        // `rgba(0, 255, 0, ${opacity})`,
+        // `rgba(0, 0, 255, ${opacity})`,
+        `rgba(255, 0, 0, ${opacity})`,
     ];
+
+    function shuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    shuffle(colors);
 
     function generateRandomPosition(existingPositions, minDistanceFactor, canvasSize, dotRadius) {
         let bestPosition = null;
