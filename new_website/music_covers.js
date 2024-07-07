@@ -23,8 +23,8 @@ function drawBlurryDots(container) {
         `rgba(255, 255, 0, ${opacity})`,
         `rgba(255, 192, 203, ${opacity})`,
         `rgba(238, 130, 238, ${opacity})`,
-        // `rgba(0, 255, 0, ${opacity})`,
-        // `rgba(0, 0, 255, ${opacity})`,
+        `rgba(0, 255, 0, ${opacity})`,
+        `rgba(0, 0, 255, ${opacity})`,
         `rgba(255, 0, 0, ${opacity})`,
     ];
 

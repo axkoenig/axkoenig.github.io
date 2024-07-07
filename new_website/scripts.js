@@ -81,7 +81,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     window.addEventListener('scroll', checkImagesAndCanvasesInView);
-    window.addEventListener('resize', checkImagesAndCanvasesInView);
+    window.addEventListener('resize', () => {
+        adjustSidebarHeight();
+        checkImagesAndCanvasesInView();
+    });
     window.addEventListener('load', () => {
         adjustSidebarHeight();
         checkImagesAndCanvasesInView();
