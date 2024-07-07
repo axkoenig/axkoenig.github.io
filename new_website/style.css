@@ -8,6 +8,7 @@
     --default-padding: 10px;
     --color-link: gray;
     --color-primary: rgb(255, 255, 218);
+    --default-margin: 15px;
 }
 
 html,
@@ -168,8 +169,8 @@ button {
     outline: 1px solid gray;
     padding: var(--default-padding);
     color: var(--color-link);
-    margin-right: 15px;
-    margin-top: 15px;
+    margin-right: var(--default-margin);
+    margin-top: var(--default-margin);
     text-decoration: none;
     text-transform: capitalize;
     white-space: nowrap
@@ -188,6 +189,26 @@ button {
     color: var(--color-link);
     text-decoration: none;
 }
+
+/* audio */
+
+.cover-container {
+    position: relative;
+}
+
+.dot-text {
+    position: absolute;
+    font-family: Arial, sans-serif;
+    color: black;
+    pointer-events: none;
+    text-align: center;
+    transform: translate(-50%, -50%);
+}
+
+.soundcloud-container {
+    margin-bottom: 15px;
+}
+
 
 /* Media query for mobile devices */
 @media (max-width: 768px) {
