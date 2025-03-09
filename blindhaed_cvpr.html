@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BLINDHÆD</title>
+    <style>
+        :root {
+            --row-min-height: 150px;
+            --default-padding: 10px;
+            --color-link: gray;
+            --color-primary: rgb(255, 255, 218);
+            --default-margin: 15px;
+            --border-color: #000;
+        }
+
+        html,
+        body {
+            overscroll-behavior: none;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.5;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            filter: none;
+            opacity: 1;
+        }
+
+        img.in-view {
+            filter: none;
+            opacity: 1;
+        }
+
+        .content .row {
+            display: flex;
+            flex-direction: column;
+            gap: 50px;
+            border-bottom: none;
+            padding: 50px 20px;
+            min-height: var(--row-min-height);
+        }
+
+        .content .row .image-container,
+        .content .row .video-container,
+        .content .row .inline-vimeo-container {
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .content .row span {
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .content .row span p {
+            margin-bottom: 1.5em;
+        }
+
+        .content .row span br {
+            display: block;
+            content: "";
+            margin-top: 1.5em;
+        }
+
+        .about-div {
+            margin-bottom: 30px;
+        }
+
+        .content .row div {
+            flex: 1;
+            word-wrap: break-word;
+        }
+
+        .link:hover {
+            background-color: var(--color-primary);
+        }
+
+        .link {
+            color: var(--color-link);
+            text-decoration: none;
+        }
+
+        /* Animation for images */
+        .image-container {
+            margin-bottom: 30px;
+        }
+
+        .image-container img:hover {
+            filter: none;
+            opacity: 1;
+        }
+
+        /* Paper resources styling */
+        .paper-resources {
+            display: flex;
+            flex-wrap: wrap;
+            border: none;
+        }
+
+        .resource-link {
+            outline: 1px solid gray;
+            padding: var(--default-padding);
+            color: var(--color-link);
+            margin-right: var(--default-margin);
+            margin-top: var(--default-margin);
+            text-decoration: none;
+            text-transform: capitalize;
+            white-space: nowrap;
+            border: none;
+        }
+
+        .resource-link:hover {
+            background-color: var(--color-primary);
+        }
+
+        /* Vimeo container styling */
+        .vimeo-container {
+            position: relative;
+            width: 100%;
+            max-width: 450px;
+            margin: 0 auto 30px auto;
+        }
+
+        /* Inline Vimeo styling for content sections */
+        .inline-vimeo-container {
+            position: relative;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .vimeo-container .vimeo-responsive,
+        .inline-vimeo-container .vimeo-responsive {
+            position: relative;
+            padding-bottom: 177.78%;
+            /* 16:9 would be 56.25%, but for 9:16 we use 177.78% (9/16 * 100) */
+            height: 0;
+            overflow: hidden;
+        }
+
+        /* Horizontal video responsive container */
+        .inline-vimeo-container .vimeo-responsive-horizontal {
+            position: relative;
+            padding-bottom: 56.25%;
+            /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+        }
+
+        .vimeo-container iframe,
+        .inline-vimeo-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* Local video styling */
+        .video-container {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .video-container video {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .title-section {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .title-section h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        /* Collaborators section styling */
+        .collaborators {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .collaborators-title {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .collaborators-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .collaborators-links a {
+            color: var(--color-link);
+            text-decoration: none;
+            padding: 5px 10px;
+        }
+
+        .collaborators-links a:hover {
+            background-color: var(--color-primary);
+        }
+
+        /* Caption styling */
+        .caption {
+            text-align: right;
+            color: #777;
+            font-size: 0.85rem;
+            margin-top: 8px;
+        }
+
+        /* Media query for mobile devices */
+        @media (max-width: 768px) {
+            .content .row {
+                padding: 30px 15px;
+                gap: 40px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="title-section">
+            <h1>BLINDHÆD</h1>
+        </div>
+
+        <div class="collaborators">
+            <div class="collaborators-links">
+                <a class="resource-link" href="https://www.justinurbach.com/mediaart" target="_blank">Justin Urbach</a>
+                <a class="resource-link" href="https://axkoenig.github.io/html/about.html" target="_blank">Alexander
+                    Koenig</a>
+                <a class="resource-link" href="https://friedhelmhamann.github.io/" target="_blank">Friedhelm Hamann</a>
+                <a class="resource-link" href="https://soundcloud.com/aquaveen" target="_blank">William East</a>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="row" id="section1">
+                <div class="image-container">
+                    <img src="images/blindhead/_DSC1731.jpg" alt="BLINDHÆD Image 1">
+                    <div class="caption">Exhibition Room 1, Photo: Wolfgang Günzel</div>
+                </div>
+                <span>
+                    BLINDHÆD is the first multi-media artwork featuring event cameras. Event-based vision is a novel
+                    computer vision technique in which the imaging sensor only responds to local changes in brightness.
+                    Event cameras only react to movement in their visual field. Thereby, they produce radically
+                    different, otherworldly imagery that offers a novel artistic interpretation of vision itself.
+                    
+                </span>
+
+                <div class="image-container">
+                    <img src="images/blindhead/_DSC1664.jpg" alt="BLINDHÆD Image 2">
+                    <div class="caption">Exhibition Room 2, Photo: Wolfgang Günzel</div>
+                </div>
+                <span>
+
+                    BLINDHÆD is the first institutional solo exhibition of Justin Urbach, which is currently on display
+                    at the <a href="https://galerie-sindelfingen.de/?lang=en" class="link" target="_blank">Galerie Stadt
+                        Sindelfingen</a>, Germany, until May 25, 2025. Historically, human sight has been
+                    subject to optimization - from glasses to microscopes and telescopes. BLINDHÆD explores this ongoing
+                    transformation of seeing in a world increasingly shaped by technology and body enhancement.
+
+                    <br><br>
+                    The first exhibition room presents an artistic rendering of laser eye surgery, while the second room
+                    symbolizes the post-enhancement sense of seeing. Event-based vision serves as a metaphor for this
+                    transformation: abstract forms emerge from a sea of pixels on a large 2 * 1,2-meter monitor wall,
+                    representing a human navigating a new perceptual reality. The human interplay with a robotic arm
+                    further illustrates the merging of human and machine, depicting a haunting yet emotional symbiosis.
+                    The artwork paints an outlook into the continuation of the constant trend of technological
+                    enhancement of our senses. Elements in the exhibition, such as the engraved laser etchings on the
+                    surface of the monitors, allude to the irreversibility of such enhancements, further reinforcing our
+                    technological dependency.
+                </span>
+                <div class="video-container">
+                    <video controls muted playsinline>
+                        <source src="images/blindhead/Teaser01.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="caption">Teaser Footage "through the cracks" 3D rendering, stereo sound.</div>
+                </div>
+                <div class="inline-vimeo-container">
+                    <div class="vimeo-responsive-horizontal">
+                        <iframe src="https://player.vimeo.com/video/1063290510?h=f241d9baf1&title=0&byline=0&portrait=0"
+                            frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="caption">BLINDHÆD event camera footage, 2023</div>
+                </div>
+            </div>
+            <div class="row" id="section2">
+                <span>
+                    BLINDHÆD is an inter-disciplinary collaboration between artists and researchers. The media artist
+                    Justin Urbach (*1995, Academy of Fine Arts Munich) teams up with scientists from TU Berlin's Robotic
+                    Interactive Perception group (PhD Student Friedhelm Hamann and Prof. Guillermo Gallego) and the
+                    Robotics and Biology Lab (PhD Student Alexander Koenig and Prof. Oliver Brock). The Berlin-based duo
+                    Aqua Veen (William East and Alexander Koenig) creates an immersive soundscape for the event-based
+                    video installation: computer vision algorithms extract shapes from the event video stream and
+                    control synthesizers to create an immersive and reactive sonic dimension of the futuristic visual
+                    signals.
+                    <br><br>
+                    In BLINDHÆD, vision is no longer static or purely human. It is optimized, expanded, and intertwined
+                    with technology. The exhibition invites reflection on the limits of perception and the speculative
+                    future of seeing. By bringing BLINDHÆD to CVPR 2025, we continue this dialogue, questioning the
+                    implications of a world where machines not only assist but redefine how we perceive. Our
+                    collaborators Friedhelm and Guillermo are hosting the Workshop on Event-Based Vision at CVPR once
+                    more this year. The workshop will be a fabulous scientific counterpart to the display of BLINDHÆD.
+                </span>
+            </div>
+
+            <div class="vimeo-container" style="max-width: 800px;">
+                <div class="vimeo-responsive-horizontal">
+                    <iframe src="https://player.vimeo.com/video/1063290510?h=f241d9baf1&title=0&byline=0&portrait=0"
+                        frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="caption">Film excerpt from BLINDHÆD, 2023</div>
+            </div>
+            <div class="row" id="section3">
+                <div class="image-container">
+                    <img src="images/blindhead/_DSC7864.jpg" alt="BLINDHÆD Image 3">
+                    <div class="caption">Untitled 03, analog photography, 2023</div>
+                </div>
+                <span>
+                    <h2>Photography Exhibition</h2>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt leo a velit maximus,
+                    sed efficitur eros ultrices. Suspendisse venenatis lorem sit amet elit convallis varius.
+                    Sed sed arcu id tellus hendrerit placerat nec quis nisi. Mauris vitae arcu fringilla,
+                    consequat erat eget, tempor nisi.
+                    <br><br>
+                    Cras volutpat diam purus, id cursus dui aliquam eu. Suspendisse tempor magna sed commodo
+                    accumsan. Phasellus non sodales odio. Donec ultrices augue lectus, in sagittis urna consequat
+                    vel. Nulla finibus velit in leo sodales, sed efficitur eros pulvinar. Nulla facilisi.
+                    <br><br>
+                    Praesent sit amet mi eget mauris lobortis commodo. Ut in nisi sed ligula molestie ultricies.
+                    Vivamus efficitur, mauris vitae commodo imperdiet, mauris leo egestas risus, quis interdum
+                    sapien nulla vitae lectus.
+                </span>
+            </div>
+            <div class="row" id="contact">
+                <div class="about-div" style="max-width: 800px; margin-left: auto; margin-right: auto;">
+                    <h2>Contact</h2>
+                    <p>For inquiries about BLINDHÆD, please contact us through the following channels:</p>
+                    <div class="paper-resources">
+                        <a class="resource-link" href="mailto:info@blindhaed.com" target="blank">E-Mail</a>
+                        <a class="resource-link" href="#" target="blank">Instagram</a>
+                        <a class="resource-link" href="#" target="blank">Twitter</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
