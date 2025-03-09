@@ -116,6 +116,56 @@
             opacity: 1;
         }
 
+        /* Video container styling */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+            margin-top: 30px;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Vertical video styling */
+        .vertical-video-container {
+            position: relative;
+            padding-bottom: 177.78%;
+            /* 9:16 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            max-width: 50%;
+            margin: 30px auto;
+        }
+
+        .vertical-video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .vertical-video-caption {
+            text-align: center;
+            color: #777;
+            font-size: 0.85rem;
+            margin-top: 8px;
+            max-width: 50%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
         /* Paper resources styling */
         .paper-resources {
             display: flex;
@@ -204,7 +254,7 @@
 
         <div class="collaborators">
             <div class="collaborators-links">
-                <a class="resource-link" href="https://www.justinurbach.com/mediaart" target="_blank">Justin Urbach</a>
+                <a class="resource-link" href="https://www.justinurbach.com/about" target="_blank">Justin Urbach</a>
                 <a class="resource-link" href="https://axkoenig.github.io/html/about.html" target="_blank">Alexander
                     Koenig</a>
                 <a class="resource-link" href="https://friedhelmhamann.github.io/" target="_blank">Friedhelm Hamann</a>
@@ -248,60 +298,81 @@
                     enhancement of our senses. Elements in the exhibition, such as the engraved laser etchings on the
                     surface of the monitors, allude to the irreversibility of such enhancements, further reinforcing our
                     technological dependency.
+
+                    <div class="image-container">
+                        <div class="video-container">
+                            <iframe
+                                src="https://player.vimeo.com/video/1024359775?h=e6c77ada69&title=0&byline=0&portrait=0"
+                                frameborder="0" allow="autoplay; fullscreen; picture-in-picture"
+                                allowfullscreen></iframe>
+                        </div>
+                        <div class="caption">Video Projection "through the cracks" in Room 1</div>
+                    </div>
                 </span>
             </div>
             <div class="row" id="section2">
                 <span>
                     BLINDHÆD is an inter-disciplinary collaboration between artists and researchers. The media artist
-                    Justin Urbach (*1995, Academy of Fine Arts Munich) teams up with scientists from TU Berlin's Robotic
-                    Interactive Perception group (PhD Student Friedhelm Hamann and Prof. Guillermo Gallego) and the
-                    Robotics and Biology Lab (PhD Student Alexander Koenig and Prof. Oliver Brock). The Berlin-based duo
-                    Aqua Veen (William East and Alexander Koenig) creates an immersive soundscape for the event-based
+                    <a href="https://www.justinurbach.com/about" class="link" target="_blank">Justin Urbach</a>
+                    (*1995, Academy of Fine Arts Munich) teams up with scientists from TU Berlin's Robotic
+                    Interactive Perception group (PhD Student <a href="https://friedhelmhamann.github.io/" class="link"
+                        target="_blank">Friedhelm Hamann</a> and <a
+                        href="https://sites.google.com/view/guillermogallego" class="link" target="_blank">Prof.
+                        Guillermo Gallego</a>) and the
+                    Robotics and Biology Lab (PhD Student <a href="https://axkoenig.github.io/html/about.html"
+                        class="link" target="_blank">Alexander Koenig</a> and <a
+                        href="https://www.tu.berlin/robotics/ueber-rbo/prof-dr-oliver-brock" class="link"
+                        target="_blank">Prof. Oliver Brock</a>). The Berlin-based duo
+                    Aqua Veen (<a href="https://soundcloud.com/aquaveen" class="link" target="_blank">William East</a>
+                    and <a href="https://axkoenig.github.io/html/about.html" class="link" target="_blank">Alexander
+                        Koenig</a>) creates an immersive soundscape for the event-based
                     video installation: computer vision algorithms extract shapes from the event video stream and
                     control synthesizers to create an immersive and reactive sonic dimension of the futuristic visual
                     signals.
-                    <br><br>
+                </span>
+
+                <div class="image-container">
+                    <div class="video-container">
+                        <iframe src="https://player.vimeo.com/video/1063290510?h=f241d9baf1&title=0&byline=0&portrait=0"
+                            frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="caption">Video Projection "through the cracks" in Room 1</div>
+                </div>
+            </div>
+            <div class="row" id="section3">
+                <span>
                     In BLINDHÆD, vision is no longer static or purely human. It is optimized, expanded, and intertwined
                     with technology. The exhibition invites reflection on the limits of perception and the speculative
                     future of seeing. By bringing BLINDHÆD to CVPR 2025, we continue this dialogue, questioning the
                     implications of a world where machines not only assist but redefine how we perceive. Our
-                    collaborators Friedhelm and Guillermo are hosting the Workshop on Event-Based Vision at CVPR once
+                    collaborators Friedhelm and Guillermo are hosting the <a
+                        href="https://tub-rip.github.io/eventvision2025/" class="link" target="_blank">Workshop on
+                        Event-Based Vision</a> at CVPR once
                     more this year. The workshop will be a fabulous scientific counterpart to the display of BLINDHÆD.
                 </span>
-            </div>
-            <div class="row" id="section3">
                 <div class="image-container">
                     <img src="images/blindhead/_DSC7864.jpg" alt="BLINDHÆD Image 3">
-                    <div class="caption">Untitled 03, analog photography, 2023</div>
+                    <div class="caption">"BRAIN ROT II", Oxide Crude Steel Laser Punching, 2024</div>
                 </div>
-                <span>
-                    <h2>Photography Exhibition</h2>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt leo a velit maximus,
-                    sed efficitur eros ultrices. Suspendisse venenatis lorem sit amet elit convallis varius.
-                    Sed sed arcu id tellus hendrerit placerat nec quis nisi. Mauris vitae arcu fringilla,
-                    consequat erat eget, tempor nisi.
-                    <br><br>
-                    Cras volutpat diam purus, id cursus dui aliquam eu. Suspendisse tempor magna sed commodo
-                    accumsan. Phasellus non sodales odio. Donec ultrices augue lectus, in sagittis urna consequat
-                    vel. Nulla finibus velit in leo sodales, sed efficitur eros pulvinar. Nulla facilisi.
-                    <br><br>
-                    Praesent sit amet mi eget mauris lobortis commodo. Ut in nisi sed ligula molestie ultricies.
-                    Vivamus efficitur, mauris vitae commodo imperdiet, mauris leo egestas risus, quis interdum
-                    sapien nulla vitae lectus.
-                </span>
+
             </div>
             <div class="row" id="contact">
-                <div class="about-div" style="max-width: 800px; margin-left: auto; margin-right: auto;">
-                    <h2>Contact</h2>
-                    <p>For inquiries about BLINDHÆD, please contact us through the following channels:</p>
-                    <div class="paper-resources">
-                        <a class="resource-link" href="mailto:info@blindhaed.com" target="blank">E-Mail</a>
-                        <a class="resource-link" href="#" target="blank">Instagram</a>
-                        <a class="resource-link" href="#" target="blank">Twitter</a>
-                    </div>
-                </div>
+                <span>
+                    For inquiries about BLINDHÆD, please contact us via E-Mail at <a href="mailto:awckoenig@gmail.com"
+                        class="link" target="_blank">awckoenig@gmail.com</a>.
+                        <div class="paper-resources">
+                            <a class="resource-link" href="mailto:awckoenig@gmail.com" target="blank">E-Mail</a>
+                            <a class="resource-link"
+                                href="https://www.maxgoelitz.com/en/news/110-exhibition-sindelfingen-de-die-erste-institutionelle-einzelausstellung-von-justin-urbach-eroffnet/  "
+                                target="blank">Press Release Max Goelitz</a>
+                            <a class="resource-link"
+                                href="https://www.maxgoelitz.com/en/artists/66-justin-urbach/"
+                                target="blank">Artist Profile at Max Goelitz</a>
+                        </div>
+                </span>
             </div>
         </div>
+    </div>
     </div>
 </body>
 
