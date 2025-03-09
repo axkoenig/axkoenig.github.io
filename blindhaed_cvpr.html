@@ -108,7 +108,7 @@
 
         /* Animation for images */
         .image-container {
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
         .image-container img:hover {
@@ -118,22 +118,52 @@
 
         /* Video container styling */
         .video-container {
+            max-width: 100%;
+            margin-top: 30px;
+        }
+
+        .video-container video {
+            width: 100%;
+            display: block;
+        }
+
+        /* Larger video container styling */
+        .video-container-large {
             position: relative;
             padding-bottom: 56.25%;
             /* 16:9 aspect ratio */
             height: 0;
             overflow: hidden;
-            max-width: 100%;
-            margin-top: 30px;
+            max-width: 80%;
+            margin: 30px auto;
         }
 
-        .video-container iframe {
+        .video-container-large iframe {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             border: none;
+        }
+
+        /* Side-by-side video container */
+        .side-by-side-video-container {
+            display: flex;
+            justify-content: space-between;
+            max-width: 100%;
+            margin: 30px auto;
+            gap: 10px;
+        }
+
+        .video-side {
+            flex: 0 0 calc(50% - 5px);
+            background-color: #000;
+        }
+
+        .video-side video {
+            width: 100%;
+            display: block;
         }
 
         /* Vertical video styling */
@@ -242,6 +272,23 @@
                 padding: 30px 15px;
                 gap: 40px;
             }
+
+            .side-by-side-video-container {
+                flex-direction: column;
+                gap: 30px;
+                max-width: 100%;
+            }
+
+            .video-side {
+                flex: 0 0 auto;
+                width: 100%;
+                margin: 0 0 20px 0;
+                max-width: 100%;
+            }
+
+            .video-side:last-child {
+                margin-bottom: 0;
+            }
         }
     </style>
 </head>
@@ -301,16 +348,15 @@
 
                     <div class="image-container">
                         <div class="video-container">
-                            <iframe
-                                src="https://player.vimeo.com/video/1024359775?h=e6c77ada69&title=0&byline=0&portrait=0"
-                                frameborder="0" allow="autoplay; fullscreen; picture-in-picture"
-                                allowfullscreen></iframe>
+                            <video controls>
+                                <source src="images/blindhead/Teaser01.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
                         </div>
                         <div class="caption">Video Projection "through the cracks" in Room 1</div>
                     </div>
                 </span>
-            </div>
-            <div class="row" id="section2">
+
                 <span>
                     BLINDHÆD is an inter-disciplinary collaboration between artists and researchers. The media artist
                     <a href="https://www.justinurbach.com/about" class="link" target="_blank">Justin Urbach</a>
@@ -332,14 +378,22 @@
                 </span>
 
                 <div class="image-container">
-                    <div class="video-container">
-                        <iframe src="https://player.vimeo.com/video/1063290510?h=f241d9baf1&title=0&byline=0&portrait=0"
-                            frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                    <div class="side-by-side-video-container">
+                        <div class="video-side">
+                            <video controls>
+                                <source src="images/blindhead/Teaser02.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                        <div class="video-side">
+                            <video controls>
+                                <source src="images/blindhead/Teaser07_short.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
                     </div>
-                    <div class="caption">Video Projection "through the cracks" in Room 1</div>
+                    <div class="caption">Exhibition Room 2: Event-based vision installation with the robotic arm</div>
                 </div>
-            </div>
-            <div class="row" id="section3">
                 <span>
                     In BLINDHÆD, vision is no longer static or purely human. It is optimized, expanded, and intertwined
                     with technology. The exhibition invites reflection on the limits of perception and the speculative
@@ -355,20 +409,17 @@
                     <div class="caption">"BRAIN ROT II", Oxide Crude Steel Laser Punching, 2024</div>
                 </div>
 
-            </div>
-            <div class="row" id="contact">
                 <span>
                     For inquiries about BLINDHÆD, please contact us via E-Mail at <a href="mailto:awckoenig@gmail.com"
                         class="link" target="_blank">awckoenig@gmail.com</a>.
-                        <div class="paper-resources">
-                            <a class="resource-link" href="mailto:awckoenig@gmail.com" target="blank">E-Mail</a>
-                            <a class="resource-link"
-                                href="https://www.maxgoelitz.com/en/news/110-exhibition-sindelfingen-de-die-erste-institutionelle-einzelausstellung-von-justin-urbach-eroffnet/  "
-                                target="blank">Press Release Max Goelitz</a>
-                            <a class="resource-link"
-                                href="https://www.maxgoelitz.com/en/artists/66-justin-urbach/"
-                                target="blank">Artist Profile at Max Goelitz</a>
-                        </div>
+                    <div class="paper-resources">
+                        <a class="resource-link" href="mailto:awckoenig@gmail.com" target="blank">E-Mail</a>
+                        <a class="resource-link"
+                            href="https://www.maxgoelitz.com/en/news/110-exhibition-sindelfingen-de-die-erste-institutionelle-einzelausstellung-von-justin-urbach-eroffnet/  "
+                            target="blank">Press Release Max Goelitz</a>
+                        <a class="resource-link" href="https://www.maxgoelitz.com/en/artists/66-justin-urbach/"
+                            target="blank">Artist Profile at Max Goelitz</a>
+                    </div>
                 </span>
             </div>
         </div>
