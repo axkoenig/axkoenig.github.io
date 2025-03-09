@@ -44,6 +44,7 @@
 
         img {
             max-width: 100%;
+            width: 100%;
             height: auto;
             filter: none;
             opacity: 1;
@@ -63,18 +64,18 @@
             min-height: var(--row-min-height);
         }
 
-        .content .row .image-container,
-        .content .row .video-container,
-        .content .row .inline-vimeo-container {
+        .content .row .image-container {
             max-width: 800px;
             margin-left: auto;
             margin-right: auto;
+            width: 100%;
         }
 
         .content .row span {
             max-width: 800px;
             margin-left: auto;
             margin-right: auto;
+            width: 100%;
         }
 
         .content .row span p {
@@ -138,61 +139,6 @@
             background-color: var(--color-primary);
         }
 
-        /* Vimeo container styling */
-        .vimeo-container {
-            position: relative;
-            width: 100%;
-            max-width: 450px;
-            margin: 0 auto 30px auto;
-        }
-
-        /* Inline Vimeo styling for content sections */
-        .inline-vimeo-container {
-            position: relative;
-            width: 100%;
-            margin-bottom: 20px;
-        }
-
-        .vimeo-container .vimeo-responsive,
-        .inline-vimeo-container .vimeo-responsive {
-            position: relative;
-            padding-bottom: 177.78%;
-            /* 16:9 would be 56.25%, but for 9:16 we use 177.78% (9/16 * 100) */
-            height: 0;
-            overflow: hidden;
-        }
-
-        /* Horizontal video responsive container */
-        .inline-vimeo-container .vimeo-responsive-horizontal {
-            position: relative;
-            padding-bottom: 56.25%;
-            /* 16:9 aspect ratio */
-            height: 0;
-            overflow: hidden;
-        }
-
-        .vimeo-container iframe,
-        .inline-vimeo-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
-        }
-
-        /* Local video styling */
-        .video-container {
-            width: 100%;
-            margin-bottom: 20px;
-        }
-
-        .video-container video {
-            width: 100%;
-            max-width: 100%;
-            height: auto;
-            display: block;
-        }
 
         .title-section {
             text-align: center;
@@ -277,7 +223,7 @@
                     computer vision technique in which the imaging sensor only responds to local changes in brightness.
                     Event cameras only react to movement in their visual field. Thereby, they produce radically
                     different, otherworldly imagery that offers a novel artistic interpretation of vision itself.
-                    
+
                 </span>
 
                 <div class="image-container">
@@ -303,20 +249,6 @@
                     surface of the monitors, allude to the irreversibility of such enhancements, further reinforcing our
                     technological dependency.
                 </span>
-                <div class="video-container">
-                    <video controls muted playsinline>
-                        <source src="images/blindhead/Teaser01.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                    <div class="caption">Teaser Footage "through the cracks" 3D rendering, stereo sound.</div>
-                </div>
-                <div class="inline-vimeo-container">
-                    <div class="vimeo-responsive-horizontal">
-                        <iframe src="https://player.vimeo.com/video/1063290510?h=f241d9baf1&title=0&byline=0&portrait=0"
-                            frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-                    </div>
-                    <div class="caption">BLINDHÆD event camera footage, 2023</div>
-                </div>
             </div>
             <div class="row" id="section2">
                 <span>
@@ -336,14 +268,6 @@
                     collaborators Friedhelm and Guillermo are hosting the Workshop on Event-Based Vision at CVPR once
                     more this year. The workshop will be a fabulous scientific counterpart to the display of BLINDHÆD.
                 </span>
-            </div>
-
-            <div class="vimeo-container" style="max-width: 800px;">
-                <div class="vimeo-responsive-horizontal">
-                    <iframe src="https://player.vimeo.com/video/1063290510?h=f241d9baf1&title=0&byline=0&portrait=0"
-                        frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-                </div>
-                <div class="caption">Film excerpt from BLINDHÆD, 2023</div>
             </div>
             <div class="row" id="section3">
                 <div class="image-container">
