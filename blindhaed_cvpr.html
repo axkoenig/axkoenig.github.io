@@ -134,7 +134,7 @@
             /* 16:9 aspect ratio */
             height: 0;
             overflow: hidden;
-            max-width: 80%;
+            max-width: 100%;
             margin: 30px auto;
         }
 
@@ -169,12 +169,18 @@
         /* Vertical video styling */
         .vertical-video-container {
             position: relative;
-            padding-bottom: 177.78%;
-            /* 9:16 aspect ratio */
-            height: 0;
-            overflow: hidden;
-            max-width: 50%;
+            width: 50%;
             margin: 30px auto;
+            background-color: transparent;
+            display: block;
+            overflow: hidden;
+        }
+
+        .vertical-video-container:before {
+            content: "";
+            display: block;
+            padding-top: 177.78%;
+            /* Maintain 9:16 aspect ratio */
         }
 
         .vertical-video-container iframe {
@@ -187,11 +193,11 @@
         }
 
         .vertical-video-caption {
-            text-align: center;
+            text-align: right;
             color: #777;
             font-size: 0.85rem;
             margin-top: 8px;
-            max-width: 50%;
+            width: 50%;
             margin-left: auto;
             margin-right: auto;
         }
@@ -289,6 +295,14 @@
             .video-side:last-child {
                 margin-bottom: 0;
             }
+
+            .vertical-video-container {
+                width: 100%;
+            }
+
+            .vertical-video-caption {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -312,7 +326,7 @@
         <div class="content">
             <div class="row" id="section1">
                 <div class="image-container">
-                    <img src="images/blindhead/_DSC1731.jpg" alt="BLINDHÆD Image 1">
+                    <img src="images/blindhead/compressed/_DSC1731.jpg" alt="BLINDHÆD Image 1">
                     <div class="caption">Exhibition Room 1, Photo: Wolfgang Günzel</div>
                 </div>
                 <span>
@@ -324,7 +338,7 @@
                 </span>
 
                 <div class="image-container">
-                    <img src="images/blindhead/_DSC1664.jpg" alt="BLINDHÆD Image 2">
+                    <img src="images/blindhead/compressed/_DSC1664.jpg" alt="BLINDHÆD Image 2">
                     <div class="caption">Exhibition Room 2, Photo: Wolfgang Günzel</div>
                 </div>
                 <span>
@@ -347,13 +361,13 @@
                     technological dependency.
 
                     <div class="image-container">
-                        <div class="video-container">
-                            <video controls>
-                                <source src="images/blindhead/Teaser01.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
+                        <div class="video-container-large">
+                            <iframe
+                                src="https://player.vimeo.com/video/1024359775?h=e6c77ada69&title=0&byline=0&portrait=0"
+                                frameborder="0" allow="autoplay; fullscreen; picture-in-picture"
+                                allowfullscreen></iframe>
                         </div>
-                        <div class="caption">Video Projection "through the cracks" in Room 1</div>
+                        <div class="caption">3D Rendering "through the cracks" in Room 1, 2024</div>
                     </div>
                 </span>
 
@@ -378,21 +392,12 @@
                 </span>
 
                 <div class="image-container">
-                    <div class="side-by-side-video-container">
-                        <div class="video-side">
-                            <video controls>
-                                <source src="images/blindhead/Teaser02.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                        </div>
-                        <div class="video-side">
-                            <video controls>
-                                <source src="images/blindhead/Teaser07_short.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                        </div>
+                    <div class="vertical-video-container">
+                        <iframe
+                            src="https://player.vimeo.com/video/1063290510?h=f241d9baf1"
+                            frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
                     </div>
-                    <div class="caption">Exhibition Room 2: Event-based vision installation with the robotic arm</div>
+                    <div class="vertical-video-caption">Event-Based Video "BLIND SPOT" in Room 2, 2025</div>
                 </div>
                 <span>
                     In BLINDHÆD, vision is no longer static or purely human. It is optimized, expanded, and intertwined
@@ -405,15 +410,14 @@
                     more this year. The workshop will be a fabulous scientific counterpart to the display of BLINDHÆD.
                 </span>
                 <div class="image-container">
-                    <img src="images/blindhead/_DSC7864.jpg" alt="BLINDHÆD Image 3">
-                    <div class="caption">"BRAIN ROT II", Oxide Crude Steel Laser Punching, 2024</div>
+                    <img src="images/blindhead/compressed/_DSC7864.jpg" alt="BLINDHÆD Image 3">
+                    <div class="caption">Oxide Crude Steel Laser Punching "BRAIN ROT II", 2024</div>
                 </div>
 
                 <span>
                     For inquiries about BLINDHÆD, please contact us via E-Mail at <a href="mailto:awckoenig@gmail.com"
                         class="link" target="_blank">awckoenig@gmail.com</a>.
                     <div class="paper-resources">
-                        <a class="resource-link" href="mailto:awckoenig@gmail.com" target="blank">E-Mail</a>
                         <a class="resource-link"
                             href="https://www.maxgoelitz.com/en/news/110-exhibition-sindelfingen-de-die-erste-institutionelle-einzelausstellung-von-justin-urbach-eroffnet/  "
                             target="blank">Press Release Max Goelitz</a>
