@@ -280,6 +280,56 @@
             margin-top: 8px;
         }
 
+        /* New Gallery Styles */
+        .image-gallery-section {
+            margin-bottom: 50px; /* Space between sections */
+            max-width: 800px; /* Max width for the gallery sections */
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .gallery-title {
+            text-align: center;
+            font-size: 1.8rem; /* Adjusted title size */
+            margin-bottom: 25px;
+        }
+
+        .main-image-container {
+            width: 100%;
+            margin-bottom: 15px; /* Space between main image and thumbnails */
+        }
+
+        .main-image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .thumbnail-gallery {
+            /* display: flex; */ /* Removed flex properties */
+            /* flex-wrap: wrap; */
+            /* gap: 10px; */ /* Will be replaced by column-gap and item margin */
+            /* justify-content: flex-start; */
+            /* align-items: flex-start; */
+            column-count: 3; /* Adjust number of columns as desired */
+            column-gap: 10px; /* Space between columns */
+        }
+
+        .thumbnail-item {
+            /* flex: 1 1 calc(33.333% - 10px); */ /* Removed flex property */
+            width: 100%; /* Item takes full width of its column */
+            margin-bottom: 10px; /* Space below each item */
+            break-inside: avoid-column; /* Try to prevent items from breaking across columns */
+            box-sizing: border-box;
+        }
+
+        .thumbnail-item img {
+            width: 100%;
+            height: auto; /* Ensure image scales and dictates item height */
+            /* object-fit: cover; /* REMOVED as we want natural aspect ratio */
+            display: block;
+        }
+
         /* Media query for mobile devices */
         @media (max-width: 768px) {
             .content .row {
@@ -333,9 +383,17 @@
 
         <div class="content">
             <div class="row" id="section1">
-                <div class="image-container">
-                    <img src="../images/blindhead/compressed/DSC1731.jpg" alt="BLINDHÆD Image 1">
-                    <div class="caption">Exhibition Room 1, Photo: Wolfgang Günzel</div>
+                <!-- Green Room Gallery -->
+                <div class="image-gallery-section">
+                    <h2 class="gallery-title">Green Room</h2>
+                    <div class="main-image-container">
+                        <img src="../images/blindhead/green/1.jpg" alt="Green Room Main Image">
+                    </div>
+                    <div class="thumbnail-gallery">
+                        <div class="thumbnail-item"><img src="../images/blindhead/green/2.jpg" alt="Green Room Image 2"></div>
+                        <div class="thumbnail-item"><img src="../images/blindhead/green/3.jpg" alt="Green Room Image 3"></div>
+                        <div class="thumbnail-item"><img src="../images/blindhead/green/4.jpg" alt="Green Room Image 4"></div>
+                    </div>
                 </div>
                 <span>
                     BLINDHÆD is the first multi-media artwork featuring event cameras. Event-based vision is a novel
@@ -345,9 +403,19 @@
 
                 </span>
 
-                <div class="image-container">
-                    <img src="../images/blindhead/compressed/DSC1664.jpg" alt="BLINDHÆD Image 2">
-                    <div class="caption">Exhibition Room 2, Photo: Wolfgang Günzel</div>
+                <!-- Red Room Gallery -->
+                <div class="image-gallery-section">
+                    <h2 class="gallery-title">Red Room</h2>
+                    <div class="main-image-container">
+                        <img src="../images/blindhead/red/1.jpg" alt="Red Room Main Image">
+                    </div>
+                    <div class="thumbnail-gallery">
+                        <div class="thumbnail-item"><img src="../images/blindhead/red/3.jpg" alt="Red Room Image 3"></div>
+                        <div class="thumbnail-item"><img src="../images/blindhead/red/2.jpg" alt="Red Room Image 2"></div>
+                        <div class="thumbnail-item"><img src="../images/blindhead/red/5.jpg" alt="Red Room Image 5"></div>
+                        <div class="thumbnail-item"><img src="../images/blindhead/red/4.jpg" alt="Red Room Image 4"></div>
+                        <div class="thumbnail-item"><img src="../images/blindhead/red/6.jpg" alt="Red Room Image 6"></div>
+                    </div>
                 </div>
                 <span>
 
@@ -410,15 +478,7 @@
                 <span>
                     In BLINDHÆD, vision is no longer static or purely human. It is optimized, expanded, and intertwined
                     with technology. The exhibition invites reflection on the limits of perception and the speculative
-                    future of seeing. By bringing BLINDHÆD to CVPR 2025, we continue this dialogue in the scientific
-                    community, questioning the
-                    implications of a world where machines not only assist but redefine how we perceive.
-                    <br><br>
-                    Our
-                    collaborators Friedhelm and Guillermo are hosting the <a
-                        href="https://tub-rip.github.io/eventvision2025/" class="link" target="_blank">Workshop on
-                        Event-Based Vision</a> at CVPR once
-                    more this year. The workshop will be a fabulous scientific counterpart to the display of BLINDHÆD.
+                    future of seeing.
                 </span>
                 <div class="image-container">
                     <img src="../images/blindhead/compressed/DSC7864.jpg" alt="BLINDHÆD Image 3">
@@ -426,22 +486,13 @@
                 </div>
 
                 <span>
-
                     BLINDHÆD consists of two central video installations, the one showing the laser surgery and the
                     event-based video stream. The laser-etched screens are integral to the artwork and convey important
                     messages. However, we are certainly open to showing our two videos on regular monitors or, if
                     possible, on larger projections. Since both videos feature reactive sound, it would be great if we
                     could use two speaker systems or headphones. The exhibition also includes further installation
                     elements, such as a Cathode Ray Tube, lasers, and oxide crude steel laser punchings shown in the
-                    images. We propose not shipping those to simplify logistics, but we are delighted to discuss this
-                    after the decision.
-                    <br><br>
-                    
-                    Friedhelm will attend CVPR since he as an accepted paper.
-                    <br><br>
-                    Looking forward to hearing from you! 
-                    <br><br>
-                    The BLINDHÆD team.
+                    images.
                     <br><br>
                     For inquiries about BLINDHÆD, please contact us via E-Mail at <a href="mailto:awckoenig@gmail.com"
                         class="link" target="_blank">awckoenig@gmail.com</a>.
@@ -454,9 +505,41 @@
                     </div>
                 </span>
             </div>
+
+            <!-- Analog Pictures Gallery -->
+            <div class="image-gallery-section">
+                <h2 class="gallery-title">Analog Pictures</h2>
+                <div class="main-image-container">
+                    <img src="../images/blindhead/analog/1.jpg" alt="Analog Main Image">
+                </div>
+                <div class="thumbnail-gallery">
+                    <div class="thumbnail-item"><img src="../images/blindhead/analog/2.jpg" alt="Analog Image 2"></div>
+                    <div class="thumbnail-item"><img src="../images/blindhead/analog/3.jpg" alt="Analog Image 3"></div>
+                    <div class="thumbnail-item"><img src="../images/blindhead/analog/4.jpg" alt="Analog Image 4"></div>
+                    <div class="thumbnail-item"><img src="../images/blindhead/analog/5.jpg" alt="Analog Image 5"></div>
+                </div>
+            </div>
+
+            <!-- Robot Photos Gallery -->
+            <div class="image-gallery-section">
+                <h2 class="gallery-title">Robot Photos</h2>
+                <div class="main-image-container">
+                    <img src="../images/blindhead/robot/IMG_3162.JPG" alt="Robot Main Image">
+                </div>
+                <div class="thumbnail-gallery">
+                    <div class="thumbnail-item"><img src="../images/blindhead/robot/IMG_3153.JPG" alt="Robot Image 2"></div>
+                </div>
+            </div>
+
         </div>
     </div>
-    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Placeholder for any future simple JS interactions if needed.
+            // For now, this tiled gallery is CSS-driven.
+        });
+    </script>
 </body>
 
 </html>
