@@ -263,6 +263,12 @@ button {
     height: auto;
 }
 
+/* Style for the profile picture */
+.content .row .profile-pic {
+    max-width: 300px;
+    height: auto; /* Maintain aspect ratio */
+}
+
 /* Dot animation styles */
 .dot {
     width: 22px;
