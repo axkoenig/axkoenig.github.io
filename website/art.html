@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-58CNLFMPV8"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-58CNLFMPV8');
+    </script>
+    <meta name="google-site-verification" content="3fNhSnRURomrLL4r_g32STwN6O09JBvGvwAXsbL57I4" />
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Art projects by Alexander Koenig - Photography, Visual Art, and Creative Works">
+    <meta name="keywords" content="Alexander Koenig, art, photography, visual art, creative projects">
+    <meta name="author" content="Alexander Koenig">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Art - Alexander Koenig">
+    <meta property="og:description" content="Art projects by Alexander Koenig">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary">
+    <meta property="twitter:title" content="Art - Alexander Koenig">
+    <meta property="twitter:description" content="Art projects by Alexander Koenig">
+    
+    <title>Art - Alexander Koenig</title>
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "Art Projects",
+        "description": "Art projects by Alexander Koenig"
+    }
+    </script>
+</head>
+<body>
+    <script type="text/javascript" src="js/scripts.js"></script>
+    <script type="text/javascript" src="js/markdown-loader.js"></script>
+    <div class="container">
+        <div class="sidebar">
+            <div class="row" id="home">
+                <a href="index.html" style="text-decoration: none; color: inherit;">
+                    <div class="dot"></div>
+                </a>
+            </div>
+            <div id="sidebar-years">
+                <!-- Years will be dynamically loaded here -->
+            </div>
+        </div>
+        <div class="vertical-line"></div>
+        <div class="main-content">
+            <div class="header">
+                <a href="art.html">ART</a>
+                <a href="research.html">RESEARCH</a>
+                <a href="about.html">ABOUT</a>
+            </div>
+            <div class="content">
+                <div id="projects-grid" class="projects-grid">
+                    <!-- Project tiles will be dynamically loaded here -->
+                </div>
+                <div id="project-detail" class="project-detail-view hidden">
+                    <!-- Project details will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Load art projects
+        (async function() {
+            window.projectBasePath = 'content/art';
+            
+            // List of project folders (in production, this could be fetched from server)
+            const projectList = ['project-1', 'project-2'];
+            window.currentProjects = await window.markdownLoader.loadProjects('content/art', projectList);
+            
+            // Sort by year (newest first)
+            window.currentProjects.sort((a, b) => (b.year || 0) - (a.year || 0));
+            
+            // Render projects
+            const projectsGrid = document.getElementById('projects-grid');
+            if (projectsGrid) {
+                if (window.currentProjects && window.currentProjects.length > 0) {
+                    projectsGrid.innerHTML = window.currentProjects.map(project => 
+                        window.markdownLoader.renderProjectTile(project, 'content/art')
+                    ).join('');
+                    
+                    // Setup project tiles after rendering
+                    setTimeout(() => {
+                        const projectTiles = document.querySelectorAll('.project-tile');
+                        projectTiles.forEach(tile => {
+                            tile.addEventListener('click', () => {
+                                const projectId = tile.dataset.projectId;
+                                const project = window.currentProjects.find(p => p.id === projectId);
+                                if (project) {
+                                    showProjectDetail(project);
+                                }
+                            });
+                        });
+                        // Update sidebar years
+                        if (typeof updateSidebarYears === 'function') {
+                            updateSidebarYears();
+                        }
+                    }, 100);
+                } else {
+                    projectsGrid.innerHTML = '<p style="padding: 40px; text-align: center;">No projects found. Check console for errors.</p>';
+                }
+            }
+        })();
+        
+        function showProjectDetail(project) {
+            const projectDetail = document.getElementById('project-detail');
+            const projectsGrid = document.getElementById('projects-grid');
+            
+            if (!projectDetail || !window.markdownLoader) return;
+            
+            const detailHTML = window.markdownLoader.renderProjectDetail(project, 'content/art');
+            projectDetail.innerHTML = detailHTML;
+            
+            if (projectsGrid) projectsGrid.classList.add('hidden');
+            projectDetail.classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>
+

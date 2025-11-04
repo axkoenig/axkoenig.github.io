@@ -1,0 +1,21 @@
+# Redirect old URLs to new website structure
+
+# Redirect old HTML pages to new website pages
+Redirect 301 /html/about.html /website/about.html
+Redirect 301 /html/research.html /website/research.html
+Redirect 301 /html/visual.html /website/art.html
+Redirect 301 /html/audio.html /website/art.html
+
+# Redirect old index to new website
+Redirect 301 /index.html /website/index.html
+
+# Redirect old visual subpages to art
+RedirectMatch 301 ^/html/visual/(.*)$ /website/art.html
+
+# Redirect old blindhead pages
+Redirect 301 /html/blindhead.html /website/art.html
+Redirect 301 /html/blindhaed_cvpr.html /website/art.html
+
+# Redirect old water page
+Redirect 301 /html/water.html /website/art.html
+

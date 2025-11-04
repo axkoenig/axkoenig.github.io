@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-58CNLFMPV8"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-58CNLFMPV8');
+    </script>
+    <meta name="google-site-verification" content="3fNhSnRURomrLL4r_g32STwN6O09JBvGvwAXsbL57I4" />
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="About Alexander Koenig - Artist and Researcher">
+    <meta name="keywords" content="Alexander Koenig, about, bio, artist, researcher, robotics, machine learning">
+    <meta name="author" content="Alexander Koenig">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="profile">
+    <meta property="og:title" content="About - Alexander Koenig">
+    <meta property="og:description" content="About Alexander Koenig - Artist and Researcher">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary">
+    <meta property="twitter:title" content="About - Alexander Koenig">
+    <meta property="twitter:description" content="About Alexander Koenig - Artist and Researcher">
+    
+    <title>About - Alexander Koenig</title>
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Alexander Koenig",
+        "url": "https://axkoenig.github.io",
+        "jobTitle": "Artist and Researcher"
+    }
+    </script>
+</head>
+<body>
+    <script type="text/javascript" src="js/scripts.js"></script>
+    <script type="text/javascript" src="js/markdown-loader.js"></script>
+    <div class="container">
+        <div class="sidebar">
+            <div class="row" id="home">
+                <a href="index.html" style="text-decoration: none; color: inherit;">
+                    <div class="dot"></div>
+                </a>
+            </div>
+        </div>
+        <div class="vertical-line"></div>
+        <div class="main-content">
+            <div class="header">
+                <a href="art.html">ART</a>
+                <a href="research.html">RESEARCH</a>
+                <a href="about.html">ABOUT</a>
+            </div>
+            <div class="content">
+                <div class="about-content" id="about-content">
+                    <!-- Content will be loaded from markdown -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Load about content from markdown
+        (async function() {
+            const parsed = await window.markdownLoader.loadMarkdownFile('content/about.md');
+            const aboutContent = document.getElementById('about-content');
+            
+            if (parsed && aboutContent) {
+                const html = window.markdownLoader.markdownToHTML(parsed.content);
+                aboutContent.innerHTML = html;
+                
+                // Recheck images in view after rendering
+                setTimeout(() => {
+                    if (typeof checkImagesAndCanvasesInView === 'function') {
+                        checkImagesAndCanvasesInView();
+                    }
+                }, 100);
+            }
+        })();
+    </script>
+</body>
+</html>
+

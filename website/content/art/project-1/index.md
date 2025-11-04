@@ -1,0 +1,22 @@
+---
+title: Architectural Photography Series
+date: 2024-01-15
+short_description: A photographic exploration of architectural facades, focusing on the interplay between light, shadow, and geometric forms.
+tags: [photography, architecture, visual]
+cover_image: https://via.placeholder.com/350x250/cccccc/000000?text=Architecture
+---
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. This series examines how buildings interact with their environment and how architectural elements create visual rhythm and texture.
+
+![Architecture Image](https://via.placeholder.com/800x600/cccccc/000000?text=Architecture+Image+1)
+
+The work captures the essence of urban architecture through careful composition and attention to detail, revealing the beauty in everyday built environments. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+![Architecture Image](https://via.placeholder.com/800x600/cccccc/000000?text=Architecture+Image+2)
+
+Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.
+
+## Resources
+- [Gallery](#)
+- [Exhibition](#)
+
