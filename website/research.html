@@ -29,6 +29,9 @@
     
     <title>Research - Alexander Koenig</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400&display=swap" rel="stylesheet">
     
     <!-- Structured Data -->
     <script type="application/ld+json">
@@ -43,29 +46,24 @@
 <body>
     <script type="text/javascript" src="js/scripts.js"></script>
     <script type="text/javascript" src="js/markdown-loader.js"></script>
+    <div class="home-dot">
+        <a href="index.html">
+            <div class="dot"></div>
+        </a>
+    </div>
     <div class="container">
-        <div class="sidebar">
-            <div class="row" id="home">
-                <a href="index.html" style="text-decoration: none; color: inherit;">
-                    <div class="dot"></div>
-                </a>
-            </div>
-            <div id="sidebar-years">
-                <!-- Years will be dynamically loaded here -->
-            </div>
-        </div>
-        <div class="vertical-line"></div>
         <div class="main-content">
             <div class="header">
-                <a href="art.html">ART</a>
-                <a href="research.html">RESEARCH</a>
-                <a href="about.html">ABOUT</a>
+                <a href="index.html">Home</a>
+                <a href="art.html">Art</a>
+                <a href="research.html">Research</a>
+                <a href="about.html">About</a>
             </div>
-            <div class="content">
+            <div class="content content-with-detail">
                 <div id="projects-grid" class="projects-grid">
                     <!-- Project tiles will be dynamically loaded here -->
                 </div>
-                <div id="project-detail" class="project-detail-view hidden">
+                <div id="project-detail" class="project-detail-view">
                     <!-- Project details will be loaded here -->
                 </div>
             </div>
@@ -88,8 +86,8 @@
             const projectsGrid = document.getElementById('projects-grid');
             if (projectsGrid) {
                 if (window.currentProjects && window.currentProjects.length > 0) {
-                    projectsGrid.innerHTML = window.currentProjects.map(project => 
-                        window.markdownLoader.renderProjectTile(project, 'content/research')
+                    projectsGrid.innerHTML = window.currentProjects.map((project, index) => 
+                        window.markdownLoader.renderProjectTile(project, 'content/research', index)
                     ).join('');
                     
                     // Setup project tiles after rendering
@@ -101,9 +99,23 @@
                                 const project = window.currentProjects.find(p => p.id === projectId);
                                 if (project) {
                                     showProjectDetail(project);
+                                    // Update URL hash
+                                    window.location.hash = projectId;
                                 }
                             });
                         });
+                        
+                        // Check for hash in URL and open corresponding project
+                        if (window.location.hash) {
+                            const projectId = window.location.hash.substring(1);
+                            const project = window.currentProjects.find(p => p.id === projectId);
+                            if (project) {
+                                setTimeout(() => {
+                                    showProjectDetail(project);
+                                }, 200);
+                            }
+                        }
+                        
                         // Update sidebar years
                         if (typeof updateSidebarYears === 'function') {
                             updateSidebarYears();
@@ -117,16 +129,33 @@
         
         function showProjectDetail(project) {
             const projectDetail = document.getElementById('project-detail');
-            const projectsGrid = document.getElementById('projects-grid');
+            const content = document.querySelector('.content');
             
             if (!projectDetail || !window.markdownLoader) return;
             
             const detailHTML = window.markdownLoader.renderProjectDetail(project, 'content/research');
             projectDetail.innerHTML = detailHTML;
             
-            if (projectsGrid) projectsGrid.classList.add('hidden');
-            projectDetail.classList.remove('hidden');
-            window.scrollTo(0, 0);
+            // Add active class to show panel
+            projectDetail.classList.add('active');
+            
+            // Add class to content to adjust layout
+            if (content) {
+                content.classList.add('has-detail');
+            }
+            
+            // Mark clicked tile as active
+            const projectTiles = document.querySelectorAll('.project-tile');
+            projectTiles.forEach(tile => {
+                if (tile.dataset.projectId === project.id) {
+                    tile.classList.add('active');
+                } else {
+                    tile.classList.remove('active');
+                }
+            });
+            
+            // Scroll panel to top
+            projectDetail.scrollTop = 0;
         }
     </script>
 </body>

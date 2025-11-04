@@ -7,6 +7,9 @@ cover_image: https://via.placeholder.com/350x250/cccccc/000000?text=Computer+Vis
 citations:
   - "Scholar, D., et al. (2023). Self-Supervised Learning for Semantic Segmentation. Conference on Computer Vision."
   - "Expert, E., & Researcher, F. (2023). Label-Efficient Visual Understanding. Journal of Machine Learning."
+news:
+  - "2023-12-10: Paper accepted at CVPR 2024"
+  - "2023-11-15: Code repository released"
 ---
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. This work focuses on understanding the inner workings of self-supervised methods for semantic segmentation, providing insights into how these approaches can be made more reliable for real-world applications.

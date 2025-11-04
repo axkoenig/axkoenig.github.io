@@ -29,6 +29,9 @@
     
     <title>About - Alexander Koenig</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400&display=swap" rel="stylesheet">
     
     <!-- Structured Data -->
     <script type="application/ld+json">
@@ -44,20 +47,18 @@
 <body>
     <script type="text/javascript" src="js/scripts.js"></script>
     <script type="text/javascript" src="js/markdown-loader.js"></script>
+    <div class="home-dot">
+        <a href="index.html">
+            <div class="dot"></div>
+        </a>
+    </div>
     <div class="container">
-        <div class="sidebar">
-            <div class="row" id="home">
-                <a href="index.html" style="text-decoration: none; color: inherit;">
-                    <div class="dot"></div>
-                </a>
-            </div>
-        </div>
-        <div class="vertical-line"></div>
         <div class="main-content">
             <div class="header">
-                <a href="art.html">ART</a>
-                <a href="research.html">RESEARCH</a>
-                <a href="about.html">ABOUT</a>
+                <a href="index.html">Home</a>
+                <a href="art.html">Art</a>
+                <a href="research.html">Research</a>
+                <a href="about.html">About</a>
             </div>
             <div class="content">
                 <div class="about-content" id="about-content">
@@ -68,22 +69,161 @@
     </div>
     
     <script>
-        // Load about content from markdown
+        // Load about content and collect news/citations from projects
         (async function() {
-            const parsed = await window.markdownLoader.loadMarkdownFile('content/about.md');
             const aboutContent = document.getElementById('about-content');
+            if (!aboutContent) return;
             
-            if (parsed && aboutContent) {
-                const html = window.markdownLoader.markdownToHTML(parsed.content);
-                aboutContent.innerHTML = html;
-                
-                // Recheck images in view after rendering
-                setTimeout(() => {
-                    if (typeof checkImagesAndCanvasesInView === 'function') {
-                        checkImagesAndCanvasesInView();
-                    }
-                }, 100);
+            // Load about page markdown
+            const parsed = await window.markdownLoader.loadMarkdownFile('content/about.md');
+            let aboutHTML = '';
+            
+            if (parsed) {
+                aboutHTML = window.markdownLoader.markdownToHTML(parsed.content);
             }
+            
+            // Load all projects to collect news and citations
+            // Note: In production, you'd want to dynamically discover all projects
+            const artProjects = await window.markdownLoader.loadProjects('content/art', ['project-1', 'project-2']);
+            const researchProjects = await window.markdownLoader.loadProjects('content/research', ['project-1', 'project-2']);
+            
+            // Collect all news items from all projects
+            const allNews = [];
+            artProjects.forEach(project => {
+                console.log('Art project:', project.id, 'news:', project.news);
+                if (project.news && Array.isArray(project.news)) {
+                    project.news.forEach(newsItem => {
+                        let news = newsItem;
+                        if (typeof newsItem === 'string') {
+                            // Format: "2024-01-15: News title"
+                            const colonIndex = newsItem.indexOf(':');
+                            if (colonIndex > 0) {
+                                news = {
+                                    date: newsItem.substring(0, colonIndex).trim(),
+                                    title: newsItem.substring(colonIndex + 1).trim()
+                                };
+                            }
+                        }
+                        if (news && news.date && news.title) {
+                            allNews.push({
+                                date: news.date,
+                                title: news.title,
+                                projectId: project.id,
+                                projectTitle: project.title,
+                                projectType: 'art'
+                            });
+                        }
+                    });
+                }
+            });
+            
+            researchProjects.forEach(project => {
+                console.log('Research project:', project.id, 'news:', project.news, 'citations:', project.citations);
+                if (project.news && Array.isArray(project.news)) {
+                    project.news.forEach(newsItem => {
+                        let news = newsItem;
+                        if (typeof newsItem === 'string') {
+                            // Format: "2024-01-15: News title"
+                            const colonIndex = newsItem.indexOf(':');
+                            if (colonIndex > 0) {
+                                news = {
+                                    date: newsItem.substring(0, colonIndex).trim(),
+                                    title: newsItem.substring(colonIndex + 1).trim()
+                                };
+                            }
+                        }
+                        if (news && news.date && news.title) {
+                            allNews.push({
+                                date: news.date,
+                                title: news.title,
+                                projectId: project.id,
+                                projectTitle: project.title,
+                                projectType: 'research'
+                            });
+                        }
+                    });
+                }
+            });
+            
+            // Sort news by date (newest first)
+            allNews.sort((a, b) => {
+                const dateA = new Date(a.date);
+                const dateB = new Date(b.date);
+                return dateB - dateA;
+            });
+            
+            // Collect all citations from research projects
+            const allCitations = [];
+            researchProjects.forEach(project => {
+                if (project.citations && Array.isArray(project.citations)) {
+                    project.citations.forEach(citation => {
+                        allCitations.push({
+                            citation: citation,
+                            projectId: project.id,
+                            projectTitle: project.title
+                        });
+                    });
+                }
+            });
+            
+            // Debug: Log what we found
+            console.log('News items found:', allNews.length);
+            console.log('Citations found:', allCitations.length);
+            console.log('Art projects:', artProjects);
+            console.log('Research projects:', researchProjects);
+            
+            // Build news section HTML
+            let newsHTML = '';
+            if (allNews.length > 0) {
+                newsHTML = '<h2>News</h2><ul style="list-style: none; padding: 0; margin-bottom: 30px;">';
+                allNews.forEach(news => {
+                    try {
+                        const date = new Date(news.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+                        const projectLink = `<a href="${news.projectType}.html#${news.projectId}" class="link">${news.projectTitle}</a>`;
+                        newsHTML += `<li style="margin-bottom: 15px;"><strong>${date}</strong>: <a href="${news.projectType}.html#${news.projectId}" class="link">${news.title}</a> — ${projectLink}</li>`;
+                    } catch (e) {
+                        console.error('Error formatting news date:', e);
+                    }
+                });
+                newsHTML += '</ul>';
+            }
+            
+            // Build citations section HTML
+            let citationsHTML = '';
+            if (allCitations.length > 0) {
+                citationsHTML = '<h2>Publications</h2><ul style="list-style: none; padding: 0; margin-bottom: 30px;">';
+                allCitations.forEach(cit => {
+                    const projectLink = `<a href="research.html#${cit.projectId}" class="link">${cit.projectTitle}</a>`;
+                    citationsHTML += `<li style="margin-bottom: 15px;">${cit.citation} — ${projectLink}</li>`;
+                });
+                citationsHTML += '</ul>';
+            }
+            
+            // Insert news and citations into about content
+            // Since markdown is already converted to HTML, we need to insert before the Contact section
+            // Look for <h2>Contact</h2> in the HTML
+            if (citationsHTML || newsHTML) {
+                // Try to insert before Contact section
+                const contactMatch = aboutHTML.match(/<h2>Contact<\/h2>/);
+                if (contactMatch) {
+                    const insertPoint = aboutHTML.indexOf('<h2>Contact</h2>');
+                    const before = aboutHTML.substring(0, insertPoint);
+                    const after = aboutHTML.substring(insertPoint);
+                    aboutHTML = before + (citationsHTML ? citationsHTML + '\n' : '') + (newsHTML ? newsHTML + '\n' : '') + after;
+                } else {
+                    // If no Contact section found, just append
+                    aboutHTML += (citationsHTML ? '\n' + citationsHTML : '') + (newsHTML ? '\n' + newsHTML : '');
+                }
+            }
+            
+            aboutContent.innerHTML = aboutHTML;
+            
+            // Recheck images in view after rendering
+            setTimeout(() => {
+                if (typeof checkImagesAndCanvasesInView === 'function') {
+                    checkImagesAndCanvasesInView();
+                }
+            }, 100);
         })();
     </script>
 </body>

@@ -11,13 +11,40 @@ document.addEventListener('DOMContentLoaded', () => {
         const windowHeight = window.innerHeight;
         const viewportTop = window.scrollY;
         const viewportBottom = viewportTop + windowHeight;
+        
+        // Check detail panel viewport
+        const projectDetail = document.getElementById('project-detail');
+        const isDetailActive = projectDetail && projectDetail.classList.contains('active');
 
         elements.forEach(element => {
             const rect = element.getBoundingClientRect();
-            const elementTop = rect.top + viewportTop;
-            const elementBottom = elementTop + rect.height;
             
-            const isInView = elementBottom > viewportTop && elementTop < viewportBottom;
+            // Check if in main viewport
+            const isInMainView = rect.bottom > 0 && rect.top < windowHeight;
+            
+            // Check if in detail panel viewport
+            let isInDetailView = false;
+            if (isDetailActive) {
+                const detailRect = projectDetail.getBoundingClientRect();
+                // Check if element is within the detail panel boundaries
+                const isInDetailBounds = rect.left >= detailRect.left && 
+                                        rect.right <= detailRect.right &&
+                                        rect.top >= detailRect.top &&
+                                        rect.bottom <= detailRect.bottom;
+                
+                if (isInDetailBounds) {
+                    // Calculate relative position within detail panel
+                    const relativeTop = rect.top - detailRect.top;
+                    const relativeBottom = rect.bottom - detailRect.top;
+                    const visibleTop = Math.max(0, relativeTop);
+                    const visibleBottom = Math.min(detailRect.height, relativeBottom);
+                    
+                    // Element is in view if any part is visible
+                    isInDetailView = visibleBottom > visibleTop;
+                }
+            }
+            
+            const isInView = isInMainView || isInDetailView;
 
             if (isInView) {
                 element.classList.add(inViewClass);
@@ -50,10 +77,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Show project detail modal
+    // Show project detail in side panel
     function showProjectDetail(project) {
         const projectDetail = document.getElementById('project-detail');
-        const projectsGrid = document.getElementById('projects-grid');
+        const content = document.querySelector('.content');
         const basePath = window.projectBasePath || 'content';
         
         if (!projectDetail || !window.markdownLoader) {
@@ -64,31 +91,63 @@ document.addEventListener('DOMContentLoaded', () => {
         const detailHTML = window.markdownLoader.renderProjectDetail(project, basePath);
         projectDetail.innerHTML = detailHTML;
         
-        if (projectsGrid) {
-            projectsGrid.classList.add(hiddenClass);
-        }
-        projectDetail.classList.remove(hiddenClass);
+        // Add active class to show panel
+        projectDetail.classList.add('active');
         
-        // Scroll to top
-        window.scrollTo(0, 0);
+        // Add class to content to adjust layout
+        if (content) {
+            content.classList.add('content-with-detail', 'has-detail');
+        }
+        
+        // Mark clicked tile as active
+        const projectTiles = document.querySelectorAll('.project-tile');
+        projectTiles.forEach(tile => {
+            if (tile.dataset.projectId === project.id) {
+                tile.classList.add('active');
+            } else {
+                tile.classList.remove('active');
+            }
+        });
+        
+        // Scroll panel to top
+        projectDetail.scrollTop = 0;
         
         // Recheck images in view after rendering
         setTimeout(() => {
             checkImagesAndCanvasesInView();
-        }, 100);
+        }, 150);
+        
+        // Add scroll listener to the detail panel for image effects
+        const detailScrollHandler = () => {
+            checkImagesAndCanvasesInView();
+        };
+        
+        // Remove any existing listener
+        projectDetail.removeEventListener('scroll', detailScrollHandler);
+        // Add new scroll listener
+        projectDetail.addEventListener('scroll', detailScrollHandler);
+        
+        // Store handler for cleanup if needed
+        projectDetail._detailScrollHandler = detailScrollHandler;
     }
 
-    // Close project detail modal
+    // Close project detail panel
     window.closeProjectDetail = function() {
         const projectDetail = document.getElementById('project-detail');
-        const projectsGrid = document.getElementById('projects-grid');
+        const content = document.querySelector('.content');
         
         if (projectDetail) {
-            projectDetail.classList.add(hiddenClass);
+            projectDetail.classList.remove('active');
         }
-        if (projectsGrid) {
-            projectsGrid.classList.remove(hiddenClass);
+        if (content) {
+            content.classList.remove('has-detail');
         }
+        
+        // Remove active class from all tiles
+        const projectTiles = document.querySelectorAll('.project-tile');
+        projectTiles.forEach(tile => {
+            tile.classList.remove('active');
+        });
     };
 
     // Setup sidebar year highlighting

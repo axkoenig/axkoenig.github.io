@@ -4,6 +4,8 @@ date: 2023-08-20
 short_description: An experimental exploration of digital and analog visual techniques, blending traditional and modern approaches to create unique visual experiences.
 tags: [visual, experimental, digital]
 cover_image: https://via.placeholder.com/350x250/cccccc/000000?text=Experimental
+news:
+  - "2023-09-05: Studio exhibition opens"
 ---
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. This project explores the boundaries between digital and analog artistic expression, creating a unique visual language that bridges traditional and contemporary techniques.

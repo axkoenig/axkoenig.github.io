@@ -4,6 +4,9 @@ date: 2024-01-15
 short_description: A photographic exploration of architectural facades, focusing on the interplay between light, shadow, and geometric forms.
 tags: [photography, architecture, visual]
 cover_image: https://via.placeholder.com/350x250/cccccc/000000?text=Architecture
+news:
+  - "2024-02-20: Exhibition opening at Gallery XYZ"
+  - "2024-01-25: Featured in Architectural Digest"
 ---
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. This series examines how buildings interact with their environment and how architectural elements create visual rhythm and texture.
