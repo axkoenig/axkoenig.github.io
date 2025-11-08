@@ -19,3 +19,4 @@ Redirect 301 /html/blindhaed_cvpr.html /website/art.html
 # Redirect old water page
 Redirect 301 /html/water.html /website/art.html
 
+

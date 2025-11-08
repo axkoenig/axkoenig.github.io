@@ -95,20 +95,20 @@
                         const projectTiles = document.querySelectorAll('.project-tile');
                         projectTiles.forEach(tile => {
                             tile.addEventListener('click', () => {
-                                const projectId = tile.dataset.projectId;
-                                const project = window.currentProjects.find(p => p.id === projectId);
+                                const projectSlug = tile.dataset.projectSlug || tile.dataset.projectId;
+                                const project = window.currentProjects.find(p => (p.slug || p.id) === projectSlug);
                                 if (project) {
                                     showProjectDetail(project);
-                                    // Update URL hash
-                                    window.location.hash = projectId;
+                                    // Update URL hash with slug
+                                    window.location.hash = project.slug || project.id;
                                 }
                             });
                         });
                         
                         // Check for hash in URL and open corresponding project
                         if (window.location.hash) {
-                            const projectId = window.location.hash.substring(1);
-                            const project = window.currentProjects.find(p => p.id === projectId);
+                            const projectSlug = window.location.hash.substring(1);
+                            const project = window.currentProjects.find(p => (p.slug || p.id) === projectSlug);
                             if (project) {
                                 setTimeout(() => {
                                     showProjectDetail(project);

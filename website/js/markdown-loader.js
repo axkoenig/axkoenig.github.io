@@ -64,6 +64,17 @@ function parseFrontmatter(content) {
                 currentKey = null;
                 currentArray = null;
             }
+            // Handle boolean values
+            else if (value === 'true' || value === 'True') {
+                metadata[key] = true;
+                currentKey = null;
+                currentArray = null;
+            }
+            else if (value === 'false' || value === 'False') {
+                metadata[key] = false;
+                currentKey = null;
+                currentArray = null;
+            }
             // Regular key-value
             else {
                 metadata[key] = value;
@@ -83,6 +94,9 @@ function parseFrontmatter(content) {
 function markdownToHTML(markdown) {
     let html = markdown;
     
+    // Images - process first, before paragraphs (match with optional whitespace)
+    html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" loading="lazy" />');
+    
     // Headers
     html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
     html = html.replace(/^## (.*$)/gim, '<h2>$1</h2>');
@@ -97,21 +111,29 @@ function markdownToHTML(markdown) {
     // Links
     html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="link">$1</a>');
     
-    // Images
-    html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" loading="lazy" />');
-    
-    // Paragraphs (split by double newlines)
-    html = html.split('\n\n').map(para => {
-        para = para.trim();
-        if (para && !para.match(/^<[h|u|o|l|i]/)) {
-            return '<p>' + para + '</p>';
-        }
-        return para;
-    }).join('\n');
-    
-    // Lists
+    // Lists - process before paragraphs
     html = html.replace(/^\- (.*$)/gim, '<li>$1</li>');
     html = html.replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>');
+    
+    // Split by double newlines and process each block
+    const blocks = html.split(/\n\s*\n/);
+    html = blocks.map(block => {
+        block = block.trim();
+        if (!block) return '';
+        
+        // Don't wrap if it's already an HTML tag (header, list, image, etc.)
+        if (block.match(/^<(h[1-6]|ul|ol|li|img|p)/)) {
+            return block;
+        }
+        
+        // If block contains an image tag, return as-is (might be image on its own line)
+        if (block.includes('<img')) {
+            return block;
+        }
+        
+        // Otherwise wrap in paragraph
+        return '<p>' + block + '</p>';
+    }).filter(block => block).join('\n\n');
     
     return html;
 }
@@ -151,13 +173,29 @@ async function loadProjects(basePath, projectList) {
         const parsed = await loadMarkdownFile(projectPath);
         
         if (parsed) {
+            // Determine category from basePath
+            const category = basePath.includes('art') ? 'art' : 'research';
+            
             const project = {
                 id: projectName,
                 path: projectName,
+                category: category,
                 ...parsed.metadata,
                 body: parsed.content,
                 html: markdownToHTML(parsed.content)
             };
+            
+            // Set slug (default to project folder name if not provided)
+            if (!project.slug) {
+                project.slug = projectName;
+            }
+            
+            // Ensure highlight is a boolean (default to false)
+            if (project.highlight === undefined || project.highlight === null) {
+                project.highlight = false;
+            } else if (typeof project.highlight === 'string') {
+                project.highlight = project.highlight.toLowerCase() === 'true';
+            }
             
             // Convert date string to year if needed
             if (project.date && !project.year) {
@@ -234,7 +272,7 @@ function renderProjectTile(project, basePath, projectIndex) {
     const description = project.short_description || '';
     
     return `
-        <div class="project-tile" data-project-id="${project.id}" data-year="${project.year || ''}" data-tags="${Array.isArray(project.tags) ? project.tags.join(',') : project.tags || ''}">
+        <div class="project-tile" data-project-id="${project.id}" data-project-slug="${project.slug || project.id}" data-year="${project.year || ''}" data-tags="${Array.isArray(project.tags) ? project.tags.join(',') : project.tags || ''}">
             <div class="project-cover">
                 <img src="${coverImage}" alt="${project.title || ''}" loading="lazy" onerror="this.src='https://via.placeholder.com/300x225/cccccc/999999?text='" />
             </div>
@@ -361,7 +399,7 @@ function renderProjectDetail(project, basePath) {
                         <div class="project-tags">${tagsHTML}</div>
                     </div>
                 </div>
-                ${coverImage ? `<div style="margin: 0 -30px 30px -30px; padding-bottom: 30px; border-bottom: 1px solid var(--border-color); width: calc(100% + 60px); box-sizing: border-box;"><img src="${coverImage}" alt="${project.title}" style="max-width: 100%; width: 100%; display: block; filter: grayscale(100%); opacity: 0.2; transition: filter 0.5s ease, opacity 0.5s ease;" class="in-view" loading="lazy" onerror="console.error('Failed to load cover image:', this.src);" /></div>` : ''}
+                ${coverImage ? `<div style="margin: 0 -30px 30px -30px; padding-bottom: 30px; border-bottom: 1px solid var(--border-color); width: calc(100% + 60px); box-sizing: border-box;"><img src="${coverImage}" alt="${project.title}" style="max-width: 100%; width: 100%; display: block; filter: grayscale(0%); opacity: 1; transition: filter 0.5s ease, opacity 0.5s ease;" class="in-view" loading="lazy" onerror="console.error('Failed to load cover image:', this.src);" /></div>` : ''}
                 ${newsHTML}
                 ${citationsHTML}
                 <div class="project-detail-body">
@@ -372,10 +410,23 @@ function renderProjectDetail(project, basePath) {
     `;
 }
 
+// Load highlighted projects from both art and research
+async function loadHighlightedProjects(artProjectList, researchProjectList) {
+    const artProjects = await loadProjects('content/art', artProjectList);
+    const researchProjects = await loadProjects('content/research', researchProjectList);
+    
+    // Combine and filter for highlighted projects
+    const allProjects = [...artProjects, ...researchProjects];
+    const highlightedProjects = allProjects.filter(project => project.highlight === true);
+    
+    return highlightedProjects;
+}
+
 // Export functions for use in other scripts
 window.markdownLoader = {
     loadMarkdownFile,
     loadProjects,
+    loadHighlightedProjects,
     renderProjectTile,
     renderProjectDetail,
     markdownToHTML,

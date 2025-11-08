@@ -66,9 +66,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const projectTiles = document.querySelectorAll('.project-tile');
         projectTiles.forEach(tile => {
             tile.addEventListener('click', () => {
-                const projectId = tile.dataset.projectId;
-                if (projectId && window.currentProjects) {
-                    const project = window.currentProjects.find(p => p.id === projectId);
+                const projectSlug = tile.dataset.projectSlug || tile.dataset.projectId;
+                if (projectSlug && window.currentProjects) {
+                    const project = window.currentProjects.find(p => (p.slug || p.id) === projectSlug);
                     if (project) {
                         showProjectDetail(project);
                     }
@@ -102,7 +102,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // Mark clicked tile as active
         const projectTiles = document.querySelectorAll('.project-tile');
         projectTiles.forEach(tile => {
-            if (tile.dataset.projectId === project.id) {
+            const tileSlug = tile.dataset.projectSlug || tile.dataset.projectId;
+            const projectSlug = project.slug || project.id;
+            if (tileSlug === projectSlug) {
                 tile.classList.add('active');
             } else {
                 tile.classList.remove('active');
