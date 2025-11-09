@@ -77,8 +77,21 @@
         (async function() {
             window.projectBasePath = 'content/art';
             
-            // List of project folders
-            const projectList = ['blindhaed', 'monoliths', 'facades', 'sakral', 'blindhaed-analog', 'aufnahme-02', 'aufnahme-01'];
+            // Load project list from central configuration
+            let projectList = [];
+            try {
+                const response = await fetch('content/projects.json');
+                if (response.ok) {
+                    const config = await response.json();
+                    projectList = config.art || [];
+                    console.log('Loaded art projects from config:', projectList);
+                } else {
+                    console.error('Failed to load projects.json');
+                }
+            } catch (error) {
+                console.error('Error loading projects.json:', error);
+            }
+            
             window.currentProjects = await window.markdownLoader.loadProjects('content/art', projectList);
             
             // Sort by year (newest first)

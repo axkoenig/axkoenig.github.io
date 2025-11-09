@@ -77,8 +77,21 @@
         (async function() {
             window.projectBasePath = 'content/research';
             
-            // List of project folders (in production, this could be fetched from server)
-            const projectList = ['squirrel-data-loading', 'grasp-refinement', 'imperial-teleoperation', 'hololens-surgery'];
+            // Load project list from central configuration
+            let projectList = [];
+            try {
+                const response = await fetch('content/projects.json');
+                if (response.ok) {
+                    const config = await response.json();
+                    projectList = config.research || [];
+                    console.log('Loaded research projects from config:', projectList);
+                } else {
+                    console.error('Failed to load projects.json');
+                }
+            } catch (error) {
+                console.error('Error loading projects.json:', error);
+            }
+            
             window.currentProjects = await window.markdownLoader.loadProjects('content/research', projectList);
             
             // Sort by year (newest first)

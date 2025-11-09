@@ -1,0 +1,20 @@
+{
+  "_comment": "This file lists all projects to be displayed. Add folder names to the respective arrays to show new projects. Each folder must contain an index.md file.",
+  "art": [
+    "analog",
+    "aufnahme-01",
+    "aufnahme-02",
+    "blindhaed",
+    "blindhaed-analog",
+    "facades",
+    "monoliths",
+    "sakral"
+  ],
+  "research": [
+    "co-design",
+    "hololens-surgery",
+    "imperial-teleoperation",
+    "squirrel-data-loading"
+  ]
+}
+

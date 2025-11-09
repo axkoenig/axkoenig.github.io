@@ -9,9 +9,23 @@
         return;
     }
 
-    // List of project folders (in production, this could be fetched from server)
-    const artProjectList = ['blindhaed', 'monoliths', 'facades', 'sakral', 'blindhaed-analog', 'aufnahme-02', 'aufnahme-01'];
-    const researchProjectList = ['squirrel-data-loading', 'grasp-refinement', 'imperial-teleoperation', 'hololens-surgery'];
+    // Load project lists from central configuration
+    let artProjectList = [];
+    let researchProjectList = [];
+    
+    try {
+        const response = await fetch('content/projects.json');
+        if (response.ok) {
+            const config = await response.json();
+            artProjectList = config.art || [];
+            researchProjectList = config.research || [];
+            console.log('Loaded project lists from config:', { art: artProjectList, research: researchProjectList });
+        } else {
+            console.error('Failed to load projects.json');
+        }
+    } catch (error) {
+        console.error('Error loading projects.json:', error);
+    }
 
     try {
         // Load highlighted projects from both categories
