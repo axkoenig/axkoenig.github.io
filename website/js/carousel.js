@@ -76,8 +76,123 @@
 
         carouselTrack.innerHTML = carouselItemsHTML;
 
-        // Setup click handlers for navigation
+        // Get carousel items immediately
         const carouselItems = document.querySelectorAll('.carousel-item');
+        const images = carouselTrack.querySelectorAll('img');
+        let initialized = false;
+        
+        // Function to initialize carousel - called immediately and refined after images load
+        function initializeCarousel(refine = false) {
+            if (initialized && !refine) return;
+            
+            // Calculate explicit width for Safari compatibility
+            // Since items are duplicated, we need the total width
+            const itemWidth = carouselItems[0] ? carouselItems[0].offsetWidth : 750;
+            const totalItems = carouselItems.length;
+            const totalWidth = itemWidth * totalItems;
+            // Animation should move exactly half the width (since items are duplicated)
+            const halfWidth = totalWidth / 2;
+            
+            // Set explicit width instead of relying on fit-content
+            carouselTrack.style.width = totalWidth + 'px';
+            
+            // Fixed velocity: 50 pixels per second (adjust this value to change speed)
+            const velocityPixelsPerSecond = 50;
+            // Calculate duration to maintain constant velocity
+            const animationDuration = Math.abs(halfWidth) / velocityPixelsPerSecond;
+            
+            // Use a consistent animation name (not time-based) to prevent conflicts
+            const animationName = 'scroll-carousel-dynamic';
+            
+            // Create or update dynamic keyframes
+            let styleElement = document.getElementById('carousel-animation-style');
+            if (!styleElement) {
+                styleElement = document.createElement('style');
+                styleElement.id = 'carousel-animation-style';
+                document.head.appendChild(styleElement);
+            }
+            
+            styleElement.textContent = `
+                @keyframes ${animationName} {
+                    from {
+                        transform: translateX(0);
+                    }
+                    to {
+                        transform: translateX(${-halfWidth}px);
+                    }
+                }
+                @-webkit-keyframes ${animationName} {
+                    from {
+                        -webkit-transform: translateX(0);
+                        transform: translateX(0);
+                    }
+                    to {
+                        -webkit-transform: translateX(${-halfWidth}px);
+                        transform: translateX(${-halfWidth}px);
+                    }
+                }
+            `;
+            
+            // Force Safari to recognize the animation by triggering a reflow
+            void carouselTrack.offsetWidth;
+            
+            // Apply animation with calculated duration
+            carouselTrack.style.animation = `${animationName} ${animationDuration}s linear infinite`;
+            carouselTrack.style.webkitAnimation = `${animationName} ${animationDuration}s linear infinite`;
+            carouselTrack.style.animationPlayState = 'running';
+            carouselTrack.style.webkitAnimationPlayState = 'running';
+            
+            if (!initialized) {
+                initialized = true;
+                console.log(`Carousel initialized: ${highlightedProjects.length} projects, width: ${totalWidth}px, distance: ${halfWidth}px, duration: ${animationDuration.toFixed(2)}s, velocity: ${velocityPixelsPerSecond}px/s`);
+            } else if (refine) {
+                console.log(`Carousel refined after image load: width: ${totalWidth}px, duration: ${animationDuration.toFixed(2)}s`);
+            }
+        }
+        
+        // Initialize immediately with estimated dimensions to prevent frozen start
+        initializeCarousel();
+        
+        // Refine after images load to get accurate dimensions
+        if (images.length > 0) {
+            let loadedCount = 0;
+            const checkAllLoaded = () => {
+                if (loadedCount === images.length) {
+                    // Small delay to ensure dimensions are accurate
+                    requestAnimationFrame(() => {
+                        requestAnimationFrame(() => {
+                            initializeCarousel(true);
+                        });
+                    });
+                }
+            };
+            
+            images.forEach(img => {
+                if (img.complete) {
+                    loadedCount++;
+                    checkAllLoaded();
+                } else {
+                    img.addEventListener('load', () => {
+                        loadedCount++;
+                        checkAllLoaded();
+                    });
+                    img.addEventListener('error', () => {
+                        loadedCount++;
+                        checkAllLoaded();
+                    });
+                }
+            });
+            
+            // Fallback timeout in case images take too long
+            setTimeout(() => {
+                if (loadedCount < images.length) {
+                    console.warn('Carousel: Some images did not load, refining with current dimensions');
+                    initializeCarousel(true);
+                }
+            }, 1000);
+        }
+
+        // Setup click handlers for navigation
         carouselItems.forEach(item => {
             item.addEventListener('click', () => {
                 const slug = item.getAttribute('data-project-slug');
@@ -87,8 +202,6 @@
                 }
             });
         });
-
-        console.log(`Carousel initialized with ${highlightedProjects.length} highlighted projects`);
     } catch (error) {
         console.error('Error initializing carousel:', error);
     }

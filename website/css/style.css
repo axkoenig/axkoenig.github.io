@@ -61,10 +61,10 @@ body {
 .header-nav a.active::after {
     content: '';
     position: absolute;
-    bottom: 0;
+    bottom: -1px;
     left: 0;
     width: 100%;
-    height: 1.5px;
+    height: 2px;
     background-color: var(--border-color);
 }
 
@@ -221,18 +221,35 @@ button {
 .dot {
     width: 22px;
     height: 22px;
-    background-color: blue;
+    background-color: transparent;
     border-radius: 50%;
-    filter: blur(5px);
-    animation: colorChange 3s infinite alternate;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    position: relative;
 }
 
-@keyframes colorChange {
+/* Use box-shadow instead of blur filter for Safari compatibility */
+.dot::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background-color: transparent;
+    box-shadow: 0 0 15px 10px rgb(0, 0, 255);
+    animation: dotGlow 3s infinite alternate;
+}
+
+@keyframes dotGlow {
     from {
-        background-color: blue;
+        box-shadow: 0 0 15px 10px rgb(0, 0, 255);
     }
     to {
-        background-color: rgba(0, 0, 255, 0.337);
+        box-shadow: 0 0 15px 8px rgba(0, 0, 255, 0.337);
     }
 }
 
@@ -804,10 +821,10 @@ body.is-home-page .home-dot::after {
 
 .carousel-track {
     display: flex;
-    width: fit-content;
     height: 100%;
-    animation: scroll-carousel 60s linear infinite;
-    animation-play-state: running;
+    /* Animation will be set by JavaScript with fixed velocity */
+    will-change: transform;
+    /* Width will be set explicitly by JavaScript for Safari compatibility */
 }
 
 .carousel-item {
@@ -890,7 +907,18 @@ body.is-home-page .home-dot::after {
         transform: translateX(0);
     }
     to {
-        transform: translateX(-50%);
+        transform: translateX(var(--carousel-half-width, -50%));
+    }
+}
+
+@-webkit-keyframes scroll-carousel {
+    from {
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+    }
+    to {
+        -webkit-transform: translateX(var(--carousel-half-width, -50%));
+        transform: translateX(var(--carousel-half-width, -50%));
     }
 }
 
