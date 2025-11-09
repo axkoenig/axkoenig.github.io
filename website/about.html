@@ -32,6 +32,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     
     <!-- Structured Data -->
     <script type="application/ld+json">
@@ -46,7 +47,6 @@
 </head>
 <body class="has-header-border">
     <script type="text/javascript" src="js/scripts.js"></script>
-    <script type="text/javascript" src="js/markdown-loader.js"></script>
     <div class="home-dot">
         <a href="index.html">
             <div class="dot"></div>
@@ -63,171 +63,150 @@
                 </div>
             </div>
             <div class="content">
-                <div class="about-content" id="about-content">
-                    <!-- Content will be loaded from markdown -->
+                <div class="about-content">
+                    <div class="about-columns">
+                        <div class="about-left">
+                            <div class="about-section">
+                                <h2 class="name-heading">Alexander Koenig</h2>
+                                <img class="about-photo" src="content/about/me4.JPG" alt="Alexander Koenig" />
+                            </div>
+                            <div class="about-section">
+                                <div class="contact-icons">
+                                    <a class="resource-link" href="https://www.linkedin.com/in/alexander-koenig-95b9a0134/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                                    <a class="resource-link" href="https://scholar.google.de/citations?user=IKDoQE0AAAAJ&hl=de&oi=sra" target="_blank"><i class="fas fa-graduation-cap"></i></a>
+                                    <a class="resource-link" href="https://github.com/axkoenig" target="_blank"><i class="fab fa-github"></i></a>
+                                    <a class="resource-link" href="https://soundcloud.com/alexander-koenig" target="_blank"><i class="fab fa-soundcloud"></i></a>
+                                    <a class="resource-link" href="mailto:awckoenig@gmail.com"><i class="fas fa-envelope"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="about-right">
+                            <div class="about-section">
+                                <h2>Biography</h2>
+                                <p>I am pursuing my PhD in TU Berlin's <a class="link" href="https://www.tu.berlin/robotics">Robotics and Biology Lab</a>, where Prof. <a class="link" href="https://www.tu.berlin/en/robotics/about-rbo/prof-dr-oliver-brock">Oliver Brock</a> advises me. Previously, I worked as a Research Fellow in the <a class="link" href="http://biorobotics.harvard.edu">Harvard Biorobotics Lab</a> and the <a class="link" href="http://www.imperial.ac.uk/mechatronics-in-medicine">Mechatronics in Medicine Lab</a> at Imperial College London, and as a Machine Learning Researcher at <a class="link" href="http://merantix-momentum.com">Merantix</a> in Berlin. I did my master's in <a class="link" href="https://www.in.tum.de/en/for-prospective-students/masters-programs/robotics-cognition-intelligence-msc/">Robotics, Cognition, Intelligence</a> and my bachelor's in <a class="link" href="https://www.mse.tum.de/en/prospective-students/engineering-science/#c3206">Engineering Science</a>, both at TU Munich.</p>
+                                <p>My current research focuses on new control and sensing paradigms for soft robotic hands to unlock robust object manipulation. I am involved in various audio-visual art projects. I'm an avid photographer, I'm one half of <a class="link" href="https://aquaveen.com/">Aqua Veen</a>, and I'm collaborating with <a class="link" href="https://www.justinurbach.com/">Justin Urbach</a> and others on <a class="link" href="https://galerie-sindelfingen.de/justin-urbach-blindhaed/">BLINDHÆD</a>, a multi-media art installation based on event vision.</p>
+                            </div>
+
+                            <div class="about-section">
+                                <h2>Publications</h2>
+                                
+                                <div class="publication-item">
+                                    <p>L. Weber, T. Wienert, M. Splettstößer, A. Koenig, O. Brock "Acoustic Sensing for Universal Jamming Grippers" In: <a class="link" href="https://sites.google.com/view/roboacoustics">Workshop on Acoustic Sensing and Representations for Robotics</a> at IEEE International Conference on Robotics and Automation (ICRA), 2025</p>
+                                    <div class="paper-resources">
+                                        <a class="resource-link" href="https://www.static.tu.berlin/fileadmin/www/10002220/Publications/8_Acoustic_Sensing_for_Univers.pdf" target="_blank">Paper</a>
+                                        <a class="resource-link" href="https://www.youtube.com/watch?v=Scyqc4L0-C8&list=PLb-CNILz7vmsjDjMogdJEh6z60XA-b5s2&index=5" target="_blank">Talk</a>
+                                        <a class="resource-link" href="https://www.youtube.com/watch?v=V4h8ktTvn88&list=PLb-CNILz7vmsjDjMogdJEh6z60XA-b5s2" target="_blank">Demo</a>
+                                        <a class="resource-link" href="https://rbo.gitlab-pages.tu-berlin.de/pages/acoustic-jamming-page/" target="_blank">Paper Page</a>
+                                        <a class="resource-link" href="https://rbo.gitlab-pages.tu-berlin.de/pages/acoustic-jamming-page/static/pdfs/award.pdf" target="_blank">Best Poster Award</a>
+                                    </div>
+                                </div>
+
+                                <div class="publication-item">
+                                    <p>V. Mengers, A. Koenig, X. Li, A. Sieler, A. Battaje, O. Brock "Stop Merging, Start Separating: Why Merging Learning and Modeling Won't Solve Manipulation but Separating the General From the Specific Will" In: <a class="link" href="https://contact-rich.github.io/">Workshop on Learning Meets Model-Based Methods for Contact-Rich Manipulation</a> at IEEE International Conference on Robotics and Automation (ICRA), 2025</p>
+                                    <div class="paper-resources">
+                                        <a class="resource-link" href="https://www.static.tu.berlin/fileadmin/www/10002220/Publications/30_Stop_Merging_Start_Separating.pdf" target="_blank">Paper</a>
+                                        <a class="resource-link" href="https://www.youtube.com/playlist?list=PLb-CNILz7vmuibtWGZuNZc8cP_3aCdBB-" target="_blank">Demo</a>
+                                        <a class="resource-link" href="../downloads/research/icra25_poster_general_specific.pdf" target="_blank">Poster</a>
+                                    </div>
+                                </div>
+
+                                <div class="publication-item">
+                                    <p>A. Sieler, A. Koenig, O. Brock "What Is the Key to Dexterous Manipulation: Learning or Compliance?" In: Proceedings of the German Robotics Conference (GRC), 2025</p>
+                                    <div class="paper-resources">
+                                        <a class="resource-link" href="https://www.static.tu.berlin/fileadmin/www/10002220/Publications/Sieler-Koenig-25-GRC.pdf" target="_blank">Paper</a>
+                                        <a class="resource-link" href="../downloads/research/2025-grc-compliance.pdf" target="_blank">Slides</a>
+                                        <a class="resource-link" href="https://www.youtube.com/playlist?list=PLb-CNILz7vmtfNvvnbw58uElme1yGWYtL" target="_blank">Demo</a>
+                                    </div>
+                                </div>
+
+                                <div class="publication-item">
+                                    <p>A. Koenig, M. Schambach, and J. Otterbach "Uncovering the Inner Workings of STEGO for Safe Unsupervised Semantic Segmentation" In: <a class="link" href="https://sites.google.com/view/saiad2023">Workshop on Safe Artificial Intelligence for All Domains</a> at IEEE/CVF Computer Vision and Pattern Recognition Conference (CVPR), 2023</p>
+                                    <div class="paper-resources">
+                                        <a class="resource-link" href="https://arxiv.org/abs/2304.07314" target="_blank">Paper</a>
+                                        <a class="resource-link" href="https://www.youtube.com/watch?v=vKadn3MF5BY" target="_blank">Talk</a>
+                                        <a class="resource-link" href="../downloads/research/cvpr23_slides.pdf" target="_blank">Slides</a>
+                                        <a class="resource-link" href="../downloads/research/cvpr23_poster.pdf" target="_blank">Poster</a>
+                                    </div>
+                                </div>
+
+                                <div class="publication-item">
+                                    <p>A. Koenig, Z. Liu, L. Janson and R. Howe "The Role of Tactile Sensing in Learning and Deploying Grasp Refinement Algorithms" In: IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), 2022</p>
+                                    <div class="paper-resources">
+                                        <a class="resource-link" href="https://arxiv.org/abs/2109.11234" target="_blank">Paper</a>
+                                        <a class="resource-link" href="https://www.youtube.com/watch?v=ko4iZgjomvY" target="_blank">Talk</a>
+                                        <a class="resource-link" href="https://www.youtube.com/watch?v=WKhmOKPEYPc" target="_blank">Demo</a>
+                                    </div>
+                                </div>
+
+                                <div class="publication-item">
+                                    <p>A. Koenig, Z. Liu, L. Janson and R. Howe "Tactile Sensing and its Role in Learning and Deploying Robotic Grasping Controllers" In: <a class="link" href="https://sites.google.com/view/icra2022-contactrich/">Workshop on Reinforcement Learning for Contact-Rich Manipulation</a> at IEEE International Conference on Robotics and Automation (ICRA), 2022</p>
+                                    <div class="paper-resources">
+                                        <a class="resource-link" href="https://openreview.net/forum?id=OqmWRIsvA4O" target="_blank">Paper</a>
+                                        <a class="resource-link" href="../downloads/research/icra22_workshop_poster.pdf" target="_blank">Poster</a>
+                                    </div>
+                                </div>
+
+                                <div class="publication-item">
+                                    <p>A. Koenig, F. Rodriguez y Baena and R. Secoli "Gesture-Based Teleoperated Grasping for Educational Robotics" In: IEEE International Symposium on Robot and Human Interactive Communication (RO-MAN), 2021.</p>
+                                    <div class="paper-resources">
+                                        <a class="resource-link" href="https://ieeexplore.ieee.org/document/9515390" target="_blank">Paper</a>
+                                        <a class="resource-link" href="https://www.youtube.com/watch?v=fNvErR5eUpc" target="_blank">Talk</a>
+                                        <a class="resource-link" href="https://www.youtube.com/watch?v=RDbpd9d7U2k" target="_blank">Demo</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="about-section">
+                                <h2>Presentations</h2>
+                                
+                                <div class="publication-item">
+                                    <p>"Co-Design for Soft Manipulation at RBO: Past, Present, and Future" at <a class="link" href="https://www.spp2100.de/workshop/spp-symposium-2025">Soft Material Robotics Symposium Hannover</a>, 2025</p>
+                                    <div class="paper-resources">
+                                        <a class="resource-link" href="../downloads/research/smr_25_slides.pdf" target="_blank">Slides</a>
+                                    </div>
+                                </div>
+
+                                <div class="publication-item">
+                                    <p>"Recent Advances in Unsupervised Semantic Segmentation" at <a class="link" href="https://sip-baselarea.com/">Switzerland Innovation Park Basel</a>, 2023</p>
+                                    <div class="paper-resources">
+                                        <a class="resource-link" href="../downloads/research/2023_talk_segmentation.pdf" target="_blank">Slides</a>
+                                    </div>
+                                </div>
+
+                                <div class="publication-item">
+                                    <p>"CVPR 2023 Conference Retrospective" at <a class="link" href="https://www.aicampus.berlin/">AI Campus Berlin</a>, 2023</p>
+                                    <div class="paper-resources">
+                                        <a class="resource-link" href="https://www.youtube.com/watch?v=yhXnf-Sz0pA" target="_blank">Talk</a>
+                                        <a class="resource-link" href="../downloads/research/cvpr23_retro.pdf" target="_blank">Slides</a>
+                                    </div>
+                                </div>
+
+                                <div class="publication-item">
+                                    <p>"High-Performance Data Loading for Machine Learning Workloads with Squirrel" at <a class="link" href="https://safetrain-projekt.de/en/">Siemens AI Colloquium</a>, 2022</p>
+                                    <div class="paper-resources">
+                                        <a class="resource-link" href="https://www.youtube.com/watch?v=Z7ziAp0mb-o" target="_blank">Talk</a>
+                                        <a class="resource-link" href="../downloads/research/squirrel_slides.pdf" target="_blank">Slides</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="about-section">
+                                <h2>Media Coverage</h2>
+                                
+                                <div class="publication-item">
+                                    <p>Interview with LeRandom <a class="link" href="https://www.lerandom.art/editorial/reprogramming-sensory-habits/">"Reprogramming Sensory Habits"</a>, June 9, 2025</p>
+                                </div>
+
+                                <div class="publication-item">
+                                    <p>Interview with Science of Intelligence <a class="link" href="https://www.scienceofintelligence.de/when-machines-learn-to-see-differently-and-artists-start-watching/">"When machines learn to see differently, and artists start watching"</a>, July 24, 2025</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    
-    <script>
-        // Load about content and collect news/citations from projects
-        (async function() {
-            const aboutContent = document.getElementById('about-content');
-            if (!aboutContent) return;
-            
-            // Load about page markdown
-            const parsed = await window.markdownLoader.loadMarkdownFile('content/about.md');
-            let aboutHTML = '';
-            
-            if (parsed) {
-                aboutHTML = window.markdownLoader.markdownToHTML(parsed.content);
-            }
-            
-            // Load all projects to collect news and citations
-            // Note: In production, you'd want to dynamically discover all projects
-            const artProjects = await window.markdownLoader.loadProjects('content/art', ['blindhaed', 'monoliths', 'facades', 'sakral', 'blindhaed-analog', 'aufnahme-02', 'aufnahme-01']);
-            const researchProjects = await window.markdownLoader.loadProjects('content/research', ['squirrel-data-loading', 'grasp-refinement', 'imperial-teleoperation', 'hololens-surgery']);
-            
-            // Collect all news items from all projects
-            const allNews = [];
-            artProjects.forEach(project => {
-                console.log('Art project:', project.id, 'news:', project.news);
-                if (project.news && Array.isArray(project.news)) {
-                    project.news.forEach(newsItem => {
-                        let news = newsItem;
-                        if (typeof newsItem === 'string') {
-                            // Format: "2024-01-15: News title"
-                            const colonIndex = newsItem.indexOf(':');
-                            if (colonIndex > 0) {
-                                news = {
-                                    date: newsItem.substring(0, colonIndex).trim(),
-                                    title: newsItem.substring(colonIndex + 1).trim()
-                                };
-                            }
-                        }
-                        if (news && news.date && news.title) {
-                            allNews.push({
-                                date: news.date,
-                                title: news.title,
-                                projectId: project.id,
-                                projectTitle: project.title,
-                                projectType: 'art'
-                            });
-                        }
-                    });
-                }
-            });
-            
-            researchProjects.forEach(project => {
-                console.log('Research project:', project.id, 'news:', project.news, 'citations:', project.citations);
-                if (project.news && Array.isArray(project.news)) {
-                    project.news.forEach(newsItem => {
-                        let news = newsItem;
-                        if (typeof newsItem === 'string') {
-                            // Format: "2024-01-15: News title"
-                            const colonIndex = newsItem.indexOf(':');
-                            if (colonIndex > 0) {
-                                news = {
-                                    date: newsItem.substring(0, colonIndex).trim(),
-                                    title: newsItem.substring(colonIndex + 1).trim()
-                                };
-                            }
-                        }
-                        if (news && news.date && news.title) {
-                            allNews.push({
-                                date: news.date,
-                                title: news.title,
-                                projectId: project.id,
-                                projectTitle: project.title,
-                                projectType: 'research'
-                            });
-                        }
-                    });
-                }
-            });
-            
-            // Sort news by date (newest first)
-            allNews.sort((a, b) => {
-                const dateA = new Date(a.date);
-                const dateB = new Date(b.date);
-                return dateB - dateA;
-            });
-            
-            // Collect all citations from research projects
-            const allCitations = [];
-            researchProjects.forEach(project => {
-                if (project.citations && Array.isArray(project.citations)) {
-                    project.citations.forEach(citation => {
-                        allCitations.push({
-                            citation: citation,
-                            projectId: project.id,
-                            projectTitle: project.title
-                        });
-                    });
-                }
-            });
-            
-            // Debug: Log what we found
-            console.log('News items found:', allNews.length);
-            console.log('Citations found:', allCitations.length);
-            console.log('Art projects:', artProjects);
-            console.log('Research projects:', researchProjects);
-            
-            // Build news section HTML
-            let newsHTML = '';
-            if (allNews.length > 0) {
-                newsHTML = '<h2>News</h2><ul style="list-style: none; padding: 0; margin-bottom: 30px;">';
-                allNews.forEach(news => {
-                    try {
-                        const date = new Date(news.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-                        const projectLink = `<a href="${news.projectType}.html#${news.projectId}" class="link">${news.projectTitle}</a>`;
-                        newsHTML += `<li style="margin-bottom: 15px;"><strong>${date}</strong>: <a href="${news.projectType}.html#${news.projectId}" class="link">${news.title}</a> — ${projectLink}</li>`;
-                    } catch (e) {
-                        console.error('Error formatting news date:', e);
-                    }
-                });
-                newsHTML += '</ul>';
-            }
-            
-            // Build citations section HTML
-            let citationsHTML = '';
-            if (allCitations.length > 0) {
-                citationsHTML = '<h2>Publications</h2><ul style="list-style: none; padding: 0; margin-bottom: 30px;">';
-                allCitations.forEach(cit => {
-                    const projectLink = `<a href="research.html#${cit.projectId}" class="link">${cit.projectTitle}</a>`;
-                    citationsHTML += `<li style="margin-bottom: 15px;">${cit.citation} — ${projectLink}</li>`;
-                });
-                citationsHTML += '</ul>';
-            }
-            
-            // Insert news and citations into about content
-            // Since markdown is already converted to HTML, we need to insert before the Contact section
-            // Look for <h2>Contact</h2> in the HTML
-            if (citationsHTML || newsHTML) {
-                // Try to insert before Contact section
-                const contactMatch = aboutHTML.match(/<h2>Contact<\/h2>/);
-                if (contactMatch) {
-                    const insertPoint = aboutHTML.indexOf('<h2>Contact</h2>');
-                    const before = aboutHTML.substring(0, insertPoint);
-                    const after = aboutHTML.substring(insertPoint);
-                    aboutHTML = before + (citationsHTML ? citationsHTML + '\n' : '') + (newsHTML ? newsHTML + '\n' : '') + after;
-                } else {
-                    // If no Contact section found, just append
-                    aboutHTML += (citationsHTML ? '\n' + citationsHTML : '') + (newsHTML ? '\n' + newsHTML : '');
-                }
-            }
-            
-            aboutContent.innerHTML = aboutHTML;
-            
-            // Recheck images in view after rendering
-            setTimeout(() => {
-                if (typeof checkImagesAndCanvasesInView === 'function') {
-                    checkImagesAndCanvasesInView();
-                }
-            }, 100);
-        })();
-    </script>
 </body>
 </html>
 

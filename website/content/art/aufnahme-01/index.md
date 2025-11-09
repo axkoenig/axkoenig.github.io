@@ -3,7 +3,7 @@ title: Aufnahme 01
 date: 2020-08-01
 short_description: A vinyl recording opening with warm sounds by Burial, exploring IDM, electronic music, and contemplative soundscapes.
 tags: [audio, music, vinyl, idm, electronic, burial]
-cover_image: cover.jpeg
+cover_image: cover_2.jpg
 highlight: false
 ---
 

@@ -3,7 +3,7 @@ title: Aufnahme 02
 date: 2020-12-01
 short_description: A vinyl recording featuring ambient, IDM, and acid-house, exploring dystopic themes and electronic soundscapes.
 tags: [audio, music, vinyl, ambient, idm, acid-house]
-cover_image: cover.jpeg
+cover_image: cover_2.jpg
 highlight: false
 ---
 
