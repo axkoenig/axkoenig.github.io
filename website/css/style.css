@@ -41,12 +41,30 @@ body {
     text-decoration: none;
     color: inherit;
     padding: 15px;
+    position: relative;
+    width: 100px;
+    text-align: center;
+    box-sizing: border-box;
 }
 
 .header-nav a:hover {
     background-color: var(--color-primary);
     color: inherit;
     text-decoration: none;
+}
+
+.header-nav a.active {
+    border-bottom: none;
+}
+
+.header-nav a.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1.5px;
+    background-color: var(--border-color);
 }
 
 .hidden {
@@ -86,9 +104,10 @@ img,
 }
 
 .header {
-    min-height: var(--header-height);
+    height: var(--header-height);
     display: flex;
     justify-content: space-between;
+    align-items: center;
     position: fixed;
     top: 0;
     width: 100%;
@@ -197,7 +216,7 @@ button {
 .dot {
     width: 22px;
     height: 22px;
-    background-color: red;
+    background-color: blue;
     border-radius: 50%;
     filter: blur(5px);
     animation: colorChange 3s infinite alternate;
@@ -205,16 +224,16 @@ button {
 
 @keyframes colorChange {
     from {
-        background-color: red;
+        background-color: blue;
     }
     to {
-        background-color: rgba(255, 0, 0, 0.337);
+        background-color: rgba(0, 0, 255, 0.337);
     }
 }
 
 .home-dot {
     position: fixed;
-    top: 11px;
+    top: calc(15px + (16px * 1.4 - 22px) / 2);
     left: 11px;
     z-index: 1000;
     cursor: pointer;
@@ -754,6 +773,7 @@ button {
     opacity: 0;
     transition: opacity 0.3s ease;
     pointer-events: none;
+    box-sizing: border-box;
 }
 
 .carousel-item:hover .carousel-overlay {
@@ -767,6 +787,9 @@ button {
     text-align: left;
     line-height: 1.4;
     letter-spacing: 0.2px;
+    max-width: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .carousel-overlay .carousel-year {
@@ -774,6 +797,9 @@ button {
     color: rgba(255, 255, 255, 0.8);
     margin-bottom: 10px;
     text-align: left;
+    max-width: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .carousel-overlay p {
@@ -782,6 +808,9 @@ button {
     text-align: left;
     line-height: 1.5;
     color: rgba(255, 255, 255, 0.9);
+    max-width: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 @keyframes scroll-carousel {
@@ -855,7 +884,7 @@ button {
     }
 
     .home-dot {
-        top: 8px;
+        top: calc(15px + (16px * 1.4 - 22px) / 2);
         left: 11px;
     }
 
@@ -965,6 +994,10 @@ button {
     .carousel-item {
         width: 500px;
         height: 400px;
+    }
+
+    .carousel-overlay {
+        padding: 15px;
     }
 
     .carousel-overlay h3 {
