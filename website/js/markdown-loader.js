@@ -115,19 +115,63 @@ function markdownToHTML(markdown) {
     html = html.replace(/^\- (.*$)/gim, '<li>$1</li>');
     html = html.replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>');
     
+    // Tables - convert markdown table syntax to HTML
+    // Match table rows (including header separator)
+    const tableRegex = /(\|.+\|\n)+/g;
+    html = html.replace(tableRegex, (match) => {
+        const lines = match.trim().split('\n').filter(line => line.trim());
+        if (lines.length < 2) return match;
+        
+        let tableHTML = '<table>';
+        let isHeader = true;
+        
+        for (let i = 0; i < lines.length; i++) {
+            const line = lines[i].trim();
+            // Skip separator row (contains only dashes, colons, spaces, and pipes)
+            if (/^[\|\s\-:]+$/.test(line)) {
+                isHeader = false;
+                continue;
+            }
+            
+            const cells = line.split('|').map(cell => cell.trim()).filter(cell => cell);
+            if (cells.length === 0) continue;
+            
+            const rowTag = isHeader ? 'thead><tr>' : 'tbody><tr>';
+            const cellTag = isHeader ? 'th' : 'td';
+            
+            if (isHeader && i === 0) {
+                tableHTML += '<thead><tr>';
+            } else if (!isHeader && (i === 1 || (i > 1 && !tableHTML.includes('<tbody>')))) {
+                tableHTML += '</thead><tbody><tr>';
+            } else {
+                tableHTML += '<tr>';
+            }
+            
+            cells.forEach(cell => {
+                tableHTML += `<${cellTag}>${cell}</${cellTag}>`;
+            });
+            
+            tableHTML += '</tr>';
+            isHeader = false;
+        }
+        
+        tableHTML += '</tbody></table>';
+        return tableHTML;
+    });
+    
     // Split by double newlines and process each block
     const blocks = html.split(/\n\s*\n/);
     html = blocks.map(block => {
         block = block.trim();
         if (!block) return '';
         
-        // Don't wrap if it's already an HTML tag (header, list, image, etc.)
-        if (block.match(/^<(h[1-6]|ul|ol|li|img|p)/)) {
+        // Don't wrap if it's already an HTML tag (header, list, image, iframe, table, etc.)
+        if (block.match(/^<(h[1-6]|ul|ol|li|img|p|iframe|table|tr|td|th)/)) {
             return block;
         }
         
-        // If block contains an image tag, return as-is (might be image on its own line)
-        if (block.includes('<img')) {
+        // If block contains HTML tags that shouldn't be wrapped, return as-is
+        if (block.includes('<img') || block.includes('<iframe') || block.includes('<table') || block.includes('<tr')) {
             return block;
         }
         
@@ -185,10 +229,8 @@ async function loadProjects(basePath, projectList) {
                 html: markdownToHTML(parsed.content)
             };
             
-            // Set slug (default to project folder name if not provided)
-            if (!project.slug) {
-                project.slug = projectName;
-            }
+            // Always use folder name as slug (slug field in frontmatter is ignored)
+            project.slug = projectName;
             
             // Ensure highlight is a boolean (default to false)
             if (project.highlight === undefined || project.highlight === null) {
@@ -245,7 +287,8 @@ async function loadProjects(basePath, projectList) {
 function renderProjectTile(project, basePath, projectIndex) {
     let coverImage = '';
     
-    if (project.cover_image) {
+    // Check if cover_image exists and is a non-empty string
+    if (project.cover_image && typeof project.cover_image === 'string' && project.cover_image.trim() !== '') {
         // If it's already a full URL, use it directly
         if (project.cover_image.startsWith('http://') || project.cover_image.startsWith('https://')) {
             coverImage = project.cover_image;
@@ -294,10 +337,34 @@ function renderProjectTile(project, basePath, projectIndex) {
 
 // Render project detail view
 function renderProjectDetail(project, basePath) {
-    const coverImage = project.cover_image 
+    // Get the current page's base directory to ensure paths work in both file:// and http:// protocols
+    const getBaseUrl = () => {
+        if (typeof window !== 'undefined' && window.location) {
+            const isFileProtocol = window.location.protocol === 'file:';
+            const path = window.location.pathname;
+            
+            if (isFileProtocol) {
+                // For file:// protocol, pathname is the full file system path
+                // Extract just the directory part relative to the file
+                const dir = path.substring(0, path.lastIndexOf('/') + 1);
+                // For file://, we want paths relative to the HTML file's directory
+                // Since paths are already relative, we just need './' or empty string
+                return '';
+            } else {
+                // For http:// or https://, pathname is relative to the server root
+                const dir = path.substring(0, path.lastIndexOf('/') + 1);
+                return dir;
+            }
+        }
+        return '';
+    };
+    
+    const pageBaseUrl = getBaseUrl();
+    
+    const coverImage = (project.cover_image && typeof project.cover_image === 'string' && project.cover_image.trim() !== '')
         ? (project.cover_image.startsWith('http') 
             ? project.cover_image 
-            : `${basePath}/${project.path}/${project.cover_image}`)
+            : `${pageBaseUrl}${basePath}/${project.path}/${project.cover_image}`)
         : '';
     
     const tagsHTML = Array.isArray(project.tags) 
@@ -306,23 +373,44 @@ function renderProjectDetail(project, basePath) {
     
     // Process images in HTML to use correct paths
     let processedHTML = project.html;
-    processedHTML = processedHTML.replace(/src="([^"]+)"/g, (match, src) => {
+    
+    // Process img tags specifically - handle all variations of img tag structure
+    // This regex matches img tags (self-closing or regular) with src attribute in any position
+    processedHTML = processedHTML.replace(/<img\s*([^>]*?)\s*\/?>/gi, (match, attributes) => {
+        // Extract src attribute from the attributes string
+        const srcMatch = attributes.match(/src\s*=\s*["']([^"']+)["']/i);
+        if (!srcMatch) {
+            // No src attribute found, return as-is
+            return match;
+        }
+        
+        let src = srcMatch[1];
+        
         // Keep HTTP/HTTPS URLs as-is
         if (src.startsWith('http://') || src.startsWith('https://')) {
             return match;
         }
-        // For relative paths, construct the full path
-        return `src="${basePath}/${project.path}/${src}"`;
-    });
-    
-    // Also handle images that might not have been converted properly
-    processedHTML = processedHTML.replace(/<img([^>]*?)src="([^"]+)"([^>]*?)>/g, (match, before, src, after) => {
-        // Check if src already has http/https
-        if (src.startsWith('http://') || src.startsWith('https://')) {
+        // Keep absolute paths (starting with /) as-is
+        if (src.startsWith('/')) {
             return match;
         }
-        // For relative paths, construct the full path
-        return `<img${before}src="${basePath}/${project.path}/${src}"${after}>`;
+        // Check if path already includes basePath (avoid double-processing)
+        if (src.includes(basePath)) {
+            return match;
+        }
+        
+        // For relative paths, construct the full path relative to the current page
+        const fullPath = `${pageBaseUrl}${basePath}/${project.path}/${src}`;
+        
+        // Replace the src attribute in the original attributes string
+        const updatedAttributes = attributes.replace(
+            /src\s*=\s*["'][^"']+["']/i,
+            `src="${fullPath}"`
+        ).trim();
+        
+        // Preserve self-closing format if original was self-closing
+        const isSelfClosing = match.trim().endsWith('/>');
+        return `<img ${updatedAttributes}${isSelfClosing ? ' /' : ''}>`;
     });
     
     // Process video tags
@@ -330,7 +418,10 @@ function renderProjectDetail(project, basePath) {
         if (src.startsWith('http')) {
             return match;
         }
-        return `<video src="${basePath}/${project.path}/${src}"`;
+        if (src.startsWith('/')) {
+            return match;
+        }
+        return `<video src="${pageBaseUrl}${basePath}/${project.path}/${src}"`;
     });
     
     // Build news section HTML

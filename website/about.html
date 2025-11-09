@@ -44,7 +44,7 @@
     }
     </script>
 </head>
-<body>
+<body class="has-header-border">
     <script type="text/javascript" src="js/scripts.js"></script>
     <script type="text/javascript" src="js/markdown-loader.js"></script>
     <div class="home-dot">
@@ -55,10 +55,12 @@
     <div class="container">
         <div class="main-content">
             <div class="header">
-                <a href="index.html">Home</a>
-                <a href="art.html">Art</a>
-                <a href="research.html">Research</a>
-                <a href="about.html">About</a>
+                <a href="index.html" class="header-name">akoenig</a>
+                <div class="header-nav">
+                    <a href="art.html">Art</a>
+                    <a href="research.html">Research</a>
+                    <a href="about.html">About</a>
+                </div>
             </div>
             <div class="content">
                 <div class="about-content" id="about-content">
@@ -84,8 +86,8 @@
             
             // Load all projects to collect news and citations
             // Note: In production, you'd want to dynamically discover all projects
-            const artProjects = await window.markdownLoader.loadProjects('content/art', ['project-1', 'project-2']);
-            const researchProjects = await window.markdownLoader.loadProjects('content/research', ['project-1', 'project-2']);
+            const artProjects = await window.markdownLoader.loadProjects('content/art', ['blindhaed', 'monoliths', 'facades', 'sakral', 'blindhaed-analog', 'aufnahme-02', 'aufnahme-01']);
+            const researchProjects = await window.markdownLoader.loadProjects('content/research', ['squirrel-data-loading', 'grasp-refinement', 'imperial-teleoperation', 'hololens-surgery']);
             
             // Collect all news items from all projects
             const allNews = [];

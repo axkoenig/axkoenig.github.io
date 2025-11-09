@@ -1,0 +1,28 @@
+---
+title: HoloLens Application for Orthopedic Trauma Surgery
+date: 2018-07-15
+short_description: An application for Microsoft HoloLens to support orthopedic trauma surgeons with intra-operative 3D visualizations of complex bone fractures.
+tags: [research, medical-imaging, augmented-reality, HoloLens, surgery]
+cover_image: images/bt.png
+highlight: false
+citations:
+  - "Koenig, A. (2018). HoloLens Application for Orthopedic Trauma Surgery. Bachelor Thesis, Technical University of Munich."
+news:
+  - "2018-09-15: User study completed with four trauma surgeons"
+---
+
+For my bachelor thesis at the [NARVIS Lab](http://campar.in.tum.de/Main/NarvisLabNew), I developed an application for the Microsoft HoloLens to support orthopedic trauma surgeons with intra-operative 3D visualizations of complex bone fractures. I conducted a user study with four trauma surgeons to evaluate my work.
+
+![HoloLens Surgery](images/bt.png)
+
+The application leverages augmented reality to overlay 3D reconstructions of bone fractures directly onto the surgical field, providing surgeons with enhanced spatial understanding during complex procedures. This technology addresses the challenge of visualizing internal bone structures that are not directly visible during surgery.
+
+The system processes preoperative CT scans to generate 3D models of fractures, which are then registered and displayed in real-time through the HoloLens headset. The user study demonstrated the potential of AR technology to improve surgical precision and reduce procedure time for complex fracture cases.
+
+This work was conducted in collaboration with [Dr. Eck](http://campar.in.tum.de/Main/UlrichEck) and [Prof. Navab](https://www.professoren.tum.de/en/navab-nassir/).
+
+## Resources
+- [Thesis](../../downloads/research/bt_compressed.pdf)
+- [Slides](../../downloads/research/bt_slides_compressed.pdf)
+- [Demo Video](https://www.youtube.com/watch?v=WQMYF8R2ZdI)
+

@@ -10,8 +10,8 @@
     }
 
     // List of project folders (in production, this could be fetched from server)
-    const artProjectList = ['project-1', 'project-2'];
-    const researchProjectList = ['project-1', 'project-2'];
+    const artProjectList = ['blindhaed', 'monoliths', 'facades', 'sakral', 'blindhaed-analog', 'aufnahme-02', 'aufnahme-01'];
+    const researchProjectList = ['squirrel-data-loading', 'grasp-refinement', 'imperial-teleoperation', 'hololens-surgery'];
 
     try {
         // Load highlighted projects from both categories

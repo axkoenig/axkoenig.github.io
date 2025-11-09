@@ -43,7 +43,7 @@
     }
     </script>
 </head>
-<body>
+<body class="has-header-border">
     <script type="text/javascript" src="js/scripts.js"></script>
     <script type="text/javascript" src="js/markdown-loader.js"></script>
     <div class="home-dot">
@@ -54,10 +54,12 @@
     <div class="container">
         <div class="main-content">
             <div class="header">
-                <a href="index.html">Home</a>
-                <a href="art.html">Art</a>
-                <a href="research.html">Research</a>
-                <a href="about.html">About</a>
+                <a href="index.html" class="header-name">akoenig</a>
+                <div class="header-nav">
+                    <a href="art.html">Art</a>
+                    <a href="research.html">Research</a>
+                    <a href="about.html">About</a>
+                </div>
             </div>
             <div class="content content-with-detail">
                 <div id="projects-grid" class="projects-grid">
@@ -76,7 +78,7 @@
             window.projectBasePath = 'content/art';
             
             // List of project folders
-            const projectList = ['project-1', 'project-2'];
+            const projectList = ['blindhaed', 'monoliths', 'facades', 'sakral', 'blindhaed-analog', 'aufnahme-02', 'aufnahme-01'];
             window.currentProjects = await window.markdownLoader.loadProjects('content/art', projectList);
             
             // Sort by year (newest first)
@@ -113,6 +115,10 @@
                                 setTimeout(() => {
                                     showProjectDetail(project);
                                 }, 200);
+                            } else {
+                                // Invalid hash - remove it and show the page normally
+                                const urlWithoutHash = window.location.pathname + window.location.search;
+                                window.history.replaceState(null, '', urlWithoutHash);
                             }
                         }
                         
