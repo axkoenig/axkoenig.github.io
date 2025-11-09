@@ -481,7 +481,10 @@ function renderProjectDetail(project, basePath) {
     
     return `
         <div class="project-detail-content">
-            <button class="project-close-button" onclick="closeProjectDetail()">← Close</button>
+            <div class="project-detail-buttons">
+                <button class="project-close-button" onclick="closeProjectDetail()">← Close</button>
+                <button class="project-fullscreen-button" onclick="toggleProjectFullscreen()" title="Enter fullscreen"><span class="fullscreen-icon">↗</span></button>
+            </div>
             <div class="project-detail-inner">
                 <div class="project-detail-header">
                     <h1>${project.title}</h1>

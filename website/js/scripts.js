@@ -6,6 +6,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Set active navigation link based on current page
     const currentPage = window.location.pathname.split('/').pop() || 'index.html';
     const navLinks = document.querySelectorAll('.header-nav a');
+    
+    // Check if we're on the home page
+    if (currentPage === 'index.html' || currentPage === '' || currentPage === 'website/index.html' || window.location.pathname.endsWith('/')) {
+        document.body.classList.add('is-home-page');
+    }
+    
     navLinks.forEach(link => {
         const linkHref = link.getAttribute('href');
         if (linkHref === currentPage || (currentPage === '' && linkHref === 'index.html')) {
@@ -124,6 +130,11 @@ document.addEventListener('DOMContentLoaded', () => {
         // Scroll panel to top
         projectDetail.scrollTop = 0;
         
+        // Update URL with hash and push to history
+        const projectSlug = project.slug || project.id;
+        const newUrl = window.location.pathname + window.location.search + '#' + projectSlug;
+        window.history.pushState({ projectOpen: true, projectSlug: projectSlug }, '', newUrl);
+        
         // Recheck images in view after rendering
         setTimeout(() => {
             checkImagesAndCanvasesInView();
@@ -150,9 +161,11 @@ document.addEventListener('DOMContentLoaded', () => {
         
         if (projectDetail) {
             projectDetail.classList.remove('active');
+            projectDetail.classList.remove('fullscreen');
         }
         if (content) {
             content.classList.remove('has-detail');
+            content.classList.remove('has-fullscreen');
         }
         
         // Remove active class from all tiles
@@ -160,6 +173,49 @@ document.addEventListener('DOMContentLoaded', () => {
         projectTiles.forEach(tile => {
             tile.classList.remove('active');
         });
+        
+        // Update URL to remove hash
+        const urlWithoutHash = window.location.pathname + window.location.search;
+        window.history.replaceState(null, '', urlWithoutHash);
+    };
+
+    // Toggle fullscreen mode for project detail panel
+    window.toggleProjectFullscreen = function() {
+        const projectDetail = document.getElementById('project-detail');
+        const content = document.querySelector('.content');
+        const fullscreenButton = document.querySelector('.project-fullscreen-button');
+        
+        if (!projectDetail) return;
+        
+        const isFullscreen = projectDetail.classList.contains('fullscreen');
+        
+        if (isFullscreen) {
+            // Exit fullscreen
+            projectDetail.classList.remove('fullscreen');
+            if (content) {
+                content.classList.remove('has-fullscreen');
+            }
+            if (fullscreenButton) {
+                const icon = fullscreenButton.querySelector('.fullscreen-icon');
+                if (icon) {
+                    icon.textContent = '↗';
+                }
+                fullscreenButton.title = 'Enter fullscreen';
+            }
+        } else {
+            // Enter fullscreen
+            projectDetail.classList.add('fullscreen');
+            if (content) {
+                content.classList.add('has-fullscreen');
+            }
+            if (fullscreenButton) {
+                const icon = fullscreenButton.querySelector('.fullscreen-icon');
+                if (icon) {
+                    icon.textContent = '↙';
+                }
+                fullscreenButton.title = 'Exit fullscreen';
+            }
+        }
     };
 
     // Setup sidebar year highlighting
@@ -237,6 +293,51 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Make updateSidebarYears globally accessible
     window.updateSidebarYears = updateSidebarYears;
+
+    // Handle browser back button
+    window.addEventListener('popstate', (event) => {
+        const projectDetail = document.getElementById('project-detail');
+        if (projectDetail && projectDetail.classList.contains('active')) {
+            // If project is open and back button is pressed, close it
+            window.closeProjectDetail();
+        }
+    });
+
+    // Handle swipe gestures on mobile
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchEndX = 0;
+    let touchEndY = 0;
+
+    document.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+        touchStartY = e.changedTouches[0].screenY;
+    }, { passive: true });
+
+    document.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        touchEndY = e.changedTouches[0].screenY;
+        handleSwipe();
+    }, { passive: true });
+
+    function handleSwipe() {
+        const projectDetail = document.getElementById('project-detail');
+        if (!projectDetail || !projectDetail.classList.contains('active')) {
+            return;
+        }
+
+        const deltaX = touchStartX - touchEndX;
+        const deltaY = touchStartY - touchEndY;
+        const minSwipeDistance = 50; // Minimum distance for a swipe
+
+        // Check if it's a horizontal swipe (more horizontal than vertical)
+        if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > minSwipeDistance) {
+            // Swipe left (close project)
+            if (deltaX > 0) {
+                window.closeProjectDetail();
+            }
+        }
+    }
 
     // Initialize
     checkImagesAndCanvasesInView();

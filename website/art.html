@@ -101,8 +101,6 @@
                                 const project = window.currentProjects.find(p => (p.slug || p.id) === projectSlug);
                                 if (project) {
                                     showProjectDetail(project);
-                                    // Update URL hash with slug
-                                    window.location.hash = project.slug || project.id;
                                 }
                             });
                         });
@@ -162,6 +160,11 @@
             
             // Scroll panel to top
             projectDetail.scrollTop = 0;
+            
+            // Update URL with hash and push to history
+            const projectSlug = project.slug || project.id;
+            const newUrl = window.location.pathname + window.location.search + '#' + projectSlug;
+            window.history.pushState({ projectOpen: true, projectSlug: projectSlug }, '', newUrl);
         }
     </script>
 </body>

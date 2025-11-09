@@ -24,6 +24,7 @@ body {
     padding: 15px;
     padding-left: 40px;
     margin-right: auto;
+    display: none;
 }
 
 .header-name:hover {
@@ -246,6 +247,22 @@ button {
     text-decoration: none;
 }
 
+.home-dot::after {
+    content: '';
+    position: fixed;
+    top: calc(var(--header-height) - 2.5px);
+    left: 0;
+    width: 44px;
+    height: 1.5px;
+    background-color: var(--border-color);
+    display: none;
+    box-sizing: border-box;
+}
+
+body.is-home-page .home-dot::after {
+    display: block;
+}
+
 .filter-controls {
     padding: 20px;
     border-bottom: 1px solid var(--border-color);
@@ -459,6 +476,11 @@ button {
     width: 50%;
 }
 
+.project-detail-view.fullscreen {
+    width: 100% !important;
+    z-index: 2000;
+}
+
 .project-detail-content {
     padding: 0;
     margin: 0;
@@ -488,6 +510,10 @@ button {
     margin-right: 50%;
 }
 
+.content-with-detail.has-detail.has-fullscreen {
+    margin-right: 0;
+}
+
 @media (max-width: 1024px) {
     .project-detail-view.active {
         width: 100%;
@@ -498,26 +524,59 @@ button {
     }
 }
 
-.project-close-button {
+.project-detail-buttons {
     position: sticky;
     top: 0;
     background: white;
-    border: none;
     border-bottom: 1px solid var(--border-color);
+    padding: 0;
+    margin: 0;
+    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.project-close-button {
+    background: white;
+    border: none;
     padding: 15px 30px;
     margin: 0;
     cursor: pointer;
     font-size: 16px;
     transition: background-color 0.3s ease;
-    z-index: 10;
     text-align: left;
-    width: 100%;
-    box-sizing: border-box;
-    display: block;
+    flex: 0 0 auto;
 }
 
 .project-close-button:hover {
     background-color: var(--color-primary);
+}
+
+.project-fullscreen-button {
+    background: white;
+    border: none;
+    padding: 15px 30px;
+    margin: 0;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    text-align: center;
+    flex: 0 0 auto;
+    min-width: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.project-fullscreen-button:hover {
+    background-color: var(--color-primary);
+}
+
+.fullscreen-icon {
+    display: inline-block;
 }
 
 .project-detail-header {
@@ -937,6 +996,22 @@ button {
     .project-close-button {
         padding: 15px 20px;
     }
+
+    /* Hide fullscreen button on mobile devices */
+    .project-fullscreen-button {
+        display: none;
+    }
+
+    /* Make close button span full width on mobile */
+    .project-close-button {
+        flex: 1;
+        width: 100%;
+    }
+
+    /* On mobile, make the buttons container allow close button to span full width */
+    .project-detail-buttons {
+        justify-content: flex-start;
+    }
     
     .project-detail-header {
         margin: 0 -20px 30px -20px;
@@ -1011,6 +1086,13 @@ button {
     .landing-nav a {
         font-size: 18px;
         padding: 15px 30px;
+    }
+}
+
+@media (max-width: 375px) {
+    /* Hide akoenig on very small screens */
+    .header-name {
+        display: none;
     }
 }
 
