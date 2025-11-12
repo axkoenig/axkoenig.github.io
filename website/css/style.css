@@ -554,6 +554,21 @@ body.is-home-page .home-dot::after {
     .content-with-detail.has-detail {
         margin-right: 0;
     }
+    
+    /* Hide fullscreen button on small screens when default view is full screen */
+    .project-fullscreen-button {
+        display: none !important;
+    }
+    
+    /* Make close button fill entire width when expand button is hidden */
+    .project-close-button {
+        flex: 1;
+        width: 100%;
+    }
+    
+    .project-detail-buttons {
+        justify-content: flex-start;
+    }
 }
 
 .project-detail-buttons {
@@ -609,6 +624,13 @@ body.is-home-page .home-dot::after {
 
 .fullscreen-icon {
     display: inline-block;
+}
+
+.fullscreen-m-key {
+    display: inline-block;
+    margin-right: 8px;
+    font-size: 16px;
+    font-weight: 300;
 }
 
 .project-detail-header {
@@ -1204,22 +1226,6 @@ body.is-home-page .home-dot::after {
     
     .project-close-button {
         padding: 15px 20px;
-    }
-
-    /* Hide fullscreen button on mobile devices */
-    .project-fullscreen-button {
-        display: none;
-    }
-
-    /* Make close button span full width on mobile */
-    .project-close-button {
-        flex: 1;
-        width: 100%;
-    }
-
-    /* On mobile, make the buttons container allow close button to span full width */
-    .project-detail-buttons {
-        justify-content: flex-start;
     }
     
     .project-detail-header {

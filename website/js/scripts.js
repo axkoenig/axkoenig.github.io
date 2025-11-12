@@ -218,6 +218,23 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    // Keyboard shortcut for fullscreen toggle (M key)
+    document.addEventListener('keydown', (event) => {
+        // Only trigger if project detail is open and not typing in an input/textarea
+        const projectDetail = document.getElementById('project-detail');
+        const isInputFocused = document.activeElement && 
+            (document.activeElement.tagName === 'INPUT' || 
+             document.activeElement.tagName === 'TEXTAREA' ||
+             document.activeElement.isContentEditable);
+        
+        if (projectDetail && projectDetail.classList.contains('active') && !isInputFocused) {
+            if (event.key === 'm' || event.key === 'M') {
+                event.preventDefault();
+                window.toggleProjectFullscreen();
+            }
+        }
+    });
+
     // Setup sidebar year highlighting
     function updateSidebarHighlight() {
         const sidebarRows = document.querySelectorAll('.sidebar .row[data-year]');
