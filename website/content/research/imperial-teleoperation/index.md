@@ -5,8 +5,18 @@ short_description: A modular ROS platform for intuitive control of a robotic rig
 tags: [research, robotics, teleoperation, human-robot-interaction, VR]
 cover_image: images/imperial.png
 highlight: false
-citations:
-  - "Koenig, A., Secoli, R., & Rodriguez y Baena, F. (2021). Educational Use of Gesture-Based Teleoperation Platform. IEEE RO-MAN 2021."
+papers:
+  - authors: ["A. Koenig", "F. Rodriguez y Baena", "R. Secoli"]
+    year: 2021
+    title: "Gesture-Based Teleoperated Grasping for Educational Robotics"
+    venue: "IEEE International Symposium on Robot and Human Interactive Communication (RO-MAN)"
+    resources:
+      - label: "Paper"
+        url: "https://ieeexplore.ieee.org/document/9515390"
+      - label: "Talk"
+        url: "https://www.youtube.com/watch?v=fNvErR5eUpc"
+      - label: "Demo"
+        url: "https://www.youtube.com/watch?v=RDbpd9d7U2k"
 news:
   - "2021-08-30: Paper accepted at IEEE RO-MAN 2021"
 ---

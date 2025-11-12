@@ -5,9 +5,27 @@ short_description: A research project exploring the role of tactile sensing in l
 tags: [research, robotics, machine-learning, haptics, manipulation]
 cover_image: images/hand.JPG
 highlight: true
-citations:
-  - "Koenig, A., et al. (2022). Tactile Sensing for Robotic Grasp Refinement. IROS 2022."
-  - "Koenig, A., et al. (2022). Learning Grasp Refinement with Tactile Feedback. ICRA 2022 Workshop on Reinforcement Learning for Contact-Rich Manipulation."
+papers:
+  - authors: ["A. Koenig", "Z. Liu", "L. Janson", "R. Howe"]
+    year: 2022
+    title: "The Role of Tactile Sensing in Learning and Deploying Grasp Refinement Algorithms"
+    venue: "IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)"
+    resources:
+      - label: "Paper"
+        url: "https://arxiv.org/abs/2109.11234"
+      - label: "Talk"
+        url: "https://www.youtube.com/watch?v=ko4iZgjomvY"
+      - label: "Demo"
+        url: "https://www.youtube.com/watch?v=WKhmOKPEYPc"
+  - authors: ["A. Koenig", "Z. Liu", "L. Janson", "R. Howe"]
+    year: 2022
+    title: "Tactile Sensing and its Role in Learning and Deploying Robotic Grasping Controllers"
+    venue: "[Workshop on Reinforcement Learning for Contact-Rich Manipulation](https://sites.google.com/view/icra2022-contactrich/) at IEEE International Conference on Robotics and Automation (ICRA)"
+    resources:
+      - label: "Paper"
+        url: "https://openreview.net/forum?id=OqmWRIsvA4O"
+      - label: "Poster"
+        url: "../downloads/research/icra22_workshop_poster.pdf"
 news:
   - "2022-10-25: Full paper accepted at IROS 2022"
   - "2022-05-25: Workshop paper accepted at ICRA 2022"

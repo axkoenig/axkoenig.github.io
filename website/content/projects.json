@@ -11,10 +11,14 @@
     "sakral"
   ],
   "research": [
+    "acoustic-jamming",
     "co-design",
     "hololens-surgery",
     "imperial-teleoperation",
-    "squirrel-data-loading"
+    "instance-general",
+    "learning-or-compliance",
+    "squirrel-data-loading",
+    "stego"
   ]
 }
 

@@ -15,24 +15,102 @@ function parseFrontmatter(content) {
     const frontmatter = match[1];
     const body = match[2];
     
-    // Simple YAML parser for basic key-value pairs and arrays
-    let currentKey = null;
-    let currentArray = null;
-    
+    // Enhanced YAML parser that handles nested objects and arrays
     const lines = frontmatter.split('\n');
+    const stack = [{ obj: metadata, indent: -1 }]; // Stack to track nested objects
+    
     for (let i = 0; i < lines.length; i++) {
-        const trimmedLine = lines[i].trim();
+        const line = lines[i];
+        const trimmedLine = line.trim();
         
         // Skip empty lines
         if (!trimmedLine) continue;
         
+        // Calculate indentation (spaces before first non-space char)
+        const indent = line.length - line.trimStart().length;
+        
+        // Pop stack until we find the right parent level
+        while (stack.length > 1 && stack[stack.length - 1].indent >= indent) {
+            stack.pop();
+        }
+        
+        const currentContext = stack[stack.length - 1];
+        const currentObj = currentContext.obj;
+        
         // Check if this is an array item (starts with -)
         if (trimmedLine.startsWith('- ')) {
-            if (currentArray !== null) {
-                const item = trimmedLine.substring(2).trim();
-                // Remove quotes if present
-                const unquoted = item.replace(/^["']|["']$/g, '');
-                currentArray.push(unquoted);
+            const itemContent = trimmedLine.substring(2).trim();
+            
+            // Ensure current context is an array
+            if (!Array.isArray(currentObj)) {
+                // Need to convert current context to array
+                const parentContext = stack[stack.length - 2];
+                if (parentContext) {
+                    const parentKey = Object.keys(parentContext.obj).find(k => parentContext.obj[k] === currentObj);
+                    if (parentKey) {
+                        parentContext.obj[parentKey] = [];
+                        currentContext.obj = parentContext.obj[parentKey];
+                        currentObj = currentContext.obj;
+                    }
+                }
+            }
+            
+            // Check if it's an object (has colon and next line might be indented)
+            if (itemContent.includes(':')) {
+                // It's an object item - create new object in array
+                const newObj = {};
+                currentObj.push(newObj);
+                stack.push({ obj: newObj, indent: indent });
+                
+                // Parse the key-value from the same line
+                const colonIdx = itemContent.indexOf(':');
+                if (colonIdx > 0) {
+                    const key = itemContent.substring(0, colonIdx).trim();
+                    let value = itemContent.substring(colonIdx + 1).trim();
+                    
+                    // Handle array format [item1, item2] on same line
+                    if (value.startsWith('[') && value.endsWith(']')) {
+                        value = value.slice(1, -1).split(',').map(item => item.trim().replace(/^["']|["']$/g, ''));
+                        newObj[key] = value;
+                    }
+                    // Handle quoted strings
+                    else if ((value.startsWith('"') && value.endsWith('"')) || 
+                             (value.startsWith("'") && value.endsWith("'"))) {
+                        value = value.slice(1, -1);
+                        newObj[key] = value;
+                    }
+                    // Handle numeric values
+                    else if (/^-?\d+$/.test(value)) {
+                        newObj[key] = parseInt(value, 10);
+                    }
+                    else if (/^-?\d+\.\d+$/.test(value)) {
+                        newObj[key] = parseFloat(value);
+                    }
+                    // Check if next line is more indented (nested object/array)
+                    else if (i + 1 < lines.length) {
+                        const nextLine = lines[i + 1];
+                        const nextIndent = nextLine.length - nextLine.trimStart().length;
+                        const nextTrimmed = nextLine.trim();
+                        
+                        if (nextIndent > indent) {
+                            if (nextTrimmed.startsWith('- ')) {
+                                newObj[key] = [];
+                                stack.push({ obj: newObj[key], indent: indent });
+                            } else {
+                                newObj[key] = {};
+                                stack.push({ obj: newObj[key], indent: indent });
+                            }
+                        } else {
+                            newObj[key] = value;
+                        }
+                    } else {
+                        newObj[key] = value;
+                    }
+                }
+            } else {
+                // Simple array item (string)
+                const unquoted = itemContent.replace(/^["']|["']$/g, '');
+                currentObj.push(unquoted);
             }
             continue;
         }
@@ -46,40 +124,77 @@ function parseFrontmatter(content) {
             // Handle array format [item1, item2] on same line
             if (value.startsWith('[') && value.endsWith(']')) {
                 value = value.slice(1, -1).split(',').map(item => item.trim().replace(/^["']|["']$/g, ''));
-                metadata[key] = value;
-                currentKey = null;
-                currentArray = null;
+                currentObj[key] = value;
             }
             // Handle array declaration (starts with empty or just colon)
+            // Only treat as array if next line is indented and starts with -
             else if (value === '' || value === '[]') {
-                metadata[key] = [];
-                currentKey = key;
-                currentArray = metadata[key];
+                // Check if next line is indented and starts with array item
+                if (i + 1 < lines.length) {
+                    const nextLine = lines[i + 1];
+                    const nextIndent = nextLine.length - nextLine.trimStart().length;
+                    const nextTrimmed = nextLine.trim();
+                    
+                    if (nextIndent > indent && nextTrimmed.startsWith('- ')) {
+                        // It's an array
+                        currentObj[key] = [];
+                        stack.push({ obj: currentObj[key], indent: indent });
+                    } else {
+                        // Empty value, not an array
+                        currentObj[key] = '';
+                    }
+                } else {
+                    // Last line, empty value
+                    currentObj[key] = '';
+                }
             }
             // Handle quoted strings
             else if ((value.startsWith('"') && value.endsWith('"')) || 
                      (value.startsWith("'") && value.endsWith("'"))) {
                 value = value.slice(1, -1);
-                metadata[key] = value;
-                currentKey = null;
-                currentArray = null;
+                currentObj[key] = value;
             }
             // Handle boolean values
             else if (value === 'true' || value === 'True') {
-                metadata[key] = true;
-                currentKey = null;
-                currentArray = null;
+                currentObj[key] = true;
             }
             else if (value === 'false' || value === 'False') {
-                metadata[key] = false;
-                currentKey = null;
-                currentArray = null;
+                currentObj[key] = false;
             }
-            // Regular key-value
+            // Handle numeric values
+            else if (/^-?\d+$/.test(value)) {
+                currentObj[key] = parseInt(value, 10);
+            }
+            else if (/^-?\d+\.\d+$/.test(value)) {
+                currentObj[key] = parseFloat(value);
+            }
+            // Regular key-value - could be start of nested object or array
             else {
-                metadata[key] = value;
-                currentKey = null;
-                currentArray = null;
+                // Check if next line is indented
+                if (i + 1 < lines.length) {
+                    const nextLine = lines[i + 1];
+                    const nextIndent = nextLine.length - nextLine.trimStart().length;
+                    const nextTrimmed = nextLine.trim();
+                    
+                    if (nextIndent > indent) {
+                        // Next line is indented - check if it's an array (starts with -) or object
+                        if (nextTrimmed.startsWith('- ')) {
+                            // It's an array
+                            currentObj[key] = [];
+                            stack.push({ obj: currentObj[key], indent: indent });
+                        } else {
+                            // It's a nested object
+                            currentObj[key] = {};
+                            stack.push({ obj: currentObj[key], indent: indent });
+                        }
+                    } else {
+                        // Regular string value
+                        currentObj[key] = value;
+                    }
+                } else {
+                    // Last line, regular string value
+                    currentObj[key] = value;
+                }
             }
         }
     }
@@ -288,7 +403,11 @@ function renderProjectTile(project, basePath, projectIndex) {
     let coverImage = '';
     
     // Check if cover_image exists and is a non-empty string
-    if (project.cover_image && typeof project.cover_image === 'string' && project.cover_image.trim() !== '') {
+    // Also check it's not an empty array (parser might create empty array for empty values)
+    if (project.cover_image && 
+        typeof project.cover_image === 'string' && 
+        project.cover_image.trim() !== '' &&
+        !Array.isArray(project.cover_image)) {
         // If it's already a full URL, use it directly
         if (project.cover_image.startsWith('http://') || project.cover_image.startsWith('https://')) {
             coverImage = project.cover_image;
@@ -297,10 +416,9 @@ function renderProjectTile(project, basePath, projectIndex) {
         else {
             coverImage = `${basePath}/${project.path}/${project.cover_image}`;
         }
-    } else {
-        // Fallback placeholder
-        coverImage = `https://via.placeholder.com/300x225/cccccc/999999?text=`;
     }
+    // If cover_image is empty, undefined, or an array, don't use placeholder
+    // The CSS should handle missing images gracefully
     
     // Generate project number (padded with zeros)
     const projectNumber = String(projectIndex + 1).padStart(3, '0');
@@ -316,9 +434,9 @@ function renderProjectTile(project, basePath, projectIndex) {
     
     return `
         <div class="project-tile" data-project-id="${project.id}" data-project-slug="${project.slug || project.id}" data-year="${project.year || ''}" data-tags="${Array.isArray(project.tags) ? project.tags.join(',') : project.tags || ''}">
-            <div class="project-cover">
-                <img src="${coverImage}" alt="${project.title || ''}" loading="lazy" onerror="this.src='https://via.placeholder.com/300x225/cccccc/999999?text='" />
-            </div>
+            ${coverImage ? `<div class="project-cover">
+                <img src="${coverImage}" alt="${project.title || ''}" loading="lazy" />
+            </div>` : '<div class="project-cover"></div>'}
             <div class="project-content">
                 <div class="project-number">${projectNumber}</div>
                 <h3 class="project-title">${project.title || 'Untitled'}</h3>
@@ -361,7 +479,10 @@ function renderProjectDetail(project, basePath) {
     
     const pageBaseUrl = getBaseUrl();
     
-    const coverImage = (project.cover_image && typeof project.cover_image === 'string' && project.cover_image.trim() !== '')
+    const coverImage = (project.cover_image && 
+                        typeof project.cover_image === 'string' && 
+                        project.cover_image.trim() !== '' &&
+                        !Array.isArray(project.cover_image))
         ? (project.cover_image.startsWith('http') 
             ? project.cover_image 
             : `${pageBaseUrl}${basePath}/${project.path}/${project.cover_image}`)
@@ -466,7 +587,65 @@ function renderProjectDetail(project, basePath) {
         `;
     }
     
-    // Build citations section HTML
+    // Build papers section HTML (structured papers)
+    let papersHTML = '';
+    if (project.papers && Array.isArray(project.papers) && project.papers.length > 0) {
+        papersHTML = `
+            <div class="papers" style="margin: 0 -30px 30px -30px; padding: 0 30px 20px 30px; width: calc(100% + 60px); box-sizing: border-box;">
+                <h3>Publications</h3>
+                ${project.papers.map(paper => {
+                    if (!paper || typeof paper !== 'object') return '';
+                    
+                    const authors = Array.isArray(paper.authors) ? paper.authors.join(', ') : (paper.authors || '');
+                    const title = paper.title || '';
+                    const venue = paper.venue || '';
+                    const year = paper.year || '';
+                    
+                    // Format citation: Authors "Title" In: Venue, Year
+                    let citationText = '';
+                    if (authors) citationText += authors;
+                    if (title) citationText += ` "${title}"`;
+                    if (venue) citationText += ` In: ${venue}`;
+                    if (year) citationText += `, ${year}`;
+                    
+                    // Build resources HTML
+                    let resourcesHTML = '';
+                    if (paper.resources && Array.isArray(paper.resources) && paper.resources.length > 0) {
+                        resourcesHTML = `
+                            <div class="paper-resources">
+                                ${paper.resources.map(resource => {
+                                    if (typeof resource === 'string') {
+                                        // Legacy format - just a URL
+                                        return `<a class="resource-link" href="${resource}" target="_blank">Link</a>`;
+                                    } else if (resource && resource.url) {
+                                        const label = resource.label || 'Link';
+                                        return `<a class="resource-link" href="${resource.url}" target="_blank">${label}</a>`;
+                                    }
+                                    return '';
+                                }).filter(html => html).join('')}
+                            </div>
+                        `;
+                    }
+                    
+                    // Process venue links (if venue contains markdown-style links)
+                    let processedCitation = citationText;
+                    if (venue) {
+                        // Replace markdown links in venue: [text](url)
+                        processedCitation = processedCitation.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a class="link" href="$2">$1</a>');
+                    }
+                    
+                    return `
+                        <div class="publication-item publication-item-vertical" style="margin-bottom: 20px;">
+                            <p>${processedCitation}</p>
+                            ${resourcesHTML}
+                        </div>
+                    `;
+                }).filter(html => html).join('')}
+            </div>
+        `;
+    }
+    
+    // Build citations section HTML (legacy format - for backward compatibility)
     let citationsHTML = '';
     if (project.citations && Array.isArray(project.citations) && project.citations.length > 0) {
         citationsHTML = `
@@ -495,6 +674,7 @@ function renderProjectDetail(project, basePath) {
                 </div>
                 ${coverImage ? `<div style="margin: 0 -30px 30px -30px; padding-bottom: 30px; border-bottom: 1px solid var(--border-color); width: calc(100% + 60px); box-sizing: border-box;"><img src="${coverImage}" alt="${project.title}" style="max-width: 100%; width: 100%; display: block; filter: grayscale(0%); opacity: 1; transition: filter 0.5s ease, opacity 0.5s ease;" class="in-view" loading="lazy" onerror="console.error('Failed to load cover image:', this.src);" /></div>` : ''}
                 ${newsHTML}
+                ${papersHTML}
                 ${citationsHTML}
                 <div class="project-detail-body">
                     ${processedHTML}
@@ -516,6 +696,74 @@ async function loadHighlightedProjects(artProjectList, researchProjectList) {
     return highlightedProjects;
 }
 
+// Aggregate all publications from research projects
+async function aggregatePublications() {
+    try {
+        // Load project list from central configuration
+        let projectList = [];
+        const response = await fetch('content/projects.json');
+        if (response.ok) {
+            const config = await response.json();
+            projectList = config.research || [];
+        } else {
+            console.error('Failed to load projects.json');
+            return [];
+        }
+        
+        // Load all research projects
+        const projects = await loadProjects('content/research', projectList);
+        
+        // Extract all papers from all projects
+        const allPapers = [];
+        for (const project of projects) {
+            if (project.papers && Array.isArray(project.papers) && project.papers.length > 0) {
+                for (const paper of project.papers) {
+                    if (paper && typeof paper === 'object') {
+                        // Get cover image path
+                        let coverImagePath = '';
+                        if (project.cover_image && 
+                            typeof project.cover_image === 'string' && 
+                            project.cover_image.trim() !== '' &&
+                            !Array.isArray(project.cover_image)) {
+                            if (project.cover_image.startsWith('http://') || project.cover_image.startsWith('https://')) {
+                                coverImagePath = project.cover_image;
+                            } else {
+                                coverImagePath = `content/research/${project.slug || project.id}/${project.cover_image}`;
+                            }
+                        }
+                        
+                        // Add project reference to each paper
+                        allPapers.push({
+                            ...paper,
+                            projectSlug: project.slug || project.id,
+                            projectTitle: project.title || project.id,
+                            projectCoverImage: coverImagePath
+                        });
+                    }
+                }
+            }
+        }
+        
+        // Sort by year (newest first), then by project title
+        allPapers.sort((a, b) => {
+            const yearA = a.year || 0;
+            const yearB = b.year || 0;
+            if (yearB !== yearA) {
+                return yearB - yearA; // Newest first
+            }
+            // If same year, sort by project title
+            const titleA = a.projectTitle || '';
+            const titleB = b.projectTitle || '';
+            return titleA.localeCompare(titleB);
+        });
+        
+        return allPapers;
+    } catch (error) {
+        console.error('Error aggregating publications:', error);
+        return [];
+    }
+}
+
 // Export functions for use in other scripts
 window.markdownLoader = {
     loadMarkdownFile,
@@ -524,6 +772,7 @@ window.markdownLoader = {
     renderProjectTile,
     renderProjectDetail,
     markdownToHTML,
-    parseFrontmatter
+    parseFrontmatter,
+    aggregatePublications
 };
 
