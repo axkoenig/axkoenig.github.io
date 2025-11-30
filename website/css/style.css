@@ -973,7 +973,7 @@ body.is-home-page .home-dot::after {
 
 .about-columns {
     display: grid;
-    grid-template-columns: 0.7fr 2.3fr;
+    grid-template-columns: max(30%, 300px) 1fr;
     gap: 0;
     align-items: stretch;
     min-height: calc(100vh - var(--header-height));
@@ -985,26 +985,23 @@ body.is-home-page .home-dot::after {
     position: absolute;
     top: 0;
     bottom: 0;
-    left: calc(23.33% - 0.5px);
+    left: max(30%, 300px);
     width: 1px;
     background-color: var(--border-color);
     pointer-events: none;
 }
 
 .about-left {
-    padding: 40px 40px 40px 40px;
+    padding: 40px 60px 40px 60px;
     height: calc(100vh - var(--header-height));
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
     box-sizing: border-box;
+    min-width: 300px;
 }
 
-.about-left > * {
-    max-width: 400px;
-    width: 100%;
-}
 
 .about-right {
     padding: 40px 60px 40px 60px;
@@ -1015,7 +1012,7 @@ body.is-home-page .home-dot::after {
 .about-photo {
     width: 100%;
     height: auto;
-    margin: 75px 0 25px 0;
+    margin: 60px 0 60px 0;
     display: block;
     text-align: left;
 }
@@ -1200,13 +1197,20 @@ body.is-home-page .home-dot::after {
 
 /* Talks list styling */
 .talks-list {
-    list-style: disc;
-    padding-left: 20px;
+    list-style: none;
+    padding: 0;
     margin: 0;
+    width: 100%;
+    display: block;
 }
 
 .talks-list li {
     margin-bottom: 25px;
+    width: 100%;
+    padding: 0;
+    margin-left: 0;
+    list-style: none;
+    display: block;
 }
 
 .talks-list li:last-child {
@@ -1216,6 +1220,8 @@ body.is-home-page .home-dot::after {
 .talks-list p {
     margin-bottom: 0;
     line-height: 1.7;
+    width: 100%;
+    max-width: 100%;
 }
 
 .talks-list .paper-resources {
@@ -1253,6 +1259,13 @@ body.is-home-page .home-dot::after {
 
 .about-content a:hover {
     background-color: var(--color-primary);
+}
+
+@media (max-width: 1200px) {
+    #bio-container {
+        column-count: 1;
+        column-gap: 0;
+    }
 }
 
 @media (max-width: 768px) {
@@ -1380,7 +1393,7 @@ body.is-home-page .home-dot::after {
         position: static;
         height: auto;
         padding: 30px 20px;
-        align-items: center;
+        align-items: flex-start;
     }
     
     .about-left > * {
@@ -1404,11 +1417,19 @@ body.is-home-page .home-dot::after {
     
     .about-right .about-section.bio-section {
         display: block;
+        position: relative;
+        padding-top: 50px;
+        margin-top: 0;
     }
     
-    #bio-container {
-        column-count: 1;
-        column-gap: 0;
+    .about-right .about-section.bio-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -20px;
+        width: 100vw;
+        height: 1px;
+        background-color: var(--border-color);
     }
     
     .about-section h2 {
@@ -1421,21 +1442,34 @@ body.is-home-page .home-dot::after {
     }
     
     .about-photo {
-        max-width: 300px;
         width: 100%;
-        margin: 0 auto 20px;
+        max-width: 100%;
+        margin: 0 0 20px 0;
     }
     
     .publication-item {
-        grid-template-columns: auto 1fr;
+        grid-template-columns: 1fr;
         gap: 15px;
         padding: 12px;
+        position: relative;
     }
     
-    .publication-cover-image {
-        width: 90px;
-        min-width: 90px;
+    .publication-item .publication-cover-image {
+        width: 40%;
+        min-width: 40%;
+        max-width: 40%;
         aspect-ratio: 4/3;
+        margin-top: 8px;
+        margin-left: 0;
+        margin-right: 0;
+    }
+    
+    .publication-arrow {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        align-self: auto;
+        padding: 0;
     }
     
     .publication-item .paper-resources {
@@ -1443,7 +1477,7 @@ body.is-home-page .home-dot::after {
     }
     
     .name-heading {
-        text-align: center;
+        text-align: left;
         margin-bottom: 20px;
     }
     
