@@ -5,6 +5,22 @@ short_description: A multi-media artwork featuring event cameras, exploring the 
 tags: [art, multimedia, event-cameras, installation]
 cover_image: images/compressed/DSC1664.jpg
 highlight: true
+collaborators:
+  - name: "Justin Urbach"
+    affiliation: "Academy of Fine Arts Munich"
+    url: "https://www.justinurbach.com/about"
+  - name: "Friedhelm Hamann"
+    affiliation: "Robotic Interactive Perception Group, TU Berlin"
+    url: "https://friedhelmhamann.github.io/"
+  - name: "Guillermo Gallego"
+    affiliation: "Robotic Interactive Perception Group, TU Berlin"
+    url: "https://sites.google.com/view/guillermogallego"
+  - name: "Oliver Brock"
+    affiliation: "Robotics and Biology Lab, TU Berlin"
+    url: "https://www.tu.berlin/robotics/ueber-rbo/prof-dr-oliver-brock"
+  - name: "William East"
+    affiliation: "Aqua Veen"
+    url: "https://soundcloud.com/aquaveen"
 news:
   - "2025-05-25: Exhibition at Galerie Stadt Sindelfingen until May 25, 2025"
   - "2024-01-15: First institutional solo exhibition of Justin Urbach"

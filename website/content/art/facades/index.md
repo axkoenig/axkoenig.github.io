@@ -5,6 +5,7 @@ short_description: A photographic exploration of architectural facades, focusing
 tags: [photography, architecture, visual]
 cover_image: images/facades/1.jpeg
 highlight: false
+collaborators: []
 ---
 
 This series examines how buildings interact with their environment and how architectural elements create visual rhythm and texture. The facades become canvases for light and shadow, revealing the intricate details of modernist and brutalist architecture.

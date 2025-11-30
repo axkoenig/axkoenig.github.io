@@ -658,6 +658,43 @@ function renderProjectDetail(project, basePath) {
         `;
     }
     
+    // Build collaborators section HTML
+    let collaboratorsHTML = '';
+    // Only show collaborators section if there are valid collaborators
+    if (project.collaborators && 
+        Array.isArray(project.collaborators) && 
+        project.collaborators.length > 0) {
+        const collaboratorItems = project.collaborators
+            .map(collaborator => {
+                // Handle both object format and string format
+                if (typeof collaborator === 'object' && collaborator !== null) {
+                    if (collaborator.name) {
+                        const affiliation = collaborator.affiliation || '';
+                        const url = collaborator.url || '';
+                        const nameHTML = url 
+                            ? `<a href="${url}" class="link" target="_blank">${collaborator.name}</a>`
+                            : collaborator.name;
+                        return `<div class="collaborator-item">${nameHTML}${affiliation ? ` - ${affiliation}` : ''}</div>`;
+                    }
+                } else if (typeof collaborator === 'string' && collaborator.trim()) {
+                    // Fallback for string format (only if non-empty)
+                    return `<div class="collaborator-item">${collaborator}</div>`;
+                }
+                return '';
+            })
+            .filter(html => html && html.trim());
+        
+        // Only create HTML if we have valid collaborator items
+        if (collaboratorItems.length > 0) {
+            collaboratorsHTML = `
+                <div class="project-collaborators" style="margin: 0 -30px 30px -30px; padding: 0 30px 20px 30px; border-bottom: 1px solid var(--border-color); width: calc(100% + 60px); box-sizing: border-box;">
+                    <h3>Collaborators</h3>
+                    ${collaboratorItems.join('')}
+                </div>
+            `;
+        }
+    }
+    
     return `
         <div class="project-detail-content">
             <div class="project-detail-buttons">
@@ -673,6 +710,7 @@ function renderProjectDetail(project, basePath) {
                     </div>
                 </div>
                 ${coverImage ? `<div style="margin: 0 -30px 30px -30px; padding-bottom: 30px; border-bottom: 1px solid var(--border-color); width: calc(100% + 60px); box-sizing: border-box;"><img src="${coverImage}" alt="${project.title}" style="max-width: 100%; width: 100%; display: block; filter: grayscale(0%); opacity: 1; transition: filter 0.5s ease, opacity 0.5s ease;" class="in-view" loading="lazy" onerror="console.error('Failed to load cover image:', this.src);" /></div>` : ''}
+                ${collaboratorsHTML}
                 ${newsHTML}
                 ${papersHTML}
                 ${citationsHTML}

@@ -5,6 +5,7 @@ short_description: A photographic series exploring architectural monoliths and t
 tags: [photography, architecture, visual]
 cover_image: images/monoliths/1.jpeg
 highlight: true
+collaborators: []
 ---
 
 This series examines monumental architectural structures and their imposing presence in urban landscapes. The photographs capture the essence of these concrete and steel giants, revealing their geometric forms and the interplay between light and shadow.

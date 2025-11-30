@@ -5,6 +5,11 @@ short_description: Analyzing STEGO for safe unsupervised semantic segmentation t
 tags: [research, computer-vision, machine-learning, semantic-segmentation, safety]
 cover_image: 
 highlight: false
+collaborators:
+  - name: "M. Schambach"
+    affiliation: "Merantix Momentum"
+  - name: "J. Otterbach"
+    affiliation: "Merantix Momentum"
 papers:
   - authors: ["A. Koenig", "M. Schambach", "J. Otterbach"]
     year: 2023

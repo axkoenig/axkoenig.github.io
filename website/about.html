@@ -72,20 +72,22 @@
                                 <img class="about-photo" src="content/about/me4.JPG" alt="Alexander Koenig" />
                             </div>
                             <div class="about-section">
-                                <div class="contact-icons">
-                                    <a class="resource-link" href="https://www.linkedin.com/in/alexander-koenig-95b9a0134/" target="_blank"><i class="fab fa-linkedin"></i></a>
-                                    <a class="resource-link" href="https://scholar.google.de/citations?user=IKDoQE0AAAAJ&hl=de&oi=sra" target="_blank"><i class="fas fa-graduation-cap"></i></a>
-                                    <a class="resource-link" href="https://github.com/axkoenig" target="_blank"><i class="fab fa-github"></i></a>
-                                    <a class="resource-link" href="https://soundcloud.com/alexander-koenig" target="_blank"><i class="fab fa-soundcloud"></i></a>
-                                    <a class="resource-link" href="mailto:awckoenig@gmail.com"><i class="fas fa-envelope"></i></a>
+                                <div class="contact-links">
+                                    <a class="resource-link" href="https://www.linkedin.com/in/alexander-koenig-95b9a0134/" target="_blank">LinkedIn</a>
+                                    <a class="resource-link" href="https://scholar.google.de/citations?user=IKDoQE0AAAAJ&hl=de&oi=sra" target="_blank">Google Scholar</a>
+                                    <a class="resource-link" href="https://github.com/axkoenig" target="_blank">GitHub</a>
+                                    <a class="resource-link" href="https://soundcloud.com/alexander-koenig" target="_blank">SoundCloud</a>
+                                    <a class="resource-link" href="https://aquaveen.com/" target="_blank">Aqua Veen</a>
+                                    <a class="resource-link" href="mailto:awckoenig@gmail.com">Email</a>
                                 </div>
                             </div>
                         </div>
                         <div class="about-right">
-                            <div class="about-section">
+                            <div class="about-section bio-section">
                                 <h2>Bio</h2>
-                                <p>I am pursuing my PhD in TU Berlin's <a class="link" href="https://www.tu.berlin/robotics">Robotics and Biology Lab</a>, where Prof. <a class="link" href="https://www.tu.berlin/en/robotics/about-rbo/prof-dr-oliver-brock">Oliver Brock</a> advises me. Previously, I worked as a Research Fellow in the <a class="link" href="http://biorobotics.harvard.edu">Harvard Biorobotics Lab</a> and the <a class="link" href="http://www.imperial.ac.uk/mechatronics-in-medicine">Mechatronics in Medicine Lab</a> at Imperial College London, and as a Machine Learning Researcher at <a class="link" href="http://merantix-momentum.com">Merantix</a> in Berlin. I did my master's in <a class="link" href="https://www.in.tum.de/en/for-prospective-students/masters-programs/robotics-cognition-intelligence-msc/">Robotics, Cognition, Intelligence</a> and my bachelor's in <a class="link" href="https://www.mse.tum.de/en/prospective-students/engineering-science/#c3206">Engineering Science</a>, both at TU Munich.</p>
-                                <p>My current research focuses on new control and sensing paradigms for soft robotic hands to unlock robust object manipulation. I am involved in various audio-visual art projects. I'm an avid photographer, I'm one half of <a class="link" href="https://aquaveen.com/">Aqua Veen</a>, and I'm collaborating with <a class="link" href="https://www.justinurbach.com/">Justin Urbach</a> and others on <a class="link" href="https://galerie-sindelfingen.de/justin-urbach-blindhaed/">BLINDHÆD</a>, a multi-media art installation based on event vision.</p>
+                                <div id="bio-container">
+                                    <!-- Bio will be dynamically loaded here -->
+                                </div>
                             </div>
 
                             <div class="about-section">
@@ -97,36 +99,37 @@
 
                             <div class="about-section">
                                 <h2>Talks</h2>
-                                
-                                <div class="publication-item">
-                                    <p>"Co-Design for Soft Manipulation at RBO: Past, Present, and Future" at <a class="link" href="https://www.spp2100.de/workshop/spp-symposium-2025">Soft Material Robotics Symposium Hannover</a>, 2025</p>
-                                    <div class="paper-resources">
-                                        <a class="resource-link" href="../downloads/research/smr_25_slides.pdf" target="_blank">Slides</a>
-                                    </div>
-                                </div>
+                                <ul class="talks-list">
+                                    <li>
+                                        <p>"Co-Design for Soft Manipulation at RBO: Past, Present, and Future" at <a class="link" href="https://www.spp2100.de/workshop/spp-symposium-2025">Soft Material Robotics Symposium Hannover</a>, 2025</p>
+                                        <div class="paper-resources">
+                                            <a class="resource-link" href="../downloads/research/smr_25_slides.pdf" target="_blank">Slides</a>
+                                        </div>
+                                    </li>
 
-                                <div class="publication-item">
-                                    <p>"Recent Advances in Unsupervised Semantic Segmentation" at <a class="link" href="https://sip-baselarea.com/">Switzerland Innovation Park Basel</a>, 2023</p>
-                                    <div class="paper-resources">
-                                        <a class="resource-link" href="../downloads/research/2023_talk_segmentation.pdf" target="_blank">Slides</a>
-                                    </div>
-                                </div>
+                                    <li>
+                                        <p>"Recent Advances in Unsupervised Semantic Segmentation" at <a class="link" href="https://sip-baselarea.com/">Switzerland Innovation Park Basel</a>, 2023</p>
+                                        <div class="paper-resources">
+                                            <a class="resource-link" href="../downloads/research/2023_talk_segmentation.pdf" target="_blank">Slides</a>
+                                        </div>
+                                    </li>
 
-                                <div class="publication-item">
-                                    <p>"CVPR 2023 Conference Retrospective" at <a class="link" href="https://www.aicampus.berlin/">AI Campus Berlin</a>, 2023</p>
-                                    <div class="paper-resources">
-                                        <a class="resource-link" href="https://www.youtube.com/watch?v=yhXnf-Sz0pA" target="_blank">Talk</a>
-                                        <a class="resource-link" href="../downloads/research/cvpr23_retro.pdf" target="_blank">Slides</a>
-                                    </div>
-                                </div>
+                                    <li>
+                                        <p>"CVPR 2023 Conference Retrospective" at <a class="link" href="https://www.aicampus.berlin/">AI Campus Berlin</a>, 2023</p>
+                                        <div class="paper-resources">
+                                            <a class="resource-link" href="https://www.youtube.com/watch?v=yhXnf-Sz0pA" target="_blank">Talk</a>
+                                            <a class="resource-link" href="../downloads/research/cvpr23_retro.pdf" target="_blank">Slides</a>
+                                        </div>
+                                    </li>
 
-                                <div class="publication-item">
-                                    <p>"High-Performance Data Loading for Machine Learning Workloads with Squirrel" at <a class="link" href="https://safetrain-projekt.de/en/">Siemens AI Colloquium</a>, 2022</p>
-                                    <div class="paper-resources">
-                                        <a class="resource-link" href="https://www.youtube.com/watch?v=Z7ziAp0mb-o" target="_blank">Talk</a>
-                                        <a class="resource-link" href="../downloads/research/squirrel_slides.pdf" target="_blank">Slides</a>
-                                    </div>
-                                </div>
+                                    <li>
+                                        <p>"High-Performance Data Loading for Machine Learning Workloads with Squirrel" at <a class="link" href="https://safetrain-projekt.de/en/">Siemens AI Colloquium</a>, 2022</p>
+                                        <div class="paper-resources">
+                                            <a class="resource-link" href="https://www.youtube.com/watch?v=Z7ziAp0mb-o" target="_blank">Talk</a>
+                                            <a class="resource-link" href="../downloads/research/squirrel_slides.pdf" target="_blank">Slides</a>
+                                        </div>
+                                    </li>
+                                </ul>
                             </div>
 
                             <div class="about-section">
@@ -148,6 +151,49 @@
     </div>
     
     <script>
+        // Load and render bio dynamically
+        (async function() {
+            if (typeof window.markdownLoader === 'undefined') {
+                console.error('markdown-loader.js must be loaded before this script');
+                return;
+            }
+            
+            const bioContainer = document.getElementById('bio-container');
+            if (!bioContainer) {
+                console.error('Bio container not found');
+                return;
+            }
+            
+            try {
+                const parsed = await window.markdownLoader.loadMarkdownFile('content/about.md');
+                if (!parsed) {
+                    bioContainer.innerHTML = '<p>Error loading bio.</p>';
+                    return;
+                }
+                
+                // Extract content after "## Bio" header
+                let bioContent = parsed.content;
+                // Remove the "# About" header if present
+                bioContent = bioContent.replace(/^#\s+About\s*\n\n?/i, '');
+                // Extract everything after "## Bio" (including the header)
+                const bioMatch = bioContent.match(/##\s+Bio\s*\n\n?([\s\S]*)$/i);
+                if (bioMatch) {
+                    bioContent = bioMatch[1].trim();
+                } else {
+                    // If no "## Bio" header found, use all content
+                    bioContent = bioContent.trim();
+                }
+                
+                // Convert markdown to HTML
+                const bioHTML = window.markdownLoader.markdownToHTML(bioContent);
+                bioContainer.innerHTML = bioHTML;
+                
+            } catch (error) {
+                console.error('Error loading bio:', error);
+                bioContainer.innerHTML = '<p>Error loading bio. Please check the console.</p>';
+            }
+        })();
+        
         // Load and render publications dynamically
         (async function() {
             if (typeof window.markdownLoader === 'undefined') {

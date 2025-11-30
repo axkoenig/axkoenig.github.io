@@ -1,21 +1,7 @@
 # About
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+## Bio
 
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+I am a robotics researcher and artist based in Berlin. I'm currently working on my PhD in Embodied Intelligence at TU Berlin's [Robotics and Biology Lab](https://www.tu.berlin/robotics) where I am advised by [Oliver Brock](https://www.tu.berlin/en/robotics/about-rbo/prof-dr-oliver-brock). My research studies new control and sensing paradigms for soft robotic manipulation. In my artistic practice with [Aqua Veen](https://aquaveen.com/), I create audio-visual experiences that gravitate between experimental installations, generative music synthesis, and DJ sets.
 
-## Experience
-
-Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
-
-## Education
-
-Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
-
-## Contact
-
-- Email: example@email.com
-- [LinkedIn](https://linkedin.com)
-- [GitHub](https://github.com)
-
-
+Previously, I worked as a Research Fellow in the [Harvard Biorobotics Lab](http://biorobotics.harvard.edu) and the [Mechatronics in Medicine Lab](http://www.imperial.ac.uk/mechatronics-in-medicine) at Imperial College London, and as a Machine Learning Researcher at [Merantix](http://merantix-momentum.com) in Berlin. I did my master's in [Robotics, Cognition, Intelligence](https://www.in.tum.de/en/for-prospective-students/masters-programs/robotics-cognition-intelligence-msc/) and my bachelor's in [Engineering Science](https://www.mse.tum.de/en/prospective-students/engineering-science/#c3206), both at TU Munich.

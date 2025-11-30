@@ -22,3 +22,8 @@ This series of analog photographs is part of the BLINDHÆD exhibition, capturing
 
 The analog photographs serve as a counterpoint to the digital event-based vision technology featured in BLINDHÆD, creating a dialogue between traditional photographic methods and cutting-edge computer vision techniques. These images capture the tangible, material aspects of the installation, grounding the speculative exploration of enhanced vision in physical reality.
 
+
+
+
+
+

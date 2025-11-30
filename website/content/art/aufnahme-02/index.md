@@ -5,6 +5,7 @@ short_description: A vinyl recording featuring ambient, IDM, and acid-house, exp
 tags: [audio, music, vinyl, ambient, idm, acid-house]
 cover_image: cover_2.jpg
 highlight: false
+collaborators: []
 ---
 
 My second vinyl recording revolves around ambient, IDM, and acid-house. We begin with industrial sounds by Berlin-based producer Kobosil. The Canadian synthwave-duo Le Matos ties in with the opening of their soundtrack for the motion picture "Turbo Kid": a voice sets the dystopic and post-apocalyptic theme of the film. Bicep then continue with more hopeful yet decelerating sounds with a track from their self-titled album.

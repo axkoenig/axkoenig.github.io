@@ -673,6 +673,19 @@ body.is-home-page .home-dot::after {
     margin-bottom: 20px;
 }
 
+.project-collaborators {
+    line-height: 1.7;
+    font-size: 15px;
+}
+
+.collaborator-item {
+    margin-bottom: 10px;
+}
+
+.collaborator-item:last-child {
+    margin-bottom: 0;
+}
+
 /* All images in project detail should be in color */
 .project-detail-view img,
 .project-detail-content img,
@@ -1028,7 +1041,27 @@ body.is-home-page .home-dot::after {
     grid-area: heading;
 }
 
+#bio-container {
+    grid-column: 1 / -1;
+    column-count: 2;
+    column-gap: 40px;
+}
+
+#bio-container > * {
+    break-inside: avoid;
+    margin-bottom: 20px;
+    margin-top: 0;
+}
+
+#bio-container > *:first-child {
+    margin-top: 0;
+}
+
 #publications-container {
+    grid-column: 1 / -1;
+}
+
+.talks-list {
     grid-column: 1 / -1;
 }
 
@@ -1082,25 +1115,11 @@ body.is-home-page .home-dot::after {
     line-height: 1.7;
 }
 
-.contact-icons {
+.contact-links {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 20px;
-}
-
-.contact-icons .resource-link {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 40px;
-    padding: var(--default-padding);
-    text-decoration: none;
-}
-
-.contact-icons .resource-link i {
-    font-size: 18px;
-    color: var(--color-link);
+    align-items: flex-start;
+    margin-top: 5px;
 }
 
 .publication-item {
@@ -1111,8 +1130,12 @@ body.is-home-page .home-dot::after {
     align-items: start;
     padding: 15px;
     transition: background-color 0.2s ease;
+    margin-bottom: 40px;
+}
+
+.publication-item-clickable {
+    cursor: pointer;
     border: 1px solid var(--border-color-light);
-    margin-bottom: 15px;
 }
 
 .publication-item .publication-cover-image {
@@ -1120,10 +1143,6 @@ body.is-home-page .home-dot::after {
     margin-top: 18px;
     margin-left: 10px;
     margin-right: 10px;
-}
-
-.publication-item-clickable {
-    cursor: pointer;
 }
 
 .publication-item-clickable:hover {
@@ -1177,6 +1196,31 @@ body.is-home-page .home-dot::after {
     justify-content: flex-start;
     align-items: flex-start;
     align-content: flex-start;
+}
+
+/* Talks list styling */
+.talks-list {
+    list-style: disc;
+    padding-left: 20px;
+    margin: 0;
+}
+
+.talks-list li {
+    margin-bottom: 25px;
+}
+
+.talks-list li:last-child {
+    margin-bottom: 0;
+}
+
+.talks-list p {
+    margin-bottom: 0;
+    line-height: 1.7;
+}
+
+.talks-list .paper-resources {
+    margin-top: 10px;
+    margin-bottom: 0;
 }
 
 /* Vertical layout for publication items in project detail pages (no cover image) */
@@ -1353,8 +1397,22 @@ body.is-home-page .home-dot::after {
     }
     
     .about-right .about-section {
-        grid-template-columns: 1fr;
+        display: block;
+        grid-template-columns: none;
         gap: 0;
+    }
+    
+    .about-right .about-section.bio-section {
+        display: block;
+    }
+    
+    #bio-container {
+        column-count: 1;
+        column-gap: 0;
+    }
+    
+    .about-section h2 {
+        margin-bottom: 30px;
     }
     
     .about-right .about-section::after {
@@ -1389,8 +1447,8 @@ body.is-home-page .home-dot::after {
         margin-bottom: 20px;
     }
     
-    .contact-icons {
-        justify-content: center;
+    .contact-links {
+        align-items: flex-start;
     }
     
     .citations {

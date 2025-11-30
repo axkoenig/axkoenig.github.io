@@ -5,6 +5,7 @@ short_description: A vinyl recording opening with warm sounds by Burial, explori
 tags: [audio, music, vinyl, idm, electronic, burial]
 cover_image: cover_2.jpg
 highlight: false
+collaborators: []
 ---
 
 My first vinyl recording opens with warm sounds by Burial &ndash; one of my all-time favorite artists. With "Hall of Mirrors", we stay in the UK and dive into the early 1990s, an evolutionary era for IDM. B12's Electro-Soma in particular marks one of the foundations of contemporary electronic music in the UK. Tagwell Woods' self-titled track introduces us to darker yet peaceful sounds.

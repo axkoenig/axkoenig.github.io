@@ -5,6 +5,10 @@ short_description: Benchmarking and contributing to Squirrel, a high-performance
 tags: [research, machine-learning, data-loading, performance, open-source]
 cover_image: images/squirrel.png
 highlight: false
+collaborators:
+  - name: "T. Wollmann"
+    affiliation: "Merantix Momentum"
+    url: "https://scholar.google.com/citations?user=H8tlV-oAAAAJ&hl=de&oi=ao"
 news:
   - "2022-09-15: Squirrel open-sourced"
   - "2022-07-20: Results showcased at PyData 2022 Berlin"

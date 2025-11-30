@@ -5,6 +5,22 @@ short_description: Analog photographs from BLINDHÆD, exploring the intersection
 tags: [photography, analog, blindhead, visual]
 cover_image: images/analog/1.jpg
 highlight: true
+collaborators:
+  - name: "Justin Urbach"
+    affiliation: "Academy of Fine Arts Munich"
+    url: "https://www.justinurbach.com/about"
+  - name: "Friedhelm Hamann"
+    affiliation: "Robotic Interactive Perception Group, TU Berlin"
+    url: "https://friedhelmhamann.github.io/"
+  - name: "Guillermo Gallego"
+    affiliation: "Robotic Interactive Perception Group, TU Berlin"
+    url: "https://sites.google.com/view/guillermogallego"
+  - name: "Oliver Brock"
+    affiliation: "Robotics and Biology Lab, TU Berlin"
+    url: "https://www.tu.berlin/robotics/ueber-rbo/prof-dr-oliver-brock"
+  - name: "William East"
+    affiliation: "Aqua Veen"
+    url: "https://soundcloud.com/aquaveen"
 ---
 
 This series of analog photographs is part of the BLINDHÆD exhibition, capturing moments from the installation that explores the transformation of vision through technology. These images document the physical elements of the artwork, including the event camera installation, laser-etched screens, and the interplay between human and machine.

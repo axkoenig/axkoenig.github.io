@@ -5,6 +5,11 @@ short_description: Investigating the role of learning versus compliance in dexte
 tags: [research, robotics, manipulation, machine-learning, compliance]
 cover_image: 
 highlight: false
+collaborators:
+  - name: "A. Sieler"
+    affiliation: "Robotics and Biology Lab, TU Berlin"
+  - name: "O. Brock"
+    affiliation: "Robotics and Biology Lab, TU Berlin"
 papers:
   - authors: ["A. Sieler", "A. Koenig", "O. Brock"]
     year: 2025

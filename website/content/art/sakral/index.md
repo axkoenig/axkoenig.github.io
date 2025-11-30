@@ -5,6 +5,7 @@ short_description: A photographic series documenting sacred and religious archit
 tags: [photography, architecture, sacred, visual]
 cover_image: images/sakral/1.jpeg
 highlight: false
+collaborators: []
 ---
 
 This series explores sacred architecture and its unique relationship with light, space, and form. The photographs capture the ethereal quality of these religious structures, revealing how architecture can transcend its materiality to create spaces of contemplation and transcendence.

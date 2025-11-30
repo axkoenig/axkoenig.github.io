@@ -5,6 +5,15 @@ short_description: Using acoustic sensing to enable universal jamming grippers t
 tags: [research, robotics, manipulation, sensing, acoustics]
 cover_image: 
 highlight: false
+collaborators:
+  - name: "L. Weber"
+    affiliation: "Robotics and Biology Lab, TU Berlin"
+  - name: "T. Wienert"
+    affiliation: "Robotics and Biology Lab, TU Berlin"
+  - name: "M. Splettstößer"
+    affiliation: "Robotics and Biology Lab, TU Berlin"
+  - name: "O. Brock"
+    affiliation: "Robotics and Biology Lab, TU Berlin"
 papers:
   - authors: ["L. Weber", "T. Wienert", "M. Splettstößer", "A. Koenig", "O. Brock"]
     year: 2025
