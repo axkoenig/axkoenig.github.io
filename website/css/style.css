@@ -1062,6 +1062,59 @@ body.is-home-page .home-dot::after {
     grid-column: 1 / -1;
 }
 
+.talks-container {
+    grid-column: 1 / -1;
+}
+
+.talks-container > div {
+    margin-bottom: 30px;
+}
+
+.talks-container > div:last-child {
+    margin-bottom: 0;
+}
+
+.talks-container p {
+    margin-bottom: 0 !important;
+    line-height: 1.7;
+}
+
+.talks-container .paper-resources {
+    margin-top: 0 !important;
+    margin-bottom: 0;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+}
+
+/* Style talks section and other sections with direct content to span full width */
+.about-right .about-section > p,
+.about-right .about-section > .resource-link {
+    grid-column: 1 / -1;
+}
+
+/* Ensure proper spacing for talks section */
+.about-right .about-section > p {
+    margin-bottom: 10px;
+}
+
+.about-right .about-section > p + .resource-link {
+    margin-top: 0;
+    margin-bottom: 0;
+    display: inline-block;
+}
+
+.about-right .about-section > .resource-link + .resource-link {
+    margin-left: var(--default-margin);
+    margin-top: 0;
+    display: inline-block;
+}
+
+.about-right .about-section > .resource-link + p,
+.about-right .about-section > br + p {
+    margin-top: 25px;
+}
+
 .about-right .about-section::after {
     content: '';
     position: absolute;
@@ -1225,7 +1278,7 @@ body.is-home-page .home-dot::after {
 }
 
 .talks-list .paper-resources {
-    margin-top: 10px;
+    margin-top: 0;
     margin-bottom: 0;
 }
 
@@ -1413,6 +1466,7 @@ body.is-home-page .home-dot::after {
         display: block;
         grid-template-columns: none;
         gap: 0;
+        padding-top: 5px;
     }
     
     .about-right .about-section.bio-section {
