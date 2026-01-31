@@ -129,9 +129,15 @@ function parseFrontmatter(content) {
             // Handle array declaration (starts with empty or just colon)
             // Only treat as array if next line is indented and starts with -
             else if (value === '' || value === '[]') {
-                // Check if next line is indented and starts with array item
-                if (i + 1 < lines.length) {
-                    const nextLine = lines[i + 1];
+                // Check if next non-empty line is indented and starts with array item
+                // Skip empty lines when looking ahead
+                let nextNonEmptyLineIndex = i + 1;
+                while (nextNonEmptyLineIndex < lines.length && !lines[nextNonEmptyLineIndex].trim()) {
+                    nextNonEmptyLineIndex++;
+                }
+                
+                if (nextNonEmptyLineIndex < lines.length) {
+                    const nextLine = lines[nextNonEmptyLineIndex];
                     const nextIndent = nextLine.length - nextLine.trimStart().length;
                     const nextTrimmed = nextLine.trim();
                     
@@ -170,9 +176,15 @@ function parseFrontmatter(content) {
             }
             // Regular key-value - could be start of nested object or array
             else {
-                // Check if next line is indented
-                if (i + 1 < lines.length) {
-                    const nextLine = lines[i + 1];
+                // Check if next non-empty line is indented
+                // Skip empty lines when looking ahead
+                let nextNonEmptyLineIndex = i + 1;
+                while (nextNonEmptyLineIndex < lines.length && !lines[nextNonEmptyLineIndex].trim()) {
+                    nextNonEmptyLineIndex++;
+                }
+                
+                if (nextNonEmptyLineIndex < lines.length) {
+                    const nextLine = lines[nextNonEmptyLineIndex];
                     const nextIndent = nextLine.length - nextLine.trimStart().length;
                     const nextTrimmed = nextLine.trim();
                     

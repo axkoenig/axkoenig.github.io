@@ -56,12 +56,19 @@
             <div class="header">
                 <a href="index.html" class="header-name">akoenig</a>
                 <div class="header-nav">
+                    <a href="#" class="filter-text-link" id="filter-toggle">Filter</a>
                     <a href="art.html">Art</a>
                     <a href="research.html">Research</a>
                     <a href="about.html">About</a>
                 </div>
             </div>
             <div class="content content-with-detail">
+                <div class="inline-filters" id="inline-filters" style="display: none;">
+                    <a href="#" class="filter-link active" data-filter="all">All</a>
+                    <a href="#" class="filter-link" data-filter="robotics">Robotics</a>
+                    <a href="#" class="filter-link" data-filter="machine-learning">Machine Learning</a>
+                    <a href="#" class="filter-link" data-filter="computer-vision">Computer Vision</a>
+                </div>
                 <div id="projects-grid" class="projects-grid">
                     <!-- Project tiles will be dynamically loaded here -->
                 </div>
@@ -97,49 +104,88 @@
             // Sort by year (newest first)
             window.currentProjects.sort((a, b) => (b.year || 0) - (a.year || 0));
             
-            // Render projects
-            const projectsGrid = document.getElementById('projects-grid');
-            if (projectsGrid) {
-                if (window.currentProjects && window.currentProjects.length > 0) {
-                    projectsGrid.innerHTML = window.currentProjects.map((project, index) => 
-                        window.markdownLoader.renderProjectTile(project, 'content/research', index)
-                    ).join('');
-                    
-                    // Setup project tiles after rendering
-                    setTimeout(() => {
-                        const projectTiles = document.querySelectorAll('.project-tile');
-                        projectTiles.forEach(tile => {
-                            tile.addEventListener('click', () => {
-                                const projectSlug = tile.dataset.projectSlug || tile.dataset.projectId;
-                                const project = window.currentProjects.find(p => (p.slug || p.id) === projectSlug);
-                                if (project) {
-                                    showProjectDetail(project);
-                                }
+            // Function to render projects based on filter
+            window.renderFilteredProjects = function(filter = 'all') {
+                let filteredProjects = window.currentProjects;
+                
+                if (filter !== 'all') {
+                    filteredProjects = window.currentProjects.filter(project => {
+                        return project.tags && project.tags.includes(filter);
+                    });
+                }
+                
+                const projectsGrid = document.getElementById('projects-grid');
+                if (projectsGrid) {
+                    if (filteredProjects.length > 0) {
+                        projectsGrid.innerHTML = filteredProjects.map((project, index) => 
+                            window.markdownLoader.renderProjectTile(project, 'content/research', index)
+                        ).join('');
+                        
+                        // Setup project tiles after rendering
+                        setTimeout(() => {
+                            const projectTiles = document.querySelectorAll('.project-tile');
+                            projectTiles.forEach(tile => {
+                                tile.addEventListener('click', () => {
+                                    const projectSlug = tile.dataset.projectSlug || tile.dataset.projectId;
+                                    const project = window.currentProjects.find(p => (p.slug || p.id) === projectSlug);
+                                    if (project) {
+                                        showProjectDetail(project);
+                                    }
+                                });
                             });
-                        });
-                        
-                        // Check for hash in URL and open corresponding project
-                        if (window.location.hash) {
-                            const projectSlug = window.location.hash.substring(1);
-                            const project = window.currentProjects.find(p => (p.slug || p.id) === projectSlug);
-                            if (project) {
-                                setTimeout(() => {
-                                    showProjectDetail(project);
-                                }, 200);
-                            } else {
-                                // Invalid hash - remove it and show the page normally
-                                const urlWithoutHash = window.location.pathname + window.location.search;
-                                window.history.replaceState(null, '', urlWithoutHash);
-                            }
-                        }
-                        
-                        // Update sidebar years
-                        if (typeof updateSidebarYears === 'function') {
-                            updateSidebarYears();
-                        }
-                    }, 100);
+                        }, 100);
+                    } else {
+                        projectsGrid.innerHTML = '<p style="padding: 40px; text-align: center;">No projects found for this filter.</p>';
+                    }
+                }
+            };
+            
+            // Setup filter toggle
+            const filterToggle = document.getElementById('filter-toggle');
+            const inlineFilters = document.getElementById('inline-filters');
+            
+            filterToggle.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (inlineFilters.style.display === 'none') {
+                    inlineFilters.style.display = 'block';
+                    filterToggle.classList.add('active');
                 } else {
-                    projectsGrid.innerHTML = '<p style="padding: 40px; text-align: center;">No projects found. Check console for errors.</p>';
+                    inlineFilters.style.display = 'none';
+                    filterToggle.classList.remove('active');
+                }
+            });
+            
+            // Setup filter links
+            const filterLinks = document.querySelectorAll('.filter-link');
+            filterLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const filter = link.dataset.filter;
+                    
+                    // Update active state
+                    filterLinks.forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+                    
+                    // Render filtered projects
+                    window.renderFilteredProjects(filter);
+                });
+            });
+            
+            // Initial render
+            window.renderFilteredProjects('all');
+            
+            // Check for hash in URL and open corresponding project
+            if (window.location.hash) {
+                const projectSlug = window.location.hash.substring(1);
+                const project = window.currentProjects.find(p => (p.slug || p.id) === projectSlug);
+                if (project) {
+                    setTimeout(() => {
+                        showProjectDetail(project);
+                    }, 200);
+                } else {
+                    // Invalid hash - remove it and show the page normally
+                    const urlWithoutHash = window.location.pathname + window.location.search;
+                    window.history.replaceState(null, '', urlWithoutHash);
                 }
             }
         })();
