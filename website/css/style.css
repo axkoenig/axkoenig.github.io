@@ -1412,6 +1412,24 @@ body.is-home-page .home-dot::after {
         width: calc(100% + 40px) !important;
     }
     
+    .project-detail-body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+    }
+    
+    .project-short-description,
+    .papers {
+        margin: 0 -20px 30px -20px !important;
+        padding: 0 0 20px 0 !important;
+        width: calc(100% + 40px) !important;
+    }
+    
+    .project-detail-inner > .paper-resources {
+        margin: 0 0 30px 0;
+        padding: 0;
+        width: 100%;
+    }
     
     .project-detail-inner > div[style*="-30px"] {
         margin-left: -20px !important;
