@@ -1119,25 +1119,36 @@ body.is-home-page .home-dot::after {
     grid-column: 1 / -1;
 }
 
-.talks-container > div {
-    margin-bottom: 30px;
+.talk-item {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+    margin-bottom: 25px;
 }
 
-.talks-container > div:last-child {
+.talk-item:last-child {
     margin-bottom: 0;
 }
 
-.talks-container p {
-    margin-bottom: 0 !important;
+.talk-description p {
+    margin-bottom: 0;
     line-height: 1.7;
 }
 
-.talks-container .paper-resources {
-    margin-top: 0 !important;
-    margin-bottom: 0;
-    justify-content: flex-start;
+.talk-links {
+    display: flex;
+    flex-wrap: wrap;
     align-items: flex-start;
     align-content: flex-start;
+}
+
+.talk-links .paper-resources {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-right: 0;
 }
 
 /* Style talks section and other sections with direct content to span full width */
@@ -1258,6 +1269,41 @@ body.is-home-page .home-dot::after {
 
 .publication-item:last-child {
     margin-bottom: 0;
+}
+
+.publication-item-compact {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    grid-column: 1 / -1;
+    margin-bottom: 25px;
+    padding: 0;
+    align-items: start;
+}
+
+.publication-item-compact:last-child {
+    margin-bottom: 0;
+}
+
+.publication-citation p {
+    margin-bottom: 0;
+    line-height: 1.7;
+}
+
+.publication-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    align-content: flex-start;
+    gap: 0;
+}
+
+.publication-links .paper-resources {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-right: 0;
 }
 
 .publication-cover-image {
@@ -1592,6 +1638,28 @@ body.is-home-page .home-dot::after {
     
     .publication-item .paper-resources {
         justify-content: flex-start;
+    }
+    
+    .publication-item-compact {
+        grid-template-columns: 1fr;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+    
+    .publication-links {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+    
+    .talk-item {
+        grid-template-columns: 1fr;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+    
+    .talk-links {
+        flex-direction: row;
+        align-items: flex-start;
     }
     
     .name-heading {
