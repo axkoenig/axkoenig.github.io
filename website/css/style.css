@@ -190,7 +190,6 @@ button {
     margin-top: var(--default-margin);
     margin-bottom: var(--default-margin);
     text-decoration: none;
-    text-transform: capitalize;
     white-space: nowrap;
     background-color: white;
     transition: background-color 0.2s ease;
@@ -1137,6 +1136,10 @@ body.is-home-page .home-dot::after {
     padding: 0 30px 0 0;
     width: calc(100% + 60px);
     box-sizing: border-box;
+}
+
+.project-detail-inner > .paper-resources .resource-link {
+    margin-top: 0;
 }
 
 .project-detail-inner > .paper-resources .resource-link:first-child {

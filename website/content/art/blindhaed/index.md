@@ -42,4 +42,6 @@ For inquiries about BLINDHÆD, please contact us via E-Mail at [awckoenig@gmail.
 
 ## Resources
 - [Press Release Max Goelitz](https://www.maxgoelitz.com/en/news/110-exhibition-sindelfingen-de-die-erste-institutionelle-einzelausstellung-von-justin-urbach-eroffnet/)
-- [Artist Profile at Max Goelitz](https://www.maxgoelitz.com/en/artists/66-justin-urbach/)
+- [Exhibition at Gallerie Stadt Sindelfingen](https://galerie-sindelfingen.de/justin-urbach-blindhaed/)
+- [Exhibition at CVPR in Nashville, USA](https://thecvf-art.com/project/blindhaed/)
+- [Exhibition at DOK Leipzig](https://www.dok-leipzig.de/film/blindspot/archive)
