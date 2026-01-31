@@ -7,13 +7,9 @@ cover_image: images/gripper-crop.png
 highlight: false
 collaborators:
   - name: "L. Weber"
-    affiliation: "Robotics and Biology Lab, TU Berlin"
   - name: "T. Wienert"
-    affiliation: "Robotics and Biology Lab, TU Berlin"
   - name: "M. Splettstößer"
-    affiliation: "Robotics and Biology Lab, TU Berlin"
   - name: "O. Brock"
-    affiliation: "Robotics and Biology Lab, TU Berlin"
 papers:
   - authors: ["L. Weber", "T. Wienert", "M. Splettstößer", "A. Koenig", "O. Brock"]
     year: 2025

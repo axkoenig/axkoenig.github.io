@@ -7,11 +7,8 @@ cover_image: images/hand.JPG
 highlight: true
 collaborators:
   - name: "Z. Liu"
-    affiliation: ""
   - name: "L. Janson"
-    affiliation: ""
   - name: "R. Howe"
-    affiliation: ""
 papers:
   - authors: ["A. Koenig", "Z. Liu", "L. Janson", "R. Howe"]
     year: 2022

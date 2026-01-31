@@ -7,9 +7,7 @@ cover_image:
 highlight: false
 collaborators:
   - name: "M. Schambach"
-    affiliation: "Merantix Momentum"
   - name: "J. Otterbach"
-    affiliation: "Merantix Momentum"
 papers:
   - authors: ["A. Koenig", "M. Schambach", "J. Otterbach"]
     year: 2023

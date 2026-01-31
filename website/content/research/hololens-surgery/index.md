@@ -7,10 +7,8 @@ cover_image: images/bt.png
 highlight: false
 collaborators:
   - name: "U. Eck"
-    affiliation: "NARVIS Lab, Technical University of Munich"
     url: "http://campar.in.tum.de/Main/UlrichEck"
   - name: "N. Navab"
-    affiliation: "NARVIS Lab, Technical University of Munich"
     url: "https://www.professoren.tum.de/en/navab-nassir/"
 citations:
   - "Koenig, A. (2018). HoloLens Application for Orthopedic Trauma Surgery. Bachelor Thesis, Technical University of Munich."

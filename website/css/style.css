@@ -631,10 +631,28 @@ body.is-home-page .home-dot::after {
 
 .project-detail-header {
     margin: 0 -30px 30px -30px;
-    padding: 0 30px 20px 30px;
-    border-bottom: 1px solid var(--border-color);
+    padding: 0 0 20px 0;
     width: calc(100% + 60px);
     box-sizing: border-box;
+}
+
+.project-short-description,
+.papers,
+.citations {
+    margin: 0 -30px 30px -30px !important;
+    padding: 0 0 20px 0 !important;
+    width: calc(100% + 60px) !important;
+    box-sizing: border-box !important;
+}
+
+.project-detail-body {
+    margin: 0 -30px;
+    padding: 0 0;
+    width: calc(100% + 60px);
+    box-sizing: border-box;
+    text-align: center;
+    line-height: 1.7;
+    font-size: 15px;
 }
 
 .project-detail-header h1 {
@@ -657,13 +675,15 @@ body.is-home-page .home-dot::after {
     font-weight: 500;
 }
 
-.project-detail-body {
-    line-height: 1.7;
-    font-size: 15px;
-}
-
-.project-detail-body p {
-    margin-bottom: 20px;
+.project-detail-body p,
+.project-detail-body h1,
+.project-detail-body h2,
+.project-detail-body h3,
+.project-detail-body ul,
+.project-detail-body ol,
+.project-detail-body li,
+.project-detail-body table {
+    text-align: left;
 }
 
 .project-collaborators {
@@ -682,17 +702,41 @@ body.is-home-page .home-dot::after {
 /* All images in project detail should be in color */
 .project-detail-view img,
 .project-detail-content img,
-.project-detail-body img {
+.project-detail-body img,
+.project-detail-body figure img {
     filter: grayscale(0%) !important;
     opacity: 1 !important;
 }
 
 .project-detail-body img {
     max-width: 100%;
+    max-height: calc(100vh - 200px);
     height: auto;
-    margin: 25px 0;
+    width: auto;
+    margin: 25px auto;
     display: block;
     transition: filter 0.5s ease, opacity 0.5s ease;
+    object-fit: contain;
+}
+
+.project-detail-body figure {
+    margin: 25px auto;
+    display: inline-block;
+    max-width: 100%;
+    width: fit-content;
+}
+
+.project-detail-body figure img {
+    margin: 0 auto;
+    display: block;
+}
+
+.project-detail-body figcaption {
+    text-align: right;
+    font-size: 0.85em;
+    color: var(--text-color-secondary);
+    margin-top: 8px;
+    width: 100%;
 }
 
 .project-detail-body img.in-view {
@@ -1086,6 +1130,17 @@ body.is-home-page .home-dot::after {
 
 .column-3 .paper-resources .resource-link {
     margin-top: 0;
+}
+
+.project-detail-inner > .paper-resources {
+    margin: 0 -30px 30px -30px;
+    padding: 0 30px 0 0;
+    width: calc(100% + 60px);
+    box-sizing: border-box;
+}
+
+.project-detail-inner > .paper-resources .resource-link:first-child {
+    margin-left: 0;
 }
 
 .publication-cover-image {

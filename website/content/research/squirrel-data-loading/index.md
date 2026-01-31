@@ -7,7 +7,6 @@ cover_image: images/squirrel.png
 highlight: false
 collaborators:
   - name: "T. Wollmann"
-    affiliation: "Merantix Momentum"
     url: "https://scholar.google.com/citations?user=H8tlV-oAAAAJ&hl=de&oi=ao"
 ---
 

@@ -7,9 +7,7 @@ cover_image: images/funnel.png
 highlight: false
 collaborators:
   - name: "A. Sieler"
-    affiliation: "Robotics and Biology Lab, TU Berlin"
   - name: "O. Brock"
-    affiliation: "Robotics and Biology Lab, TU Berlin"
 papers:
   - authors: ["A. Sieler", "A. Koenig", "O. Brock"]
     year: 2025

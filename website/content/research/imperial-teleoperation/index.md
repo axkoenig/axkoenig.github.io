@@ -7,10 +7,8 @@ cover_image: images/imperial.png
 highlight: false
 collaborators:
   - name: "R. Secoli"
-    affiliation: "Mechatronics in Medicine Lab, Imperial College London"
     url: "https://www.imperial.ac.uk/people/r.secoli"
   - name: "F. Rodriguez y Baena"
-    affiliation: "Mechatronics in Medicine Lab, Imperial College London"
     url: "https://www.imperial.ac.uk/people/f.rodriguez"
 papers:
   - authors: ["A. Koenig", "F. Rodriguez y Baena", "R. Secoli"]

@@ -7,19 +7,14 @@ cover_image: images/compressed/DSC1664.jpg
 highlight: true
 collaborators:
   - name: "Justin Urbach"
-    affiliation: "Academy of Fine Arts Munich"
     url: "https://www.justinurbach.com/about"
   - name: "Friedhelm Hamann"
-    affiliation: "Robotic Interactive Perception Group, TU Berlin"
     url: "https://friedhelmhamann.github.io/"
   - name: "Guillermo Gallego"
-    affiliation: "Robotic Interactive Perception Group, TU Berlin"
     url: "https://sites.google.com/view/guillermogallego"
   - name: "Oliver Brock"
-    affiliation: "Robotics and Biology Lab, TU Berlin"
     url: "https://www.tu.berlin/robotics/ueber-rbo/prof-dr-oliver-brock"
   - name: "William East"
-    affiliation: "Aqua Veen"
     url: "https://soundcloud.com/aquaveen"
 ---
 

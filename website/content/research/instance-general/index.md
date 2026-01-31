@@ -7,15 +7,10 @@ cover_image: images/image.png
 highlight: false
 collaborators:
   - name: "V. Mengers"
-    affiliation: "Robotics and Biology Lab, TU Berlin"
   - name: "X. Li"
-    affiliation: "Robotics and Biology Lab, TU Berlin"
   - name: "A. Sieler"
-    affiliation: "Robotics and Biology Lab, TU Berlin"
   - name: "A. Battaje"
-    affiliation: "Robotics and Biology Lab, TU Berlin"
   - name: "O. Brock"
-    affiliation: "Robotics and Biology Lab, TU Berlin"
 papers:
   - authors: ["V. Mengers", "A. Koenig", "X. Li", "A. Sieler", "A. Battaje", "O. Brock"]
     year: 2025

@@ -217,12 +217,50 @@ function parseFrontmatter(content) {
     return { metadata, content: body };
 }
 
+// Extract resources from markdown body (## Resources section)
+function extractResources(markdown) {
+    const resources = [];
+    // Match ## Resources followed by markdown list items
+    const resourcesRegex = /##\s+Resources\s*\n((?:- \[.*?\]\(.*?\)\s*\n?)+)/i;
+    const match = markdown.match(resourcesRegex);
+    
+    if (match) {
+        const linksText = match[1];
+        // Extract markdown links: [text](url)
+        const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
+        let linkMatch;
+        while ((linkMatch = linkRegex.exec(linksText)) !== null) {
+            resources.push({
+                label: linkMatch[1],
+                url: linkMatch[2]
+            });
+        }
+    }
+    
+    return resources;
+}
+
+// Remove Resources section from markdown
+function removeResourcesSection(markdown) {
+    // Remove ## Resources section and everything after it
+    return markdown.replace(/##\s+Resources.*$/is, '').trim();
+}
+
 // Simple markdown to HTML converter (basic implementation)
 function markdownToHTML(markdown) {
     let html = markdown;
     
-    // Images - process first, before paragraphs (match with optional whitespace)
-    html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" loading="lazy" />');
+    // Images - process first, before paragraphs
+    // Support: ![alt](url) or ![alt](url "caption")
+    // Always wrap in figure and use alt text as caption (or title if provided)
+    html = html.replace(/!\[([^\]]*)\]\(([^)]+)(?:\s+"([^"]+)")?\)/g, (match, alt, url, title) => {
+        const imgTag = `<img src="${url}" alt="${alt}" loading="lazy" />`;
+        const caption = title || alt; // Use title if provided, otherwise use alt text
+        if (caption) {
+            return `<figure>${imgTag}<figcaption>${caption}</figcaption></figure>`;
+        }
+        return `<figure>${imgTag}</figure>`;
+    });
     
     // Headers
     html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
@@ -292,13 +330,13 @@ function markdownToHTML(markdown) {
         block = block.trim();
         if (!block) return '';
         
-        // Don't wrap if it's already an HTML tag (header, list, image, iframe, table, etc.)
-        if (block.match(/^<(h[1-6]|ul|ol|li|img|p|iframe|table|tr|td|th)/)) {
+        // Don't wrap if it's already an HTML tag (header, list, image, iframe, table, figure, etc.)
+        if (block.match(/^<(h[1-6]|ul|ol|li|img|p|iframe|table|tr|td|th|figure)/)) {
             return block;
         }
         
         // If block contains HTML tags that shouldn't be wrapped, return as-is
-        if (block.includes('<img') || block.includes('<iframe') || block.includes('<table') || block.includes('<tr')) {
+        if (block.includes('<img') || block.includes('<iframe') || block.includes('<table') || block.includes('<tr') || block.includes('<figure')) {
             return block;
         }
         
@@ -347,13 +385,23 @@ async function loadProjects(basePath, projectList) {
             // Determine category from basePath
             const category = basePath.includes('art') ? 'art' : 'research';
             
+            // Extract resources from markdown body if not in frontmatter
+            let resources = parsed.metadata.resources || [];
+            if (!resources || resources.length === 0) {
+                resources = extractResources(parsed.content);
+            }
+            
+            // Remove Resources section from body
+            const cleanedContent = removeResourcesSection(parsed.content);
+            
             const project = {
                 id: projectName,
                 path: projectName,
                 category: category,
                 ...parsed.metadata,
-                body: parsed.content,
-                html: markdownToHTML(parsed.content)
+                resources: resources,
+                body: cleanedContent,
+                html: markdownToHTML(cleanedContent)
             };
             
             // Always use folder name as slug (slug field in frontmatter is ignored)
@@ -375,6 +423,11 @@ async function loadProjects(basePath, projectList) {
             // Ensure tags is an array
             if (typeof project.tags === 'string') {
                 project.tags = [project.tags];
+            }
+            
+            // Ensure resources is an array
+            if (!Array.isArray(project.resources)) {
+                project.resources = [];
             }
             
             console.log('Loaded project:', project.title);
@@ -410,9 +463,6 @@ function renderProjectTile(project, basePath, projectIndex) {
     // If cover_image is empty, undefined, or an array, don't use placeholder
     // The CSS should handle missing images gracefully
     
-    // Generate project number (padded with zeros)
-    const projectNumber = String(projectIndex + 1).padStart(3, '0');
-    
     // Extract metadata for display
     const year = project.year || (project.date ? new Date(project.date).getFullYear() : '');
     const location = project.location || project.gallery || '';
@@ -428,7 +478,6 @@ function renderProjectTile(project, basePath, projectIndex) {
                 <img src="${coverImage}" alt="${project.title || ''}" loading="lazy" />
             </div>` : '<div class="project-cover"></div>'}
             <div class="project-content">
-                <div class="project-number">${projectNumber}</div>
                 <h3 class="project-title">${project.title || 'Untitled'}</h3>
                 ${year ? `<div class="project-year">${year}</div>` : ''}
                 ${description ? `<div class="project-description">${description}</div>` : ''}
@@ -437,7 +486,6 @@ function renderProjectTile(project, basePath, projectIndex) {
                 ${dimensions ? `<div class="project-dimensions">${dimensions}</div>` : ''}
                 ${gallery ? `<div class="project-gallery">${gallery}</div>` : ''}
                 ${copyright ? `<div class="project-copyright">© ${copyright}</div>` : ''}
-                <a href="#" class="project-view-link" onclick="event.preventDefault(); const tile = this.closest('.project-tile'); if (tile) { tile.click(); } return false;">[View...]</a>
             </div>
         </div>
     `;
@@ -539,8 +587,8 @@ function renderProjectDetail(project, basePath) {
     let papersHTML = '';
     if (project.papers && Array.isArray(project.papers) && project.papers.length > 0) {
         papersHTML = `
-            <div class="papers" style="margin: 0 -30px 30px -30px; padding: 0 30px 20px 30px; width: calc(100% + 60px); box-sizing: border-box;">
-                <h3>Publications</h3>
+            <div class="papers" style="margin: 0 -30px 30px -30px; padding: 0 0 20px 0; width: calc(100% + 60px); box-sizing: border-box;">
+                <h3 style="margin: 0 0 20px 0;">Publications</h3>
                 ${project.papers.map(paper => {
                     if (!paper || typeof paper !== 'object') return '';
                     
@@ -597,51 +645,68 @@ function renderProjectDetail(project, basePath) {
     let citationsHTML = '';
     if (project.citations && Array.isArray(project.citations) && project.citations.length > 0) {
         citationsHTML = `
-            <div class="citations" style="margin: 0 -30px 30px -30px; padding: 0 30px 20px 30px; width: calc(100% + 60px); box-sizing: border-box;">
-                <h3>Citations</h3>
-                <ul>
+            <div class="citations" style="margin: 0 -30px 30px -30px; padding: 0 0 20px 0; width: calc(100% + 60px); box-sizing: border-box;">
+                <h3 style="margin: 0 0 20px 0;">Citations</h3>
+                <ul style="margin: 0; padding-left: 20px;">
                     ${project.citations.map(citation => `<li>${citation}</li>`).join('')}
                 </ul>
             </div>
         `;
     }
     
-    // Build collaborators section HTML
+    // Build collaborators HTML for display below year
     let collaboratorsHTML = '';
-    // Only show collaborators section if there are valid collaborators
     if (project.collaborators && 
         Array.isArray(project.collaborators) && 
         project.collaborators.length > 0) {
-        const collaboratorItems = project.collaborators
+        const collaboratorNames = project.collaborators
             .map(collaborator => {
                 // Handle both object format and string format
                 if (typeof collaborator === 'object' && collaborator !== null) {
                     if (collaborator.name) {
-                        const affiliation = collaborator.affiliation || '';
                         const url = collaborator.url || '';
-                        const nameHTML = url 
+                        return url 
                             ? `<a href="${url}" class="link" target="_blank">${collaborator.name}</a>`
                             : collaborator.name;
-                        return `<div class="collaborator-item">${nameHTML}${affiliation ? ` - ${affiliation}` : ''}</div>`;
                     }
                 } else if (typeof collaborator === 'string' && collaborator.trim()) {
                     // Fallback for string format (only if non-empty)
-                    return `<div class="collaborator-item">${collaborator}</div>`;
+                    return collaborator.trim();
                 }
                 return '';
             })
-            .filter(html => html && html.trim());
+            .filter(name => name && name.trim());
         
-        // Only create HTML if we have valid collaborator items
-        if (collaboratorItems.length > 0) {
-            collaboratorsHTML = `
-                <div class="project-collaborators" style="margin: 0 -30px 30px -30px; padding: 0 30px 20px 30px; border-bottom: 1px solid var(--border-color); width: calc(100% + 60px); box-sizing: border-box;">
-                    <h3>Collaborators</h3>
-                    ${collaboratorItems.join('')}
+        if (collaboratorNames.length > 0) {
+            collaboratorsHTML = `<div class="project-collaborators" style="margin-top: 5px; font-size: 0.9em; color: var(--text-color-secondary);">with ${collaboratorNames.join(', ')}</div>`;
+        }
+    }
+    
+    // Build resources HTML
+    let resourcesHTML = '';
+    if (project.resources && Array.isArray(project.resources) && project.resources.length > 0) {
+        const resourceLinks = project.resources.map(resource => {
+            const label = typeof resource === 'string' ? resource : (resource.label || 'Link');
+            const url = typeof resource === 'string' ? resource : (resource.url || '');
+            if (!url) return '';
+            return `<a href="${url}" class="resource-link" target="_blank" rel="noopener noreferrer">${label}</a>`;
+        }).filter(html => html).join('');
+        
+        if (resourceLinks) {
+            resourcesHTML = `
+                <div class="paper-resources">
+                    ${resourceLinks}
                 </div>
             `;
         }
     }
+    
+    // Build short description HTML
+    const shortDescriptionHTML = project.short_description 
+        ? `<div class="project-short-description" style="margin: 0 -30px 30px -30px; padding: 0 0 20px 0; border-bottom: 1px solid var(--border-color); width: calc(100% + 60px); box-sizing: border-box;">
+            <p style="font-size: 1em; line-height: 1.6; color: var(--text-color-secondary); margin: 0;">${project.short_description}</p>
+          </div>`
+        : '';
     
     return `
         <div class="project-detail-content">
@@ -652,12 +717,12 @@ function renderProjectDetail(project, basePath) {
                 <div class="project-detail-header">
                     <h1>${project.title}</h1>
                     <div class="project-meta">
-                        ${project.year ? `<span class="project-year">${project.year}</span>` : ''}
+                        ${project.year ? `<div><span class="project-year">${project.year}</span>${collaboratorsHTML}</div>` : collaboratorsHTML}
                         <div class="project-tags">${tagsHTML}</div>
                     </div>
                 </div>
-                ${coverImage ? `<div style="margin: 0 -30px 30px -30px; padding-bottom: 30px; border-bottom: 1px solid var(--border-color); width: calc(100% + 60px); box-sizing: border-box;"><img src="${coverImage}" alt="${project.title}" style="max-width: 100%; width: 100%; display: block; filter: grayscale(0%); opacity: 1; transition: filter 0.5s ease, opacity 0.5s ease;" class="in-view" loading="lazy" onerror="console.error('Failed to load cover image:', this.src);" /></div>` : ''}
-                ${collaboratorsHTML}
+                ${shortDescriptionHTML}
+                ${resourcesHTML}
                 ${papersHTML}
                 ${citationsHTML}
                 <div class="project-detail-body">
