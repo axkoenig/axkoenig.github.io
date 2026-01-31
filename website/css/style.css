@@ -393,9 +393,7 @@ body.is-home-page .home-dot::after {
     transition: opacity 0.3s ease;
 }
 
-.content-with-detail.has-detail .projects-grid {
-    opacity: 0.5;
-}
+/* Removed: projects grid stays normal since detail view is fullscreen overlay */
 
 .project-tile {
     position: relative;
@@ -442,17 +440,7 @@ body.is-home-page .home-dot::after {
     display: block;
 }
 
-/* Grey out project tiles when detail view is open */
-.content-with-detail.has-detail .project-cover img {
-    filter: grayscale(100%);
-    opacity: 0.6;
-}
-
-.content-with-detail.has-detail .project-tile:hover .project-cover img,
-.content-with-detail.has-detail .project-tile.active .project-cover img {
-    filter: grayscale(0%);
-    opacity: 1;
-}
+/* Removed: project tiles no longer grey out since detail view is fullscreen overlay */
 
 .project-content {
     padding: 0;
@@ -543,7 +531,7 @@ body.is-home-page .home-dot::after {
     color: black;
 }
 
-/* Project detail view - side panel */
+/* Project detail view - fullscreen panel */
 .project-detail-view {
     position: fixed;
     top: 0;
@@ -551,23 +539,17 @@ body.is-home-page .home-dot::after {
     bottom: 0;
     width: 0;
     background: white;
-    z-index: 1000;
+    z-index: 2000;
     overflow-y: auto;
     overflow-x: visible;
     transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    border-left: 1px solid var(--border-color);
     box-shadow: -2px 0 10px rgba(0, 0, 0, 0.05);
     visibility: hidden;
 }
 
 .project-detail-view.active {
     visibility: visible;
-    width: 50%;
-}
-
-.project-detail-view.fullscreen {
-    width: 100% !important;
-    z-index: 2000;
+    width: 100%;
 }
 
 .project-detail-content {
@@ -587,44 +569,18 @@ body.is-home-page .home-dot::after {
 .project-detail-inner {
     padding: 40px 30px;
     width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
     box-sizing: border-box;
 }
 
-/* Adjust main content when detail panel is open */
-.content-with-detail {
-    transition: margin-right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.content-with-detail.has-detail {
-    margin-right: 50%;
-}
-
-.content-with-detail.has-detail.has-fullscreen {
-    margin-right: 0;
-}
+/* Main content stays in place when detail panel is open (fullscreen overlay) */
+/* No special styles needed - detail view is always fullscreen */
 
 @media (max-width: 1024px) {
+    /* Detail view is always fullscreen now, no special handling needed */
     .project-detail-view.active {
         width: 100%;
-    }
-    
-    .content-with-detail.has-detail {
-        margin-right: 0;
-    }
-    
-    /* Hide fullscreen button on small screens when default view is full screen */
-    .project-fullscreen-button {
-        display: none !important;
-    }
-    
-    /* Make close button fill entire width when expand button is hidden */
-    .project-close-button {
-        flex: 1;
-        width: 100%;
-    }
-    
-    .project-detail-buttons {
-        justify-content: flex-start;
     }
 }
 
@@ -652,7 +608,8 @@ body.is-home-page .home-dot::after {
     font-size: 16px;
     transition: background-color 0.3s ease;
     text-align: left;
-    flex: 0 0 auto;
+    width: 100%;
+    flex: 1;
 }
 
 .project-close-button:hover {
@@ -660,34 +617,16 @@ body.is-home-page .home-dot::after {
 }
 
 .project-fullscreen-button {
-    background: white;
-    border: none;
-    padding: 15px 30px;
-    margin: 0;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-    text-align: center;
-    flex: 0 0 auto;
-    min-width: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.project-fullscreen-button:hover {
-    background-color: var(--color-primary);
+    /* Hidden - detail view is always fullscreen */
+    display: none;
 }
 
 .fullscreen-icon {
-    display: inline-block;
+    display: none;
 }
 
 .fullscreen-m-key {
-    display: inline-block;
-    margin-right: 8px;
-    font-size: 16px;
-    font-weight: 300;
+    display: none;
 }
 
 .project-detail-header {

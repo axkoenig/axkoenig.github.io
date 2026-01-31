@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Show project detail in side panel
+    // Show project detail in fullscreen panel
     function showProjectDetail(project) {
         const projectDetail = document.getElementById('project-detail');
         const content = document.querySelector('.content');
@@ -107,13 +107,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const detailHTML = window.markdownLoader.renderProjectDetail(project, basePath);
         projectDetail.innerHTML = detailHTML;
         
-        // Add active class to show panel
+        // Add active class to show fullscreen panel
         projectDetail.classList.add('active');
-        
-        // Add class to content to adjust layout
-        if (content) {
-            content.classList.add('content-with-detail', 'has-detail');
-        }
         
         // Mark clicked tile as active
         const projectTiles = document.querySelectorAll('.project-tile');
@@ -161,11 +156,9 @@ document.addEventListener('DOMContentLoaded', () => {
         
         if (projectDetail) {
             projectDetail.classList.remove('active');
-            projectDetail.classList.remove('fullscreen');
         }
         if (content) {
             content.classList.remove('has-detail');
-            content.classList.remove('has-fullscreen');
         }
         
         // Remove active class from all tiles
@@ -179,46 +172,12 @@ document.addEventListener('DOMContentLoaded', () => {
         window.history.replaceState(null, '', urlWithoutHash);
     };
 
-    // Toggle fullscreen mode for project detail panel
+    // Toggle fullscreen mode (kept for backward compatibility, but does nothing now)
     window.toggleProjectFullscreen = function() {
-        const projectDetail = document.getElementById('project-detail');
-        const content = document.querySelector('.content');
-        const fullscreenButton = document.querySelector('.project-fullscreen-button');
-        
-        if (!projectDetail) return;
-        
-        const isFullscreen = projectDetail.classList.contains('fullscreen');
-        
-        if (isFullscreen) {
-            // Exit fullscreen
-            projectDetail.classList.remove('fullscreen');
-            if (content) {
-                content.classList.remove('has-fullscreen');
-            }
-            if (fullscreenButton) {
-                const icon = fullscreenButton.querySelector('.fullscreen-icon');
-                if (icon) {
-                    icon.textContent = '↗';
-                }
-                fullscreenButton.title = 'Enter fullscreen';
-            }
-        } else {
-            // Enter fullscreen
-            projectDetail.classList.add('fullscreen');
-            if (content) {
-                content.classList.add('has-fullscreen');
-            }
-            if (fullscreenButton) {
-                const icon = fullscreenButton.querySelector('.fullscreen-icon');
-                if (icon) {
-                    icon.textContent = '↙';
-                }
-                fullscreenButton.title = 'Exit fullscreen';
-            }
-        }
+        // Detail view is always fullscreen now
     };
 
-    // Keyboard shortcut for fullscreen toggle (M key)
+    // Keyboard shortcuts for project detail navigation
     document.addEventListener('keydown', (event) => {
         // Only trigger if project detail is open and not typing in an input/textarea
         const projectDetail = document.getElementById('project-detail');
@@ -228,9 +187,10 @@ document.addEventListener('DOMContentLoaded', () => {
              document.activeElement.isContentEditable);
         
         if (projectDetail && projectDetail.classList.contains('active') && !isInputFocused) {
-            if (event.key === 'm' || event.key === 'M') {
+            // ESC key or Left arrow to close project detail
+            if (event.key === 'Escape' || event.key === 'ArrowLeft') {
                 event.preventDefault();
-                window.toggleProjectFullscreen();
+                window.closeProjectDetail();
             }
         }
     });

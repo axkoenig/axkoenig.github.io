@@ -199,13 +199,8 @@
             const detailHTML = window.markdownLoader.renderProjectDetail(project, 'content/research');
             projectDetail.innerHTML = detailHTML;
             
-            // Add active class to show panel
+            // Add active class to show fullscreen panel
             projectDetail.classList.add('active');
-            
-            // Add class to content to adjust layout
-            if (content) {
-                content.classList.add('has-detail');
-            }
             
             // Mark clicked tile as active
             const projectTiles = document.querySelectorAll('.project-tile');
