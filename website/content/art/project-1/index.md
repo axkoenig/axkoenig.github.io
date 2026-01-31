@@ -6,9 +6,6 @@ tags: [art, multimedia, event-cameras, installation]
 cover_image: images/compressed/DSC1664.jpg
 highlight: true
 slug: blindhead
-news:
-  - "2025-05-25: Exhibition at Galerie Stadt Sindelfingen until May 25, 2025"
-  - "2024-01-15: First institutional solo exhibition of Justin Urbach"
 ---
 
 BLINDHÆD is the first multi-media artwork featuring event cameras. Event-based vision is a novel computer vision technique in which the imaging sensor only responds to local changes in brightness. Event cameras only react to movement in their visual field. Thereby, they produce radically different, otherworldly imagery that offers a novel artistic interpretation of vision itself.

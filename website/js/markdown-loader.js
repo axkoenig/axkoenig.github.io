@@ -377,28 +377,6 @@ async function loadProjects(basePath, projectList) {
                 project.tags = [project.tags];
             }
             
-            // Parse news items if they exist as array of strings
-            if (project.news && Array.isArray(project.news)) {
-                project.news = project.news.map(item => {
-                    if (typeof item === 'string') {
-                        // Format: "2024-01-15: News title"
-                        const colonIndex = item.indexOf(':');
-                        if (colonIndex > 0) {
-                            return {
-                                date: item.substring(0, colonIndex).trim(),
-                                title: item.substring(colonIndex + 1).trim()
-                            };
-                        }
-                        // If no colon, return null to filter out
-                        return null;
-                    }
-                    // If already an object, return as is
-                    return item;
-                }).filter(item => item && item.date && item.title);
-                
-                console.log('Parsed news for project:', project.title, project.news);
-            }
-            
             console.log('Loaded project:', project.title);
             projects.push(project);
         } else {
@@ -557,48 +535,6 @@ function renderProjectDetail(project, basePath) {
         return `<video src="${pageBaseUrl}${basePath}/${project.path}/${src}"`;
     });
     
-    // Build news section HTML
-    let newsHTML = '';
-    if (project.news && Array.isArray(project.news) && project.news.length > 0) {
-        // Sort news by date (newest first)
-        const sortedNews = [...project.news].sort((a, b) => {
-            const dateA = new Date(a.date || a);
-            const dateB = new Date(b.date || b);
-            return dateB - dateA;
-        });
-        
-        newsHTML = `
-            <div class="project-news" style="margin: 0 -30px 30px -30px; padding: 0 30px 20px 30px; border-bottom: 1px solid var(--border-color); width: calc(100% + 60px); box-sizing: border-box;">
-                <h3>News</h3>
-                <ul style="list-style: none; padding: 0;">
-                    ${sortedNews.map(newsItem => {
-                        let news = newsItem;
-                        // If it's still a string, parse it
-                        if (typeof newsItem === 'string') {
-                            const colonIndex = newsItem.indexOf(':');
-                            if (colonIndex > 0) {
-                                news = {
-                                    date: newsItem.substring(0, colonIndex).trim(),
-                                    title: newsItem.substring(colonIndex + 1).trim()
-                                };
-                            }
-                        }
-                        
-                        if (news && news.date && news.title) {
-                            try {
-                                const date = new Date(news.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-                                return `<li style="margin-bottom: 15px;"><strong>${date}</strong>: ${news.title}</li>`;
-                            } catch (e) {
-                                return `<li style="margin-bottom: 15px;"><strong>${news.date}</strong>: ${news.title}</li>`;
-                            }
-                        }
-                        return '';
-                    }).filter(html => html).join('')}
-                </ul>
-            </div>
-        `;
-    }
-    
     // Build papers section HTML (structured papers)
     let papersHTML = '';
     if (project.papers && Array.isArray(project.papers) && project.papers.length > 0) {
@@ -722,7 +658,6 @@ function renderProjectDetail(project, basePath) {
                 </div>
                 ${coverImage ? `<div style="margin: 0 -30px 30px -30px; padding-bottom: 30px; border-bottom: 1px solid var(--border-color); width: calc(100% + 60px); box-sizing: border-box;"><img src="${coverImage}" alt="${project.title}" style="max-width: 100%; width: 100%; display: block; filter: grayscale(0%); opacity: 1; transition: filter 0.5s ease, opacity 0.5s ease;" class="in-view" loading="lazy" onerror="console.error('Failed to load cover image:', this.src);" /></div>` : ''}
                 ${collaboratorsHTML}
-                ${newsHTML}
                 ${papersHTML}
                 ${citationsHTML}
                 <div class="project-detail-body">

@@ -14,8 +14,6 @@ collaborators:
     url: "https://www.professoren.tum.de/en/navab-nassir/"
 citations:
   - "Koenig, A. (2018). HoloLens Application for Orthopedic Trauma Surgery. Bachelor Thesis, Technical University of Munich."
-news:
-  - "2018-09-15: User study completed with four trauma surgeons"
 ---
 
 For my bachelor thesis at the [NARVIS Lab](http://campar.in.tum.de/Main/NarvisLabNew), I developed an application for the Microsoft HoloLens to support orthopedic trauma surgeons with intra-operative 3D visualizations of complex bone fractures. I conducted a user study with four trauma surgeons to evaluate my work.

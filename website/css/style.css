@@ -1357,11 +1357,6 @@ body.is-home-page .home-dot::after {
         width: calc(100% + 40px) !important;
     }
     
-    .project-news {
-        margin: 0 -20px 30px -20px !important;
-        padding: 0 20px 20px 20px !important;
-        width: calc(100% + 40px) !important;
-    }
     
     .project-detail-inner > div[style*="-30px"] {
         margin-left: -20px !important;

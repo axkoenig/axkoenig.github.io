@@ -33,8 +33,5 @@ papers:
         url: "https://openreview.net/forum?id=OqmWRIsvA4O"
       - label: "Poster"
         url: "../downloads/research/icra22_workshop_poster.pdf"
-news:
-  - "2022-10-25: Full paper accepted at IROS 2022"
-  - "2022-05-25: Workshop paper accepted at ICRA 2022"
 ---
 

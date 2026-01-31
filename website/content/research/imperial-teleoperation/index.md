@@ -24,8 +24,6 @@ papers:
         url: "https://www.youtube.com/watch?v=fNvErR5eUpc"
       - label: "Demo"
         url: "https://www.youtube.com/watch?v=RDbpd9d7U2k"
-news:
-  - "2021-08-30: Paper accepted at IEEE RO-MAN 2021"
 ---
 
 During my research internship at the [Mechatronics in Medicine Lab](http://www.imperial.ac.uk/mechatronics-in-medicine) at Imperial College London, I built a modular ROS platform to intuitively control a robotic rig with a gesture tracker. Visual feedback via a virtual reality headset allows for remote teleoperation of the robot. I also used data from an RGB-D camera to play with ideas regarding autonomous robotic grasping.

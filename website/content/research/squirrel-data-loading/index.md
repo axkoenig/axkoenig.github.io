@@ -9,9 +9,6 @@ collaborators:
   - name: "T. Wollmann"
     affiliation: "Merantix Momentum"
     url: "https://scholar.google.com/citations?user=H8tlV-oAAAAJ&hl=de&oi=ao"
-news:
-  - "2022-09-15: Squirrel open-sourced"
-  - "2022-07-20: Results showcased at PyData 2022 Berlin"
 ---
 
 At [Merantix Momentum](http://merantix-momentum.com), I'm benchmarking our data loading tool [Squirrel](https://hub.docker.com/repository/docker/axkoenig/reflex_stack). Preliminary results show that data loading pipelines can benefit greatly from Squirrel's improved throughput. Upon open-sourcing Squirrel, our VP of Engineering, Dr. Thomas Wollmann, showcased some of our initial results at the [PyData 2022](https://www.youtube.com/watch?v=pZPbi4EmqEo) conference in Berlin.
