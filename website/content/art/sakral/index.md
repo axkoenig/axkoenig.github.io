@@ -1,7 +1,7 @@
 ---
 title: Sakral
-date: 2023-10-10
-short_description: A photographic series documenting religious architecture.
+date: 2022-01-01
+short_description: A photographic series documenting sacred architecture.
 tags: [photography]
 cover_image: media/1.jpeg
 highlight: false
