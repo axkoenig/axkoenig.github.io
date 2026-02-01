@@ -4,9 +4,10 @@ start_date: 2020-06-15
 end_date: 2020-09-15
 short_description: A uni-project developing a self-supervised method for class and content disentanglement.
 tags: [research, machine-learning, computer-vision]
-cover_image: media/ml4cg.png
+cover_image: media/image3.jpeg
 highlight: false
 collaborators:
+  - name: "Li Nguyen" 
   - name: "Ron Mokady"
     url: "https://rmokady.github.io/"
   - name: "Daniel Cohen-Or"
