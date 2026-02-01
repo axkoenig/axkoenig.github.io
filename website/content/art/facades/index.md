@@ -2,7 +2,7 @@
 title: Facades
 start_date: 2018-01-01
 end_date: 2022-01-01
-short_description: A photographic exploration of architectural facades and their material textures.
+short_description: Photographs of architectural facades and their material textures.
 tags: [photography]
 cover_image: media/1.jpeg
 highlight: false
