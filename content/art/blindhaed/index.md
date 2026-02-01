@@ -46,7 +46,7 @@ BLINDHÆD is an interdisciplinary collaboration between artists and researchers.
 ![Outside gallery view, Photo by Justin Urbach](media/justin/outside.jpg)
 
 ![Depth and grayscale camera on robot](media/robot/depth-camera.jpg)
-![Event and grayscale camera](media/robot/two-cameras.jpg)
+![Event and grayscale camera](media/robot/event-camera.jpg)
 
 In BLINDHÆD, vision is no longer static or purely human. It is optimized, expanded, and intertwined with technology. The exhibition invites reflection on the limits of perception and the speculative future of seeing.
 
