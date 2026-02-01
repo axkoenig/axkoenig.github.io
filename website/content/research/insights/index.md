@@ -7,6 +7,7 @@ tags: [research, computer-vision, machine-learning, blog]
 cover_image: "media/insights.png"
 highlight: false
 collaborators:
+  - name: "Julien Siems"
   - name: "Johannes Otterbach"
     url: "https://jotterbach.github.io/"
 resources:
