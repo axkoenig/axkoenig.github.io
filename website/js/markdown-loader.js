@@ -716,7 +716,7 @@ function renderProjectDetail(project, basePath) {
     
     // Build short description HTML
     const shortDescriptionHTML = project.short_description 
-        ? `<div class="project-short-description" style="margin: 0 -30px 30px -30px; padding: 0 0 20px 0; border-bottom: 1px solid var(--border-color); width: calc(100% + 60px); box-sizing: border-box;">
+        ? `<div class="project-short-description">
             <p style="font-size: 1em; line-height: 1.6; color: var(--text-color-secondary); margin: 0;">${project.short_description}</p>
           </div>`
         : '';
