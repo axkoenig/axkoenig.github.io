@@ -546,6 +546,10 @@ body.is-home-page .home-dot::after {
     visibility: hidden;
 }
 
+.project-detail-view.no-transition {
+    transition: none;
+}
+
 .project-detail-view.active {
     visibility: visible;
     width: 100%;

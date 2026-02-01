@@ -179,9 +179,8 @@
                 const projectSlug = window.location.hash.substring(1);
                 const project = window.currentProjects.find(p => (p.slug || p.id) === projectSlug);
                 if (project) {
-                    setTimeout(() => {
-                        showProjectDetail(project);
-                    }, 200);
+                    // Open directly without animation for direct links
+                    showProjectDetail(project, true);
                 } else {
                     // Invalid hash - remove it and show the page normally
                     const urlWithoutHash = window.location.pathname + window.location.search;
@@ -190,7 +189,7 @@
             }
         })();
         
-        function showProjectDetail(project) {
+        function showProjectDetail(project, skipAnimation = false) {
             const projectDetail = document.getElementById('project-detail');
             const content = document.querySelector('.content');
             
@@ -199,8 +198,23 @@
             const detailHTML = window.markdownLoader.renderProjectDetail(project, 'content/art');
             projectDetail.innerHTML = detailHTML;
             
+            // Skip animation for direct links (when page loads with hash)
+            if (skipAnimation) {
+                projectDetail.classList.add('no-transition');
+            }
+            
             // Add active class to show fullscreen panel
             projectDetail.classList.add('active');
+            
+            // Remove no-transition class after the panel is shown
+            if (skipAnimation) {
+                // Use requestAnimationFrame to ensure the class is applied before removing
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        projectDetail.classList.remove('no-transition');
+                    });
+                });
+            }
             
             // Mark clicked tile as active
             const projectTiles = document.querySelectorAll('.project-tile');
