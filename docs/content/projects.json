@@ -1,0 +1,29 @@
+{
+  "_comment": "This file lists all projects to be displayed. Add folder names to the respective arrays to show new projects. Each folder must contain an index.md file.",
+  "art": [
+    "ungefiltert",
+    "blindhaed",
+    "blindhaed-analog",
+    "facades",
+    "monoliths",
+    "procedure",
+    "sakral",
+    "veen-sets"
+  ],
+  "research": [
+    "acoustic-jamming",
+    "co-design",
+    "hololens-surgery",
+    "imperial-teleoperation",
+    "instance-general",
+    "learning-or-compliance",
+    "insights",
+    "stego",
+    "neuroprosthetics",
+    "grasp-refinement",
+    "reflex-stack",
+    "dl4mi",
+    "ml4cg"
+  ]
+}
+
