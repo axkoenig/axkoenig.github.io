@@ -3,7 +3,6 @@ title: Tactile Grasp Refinement
 start_date: 2020-12-15
 end_date: 2022-02-15
 short_description: Master thesis research on tactile sensing for learning and deploying robotic grasping controllers.
-tags: [research, robotics, machine-learning]
 cover_image: media/grasp-refinement.png
 highlight: false
 collaborators:

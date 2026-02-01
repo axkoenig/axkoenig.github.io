@@ -3,7 +3,6 @@ title: Machine Learning for Computer Graphics
 start_date: 2020-06-15
 end_date: 2020-09-15
 short_description: A uni-project developing a self-supervised method for class and content disentanglement.
-tags: [research, machine-learning, computer-vision]
 cover_image: media/ml4cg-image3.jpg
 highlight: false
 collaborators:

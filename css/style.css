@@ -84,20 +84,6 @@ body {
     background-color: var(--border-color);
 }
 
-.filter-text-link {
-    color: #bbb !important;
-}
-
-.filter-text-link:hover {
-    background-color: var(--color-primary) !important;
-    color: #000 !important;
-}
-
-.filter-text-link.active {
-    background-color: var(--color-primary) !important;
-    color: #000 !important;
-}
-
 .hidden {
     display: none;
 }
@@ -313,78 +299,6 @@ body.is-home-page .home-dot::after {
     display: none;
 }
 
-.filter-controls {
-    padding: 20px;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.filter-buttons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
-}
-
-.filter-btn {
-    background: none;
-    border: 1px solid var(--border-color);
-    padding: 8px 16px;
-    cursor: pointer;
-    font-size: 14px;
-    color: var(--color-link);
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-}
-
-.filter-btn:hover {
-    background-color: var(--color-primary);
-    color: black;
-}
-
-.filter-btn.active {
-    background-color: var(--color-primary);
-    color: black;
-}
-
-.inline-filters {
-    padding: 15px 20px;
-    text-align: center;
-    font-size: 14px;
-    border-bottom: 1px solid var(--border-color);
-    background-color: white;
-    animation: slideDown 0.2s ease;
-}
-
-@keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.filter-link {
-    color: var(--color-link);
-    text-decoration: none;
-    padding: 4px 12px;
-    margin: 0 8px;
-    transition: background-color 0.2s ease;
-    display: inline-block;
-}
-
-.filter-link:hover {
-    background-color: var(--color-primary);
-    color: inherit;
-}
-
-.filter-link.active {
-    background-color: var(--color-primary);
-    color: black;
-}
-
 .projects-grid {
     display: flex;
     flex-direction: column;
@@ -505,10 +419,6 @@ body.is-home-page .home-dot::after {
     min-width: 200px;
 }
 
-.project-tags {
-    display: none;
-}
-
 .project-resources {
     margin-top: 15px;
     display: flex;
@@ -620,6 +530,16 @@ body.is-home-page .home-dot::after {
 
 .project-close-button:hover {
     background-color: var(--color-primary);
+}
+
+/* Mobile: button should just say "Close" (no ESC hint) */
+@media (max-width: 768px) {
+    .project-close-button .project-close-esc {
+        display: none;
+    }
+    .project-close-button .project-close-arrow {
+        display: none;
+    }
 }
 
 .project-fullscreen-button {
@@ -1006,7 +926,12 @@ body.is-home-page .home-dot::after {
     left: 0;
     width: 100%;
     height: 600px;
-    overflow: hidden;
+    /* Allow native horizontal scrolling (trackpad + touch swipe). */
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x proximity;
+    touch-action: pan-x;
     background-color: white;
     z-index: 10;
 }
@@ -1014,9 +939,8 @@ body.is-home-page .home-dot::after {
 .carousel-track {
     display: flex;
     height: 100%;
-    /* Animation will be set by JavaScript with fixed velocity */
-    will-change: transform;
-    /* Width will be set explicitly by JavaScript for Safari compatibility */
+    /* Natural width based on items; no auto-animation. */
+    will-change: scroll-position;
 }
 
 .carousel-item {
@@ -1027,6 +951,7 @@ body.is-home-page .home-dot::after {
     margin-right: 0;
     cursor: pointer;
     overflow: hidden;
+    scroll-snap-align: start;
 }
 
 .carousel-item img {
@@ -1092,26 +1017,6 @@ body.is-home-page .home-dot::after {
     max-width: 100%;
     word-wrap: break-word;
     overflow-wrap: break-word;
-}
-
-@keyframes scroll-carousel {
-    from {
-        transform: translateX(0);
-    }
-    to {
-        transform: translateX(var(--carousel-half-width, -50%));
-    }
-}
-
-@-webkit-keyframes scroll-carousel {
-    from {
-        -webkit-transform: translateX(0);
-        transform: translateX(0);
-    }
-    to {
-        -webkit-transform: translateX(var(--carousel-half-width, -50%));
-        transform: translateX(var(--carousel-half-width, -50%));
-    }
 }
 
 /* About Page Styles */
@@ -1456,31 +1361,6 @@ body.is-home-page .home-dot::after {
         padding-right: 20px;
     }
 
-    .filter-controls {
-        padding: 15px 20px;
-    }
-    
-    .filter-buttons {
-        justify-content: flex-start;
-        gap: 8px;
-    }
-    
-    .filter-btn {
-        padding: 6px 12px;
-        font-size: 12px;
-    }
-    
-    .inline-filters {
-        padding: 15px 20px;
-        font-size: 13px;
-        text-align: left;
-    }
-    
-    .filter-link {
-        padding: 3px 8px;
-        margin: 0 4px;
-    }
-    
     .project-tile {
         grid-template-columns: 1fr;
         gap: 20px;

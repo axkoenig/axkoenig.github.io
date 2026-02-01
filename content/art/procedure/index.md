@@ -2,7 +2,6 @@
 title: The Procedure
 date: 2025-10-31
 short_description: Live-performance of BLINDHÆD at DOK Filmfest in Leipzig.
-tags: [performance, installation]
 cover_image: media/me.jpg
 highlight: true
 collaborators:

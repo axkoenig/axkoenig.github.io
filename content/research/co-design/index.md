@@ -3,7 +3,6 @@ title: Trust the Hand
 start_date: 2026-03-01
 end_date: 2026-03-01
 short_description: Lessons from 15 years of applied co-design for soft manipulation.
-tags: [research, robotics, machine-learning, haptics, manipulation]
 cover_image: media/two-thumbs.jpg
 highlight: true
 collaborators:

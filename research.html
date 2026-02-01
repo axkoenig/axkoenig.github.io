@@ -57,19 +57,12 @@
             <div class="header">
                 <a href="index.html" class="header-name">akoenig</a>
                 <div class="header-nav">
-                    <a href="#" class="filter-text-link" id="filter-toggle">Filter</a>
                     <a href="art.html">Art</a>
                     <a href="research.html">Research</a>
                     <a href="about.html">About</a>
                 </div>
             </div>
             <div class="content content-with-detail">
-                <div class="inline-filters" id="inline-filters" style="display: none;">
-                    <a href="#" class="filter-link active" data-filter="all">All</a>
-                    <a href="#" class="filter-link" data-filter="robotics">Robotics</a>
-                    <a href="#" class="filter-link" data-filter="machine-learning">Machine Learning</a>
-                    <a href="#" class="filter-link" data-filter="computer-vision">Computer Vision</a>
-                </div>
                 <div id="projects-grid" class="projects-grid">
                     <!-- Project tiles will be dynamically loaded here -->
                 </div>
@@ -104,62 +97,15 @@
             
             // Sort by start_date (newest first). Dates are expected in YYYY-MM-DD (year-month-day).
             window.markdownLoader.sortProjectsNewFirst(window.currentProjects);
-            
-            // Function to render projects based on filter
-            window.renderFilteredProjects = function(filter = 'all') {
-                let filteredProjects = window.currentProjects;
-                
-                if (filter !== 'all') {
-                    filteredProjects = window.currentProjects.filter(project => {
-                        return project.tags && project.tags.includes(filter);
-                    });
-                }
-                
-                const projectsGrid = document.getElementById('projects-grid');
-                if (projectsGrid) {
-                    if (filteredProjects.length > 0) {
-                        projectsGrid.innerHTML = filteredProjects.map((project, index) => 
-                            window.markdownLoader.renderProjectTile(project, 'content/research', index)
-                        ).join('');
-                    } else {
-                        projectsGrid.innerHTML = '<p style="padding: 40px; text-align: center;">No projects found for this filter.</p>';
-                    }
-                }
-            };
-            
-            // Setup filter toggle
-            const filterToggle = document.getElementById('filter-toggle');
-            const inlineFilters = document.getElementById('inline-filters');
-            
-            filterToggle.addEventListener('click', (e) => {
-                e.preventDefault();
-                if (inlineFilters.style.display === 'none') {
-                    inlineFilters.style.display = 'block';
-                    filterToggle.classList.add('active');
-                } else {
-                    inlineFilters.style.display = 'none';
-                    filterToggle.classList.remove('active');
-                }
-            });
-            
-            // Setup filter links
-            const filterLinks = document.querySelectorAll('.filter-link');
-            filterLinks.forEach(link => {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const filter = link.dataset.filter;
-                    
-                    // Update active state
-                    filterLinks.forEach(l => l.classList.remove('active'));
-                    link.classList.add('active');
-                    
-                    // Render filtered projects
-                    window.renderFilteredProjects(filter);
-                });
-            });
-            
-            // Initial render
-            window.renderFilteredProjects('all');
+
+            // Render all projects (filters removed)
+            const projectsGrid = document.getElementById('projects-grid');
+            if (projectsGrid) {
+                projectsGrid.innerHTML = window.currentProjects.map((project, index) =>
+                    window.markdownLoader.renderProjectTile(project, 'content/research', index)
+                ).join('');
+            }
+
             // If URL has a hash, open the corresponding project (router handles history).
             if (typeof window.syncProjectDetailToUrl === 'function') {
                 window.syncProjectDetailToUrl({ skipAnimation: true });

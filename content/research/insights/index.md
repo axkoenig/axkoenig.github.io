@@ -3,7 +3,6 @@ title: Research Blog Posts
 start_date: 2023-03-01
 end_date: 2023-06-01
 short_description: Two blog posts on self-supervised monocular depth estimation and label-efficient semantic segmentation.
-tags: [research, computer-vision, machine-learning, blog]
 cover_image: "media/insights-image4.jpg"
 highlight: false
 collaborators:

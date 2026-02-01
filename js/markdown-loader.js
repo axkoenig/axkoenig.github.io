@@ -517,11 +517,6 @@ async function loadProjects(basePath, projectList) {
                 project.highlight = project.highlight.toLowerCase() === 'true';
             }
             
-            // Ensure tags is an array
-            if (typeof project.tags === 'string') {
-                project.tags = [project.tags];
-            }
-            
             // Ensure resources is an array
             if (!Array.isArray(project.resources)) {
                 project.resources = [];
@@ -743,7 +738,7 @@ function renderProjectTile(project, basePath, projectIndex) {
     const description = project.short_description || '';
     
     return `
-        <div class="project-tile" data-project-id="${project.id}" data-project-slug="${project.slug || project.id}" data-year="${project.year || ''}" data-tags="${Array.isArray(project.tags) ? project.tags.join(',') : project.tags || ''}">
+        <div class="project-tile" data-project-id="${project.id}" data-project-slug="${project.slug || project.id}" data-year="${project.year || ''}">
             ${coverImage ? `<div class="project-cover">
                 <img src="${coverImage}" alt="${project.title || ''}" loading="lazy" />
             </div>` : '<div class="project-cover"></div>'}
@@ -813,10 +808,6 @@ function renderProjectDetail(project, basePath) {
         ? (project.cover_image.startsWith('http') 
             ? project.cover_image 
             : `${pageBaseUrl}${basePath}/${project.path}/${project.cover_image}`)
-        : '';
-    
-    const tagsHTML = Array.isArray(project.tags) 
-        ? project.tags.map(tag => `<span class="tag">${tag}</span>`).join('')
         : '';
     
     // Process images in HTML to use correct paths
@@ -992,14 +983,15 @@ function renderProjectDetail(project, basePath) {
     return `
         <div class="project-detail-content">
             <div class="project-detail-buttons">
-                <button class="project-close-button" onclick="closeProjectDetail()">← Close (ESC)</button>
+                <button class="project-close-button" onclick="closeProjectDetail()">
+                    <span class="project-close-arrow">← </span><span class="project-close-text">Close</span><span class="project-close-esc"> (ESC)</span>
+                </button>
             </div>
             <div class="project-detail-inner">
                 <div class="project-detail-header">
                     <h1>${project.title}</h1>
                     <div class="project-meta">
                         ${yearLabel ? `<div><span class="project-year">${yearLabel}</span>${collaboratorsHTML}</div>` : collaboratorsHTML}
-                        <div class="project-tags">${tagsHTML}</div>
                     </div>
                     ${project.short_description ? `<div class="project-short-description-in-header"><p style="font-size: 1em; line-height: 1.6; color: var(--text-color-secondary); margin: 20px 0 0 0;">${project.short_description}</p></div>` : ''}
                 </div>
