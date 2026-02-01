@@ -16,20 +16,14 @@
 
 html {
     overscroll-behavior: none;
-    overflow-x: hidden;
-    overflow-y: auto;
 }
 
 body {
     min-height: 100vh;
     overscroll-behavior: none;
-    overflow-x: hidden;
-    overflow-y: auto;
     font-family: -apple-system, BlinkMacSystemFont, 'IBM Plex Sans', Arial, sans-serif;
     margin: 0;
     padding: 0;
-    display: flex;
-    flex-direction: column;
     line-height: 1.4;
     font-weight: 300;
     -webkit-font-smoothing: antialiased;
@@ -109,17 +103,12 @@ body {
 }
 
 .container {
-    display: flex;
     width: 100%;
-    min-height: 0;
-    flex: 1;
 }
 
 .main-content {
-    flex: 1;
     width: 100%;
     margin-top: var(--header-height);
-    min-height: 0;
 }
 
 img,
