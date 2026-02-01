@@ -15,12 +15,16 @@
 }
 
 html {
-    overscroll-behavior: none;
+    /* Keep the "no rubber-band" feel vertically, but don't disable horizontal
+       overscroll/back-gesture behavior (important for Mac trackpad back-swipe). */
+    overscroll-behavior-y: none;
+    overscroll-behavior-x: auto;
 }
 
 body {
     min-height: 100vh;
-    overscroll-behavior: none;
+    overscroll-behavior-y: none;
+    overscroll-behavior-x: auto;
     font-family: -apple-system, BlinkMacSystemFont, 'IBM Plex Sans', Arial, sans-serif;
     margin: 0;
     padding: 0;
@@ -537,7 +541,9 @@ body.is-home-page .home-dot::after {
     background: white;
     z-index: 2000;
     overflow-y: auto;
-    overflow-x: visible;
+    /* Prevent accidental horizontal scrolling inside the overlay which can
+       hijack the two-finger back-swipe gesture on macOS browsers. */
+    overflow-x: hidden;
     transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: -2px 0 10px rgba(0, 0, 0, 0.05);
     visibility: hidden;

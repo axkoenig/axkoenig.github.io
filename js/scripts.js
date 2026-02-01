@@ -2,7 +2,226 @@
  * UI Scripts - Image scroll effects, sidebar interactions, project detail modals
  */
 
-document.addEventListener('DOMContentLoaded', () => {
+(function() {
+    /**
+     * Project detail "router" — keep the overlay UI in sync with the URL hash
+     * and browser history. This makes macOS two-finger swipe Back behave like
+     * a normal browser "Back" (close project detail first).
+     */
+    function getProjectDetailEl() {
+        return document.getElementById('project-detail');
+    }
+    
+    function getProjectsGridEl() {
+        return document.getElementById('projects-grid');
+    }
+    
+    function getBasePath() {
+        return window.projectBasePath || 'content';
+    }
+    
+    function getSlugFromHash() {
+        const raw = (window.location && window.location.hash) ? window.location.hash : '';
+        if (!raw || raw.length < 2) return '';
+        try {
+            return decodeURIComponent(raw.substring(1));
+        } catch {
+            return raw.substring(1);
+        }
+    }
+    
+    function findProjectBySlug(slug) {
+        if (!slug || !Array.isArray(window.currentProjects)) return null;
+        return window.currentProjects.find((p) => String(p.slug || p.id) === String(slug)) || null;
+    }
+    
+    function setActiveTile(slugOrId) {
+        const projectTiles = document.querySelectorAll('.project-tile');
+        projectTiles.forEach((tile) => {
+            const tileSlug = tile.dataset.projectSlug || tile.dataset.projectId;
+            if (tileSlug && slugOrId && String(tileSlug) === String(slugOrId)) {
+                tile.classList.add('active');
+            } else {
+                tile.classList.remove('active');
+            }
+        });
+    }
+    
+    function closeProjectDetailUI() {
+        const projectDetail = getProjectDetailEl();
+        const content = document.querySelector('.content');
+        
+        if (projectDetail) {
+            projectDetail.classList.remove('active');
+        }
+        if (content) {
+            content.classList.remove('has-detail');
+        }
+        
+        setActiveTile(null);
+        
+        // Best-effort cleanup: remove scroll handler if we attached one
+        if (projectDetail && projectDetail._detailScrollHandler) {
+            projectDetail.removeEventListener('scroll', projectDetail._detailScrollHandler);
+            projectDetail._detailScrollHandler = null;
+        }
+    }
+    
+    function openProjectDetailUI(project, options = {}) {
+        const { skipAnimation = false } = options;
+        const projectDetail = getProjectDetailEl();
+        const basePath = getBasePath();
+        
+        if (!projectDetail || !window.markdownLoader) {
+            console.error('Project detail element or markdown loader not found');
+            return;
+        }
+        
+        const detailHTML = window.markdownLoader.renderProjectDetail(project, basePath);
+        projectDetail.innerHTML = detailHTML;
+        
+        if (skipAnimation) {
+            projectDetail.classList.add('no-transition');
+        }
+        
+        projectDetail.classList.add('active');
+        
+        if (skipAnimation) {
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    projectDetail.classList.remove('no-transition');
+                });
+            });
+        }
+        
+        const slug = project.slug || project.id;
+        setActiveTile(slug);
+        projectDetail.scrollTop = 0;
+        
+        // Recheck images in view after rendering
+        if (typeof window.requestAnimationFrame === 'function') {
+            setTimeout(() => {
+                if (typeof window.__checkImagesAndCanvasesInView === 'function') {
+                    window.__checkImagesAndCanvasesInView();
+                }
+            }, 150);
+        }
+        
+        // Add scroll listener to the detail panel for image effects
+        const detailScrollHandler = () => {
+            if (typeof window.__checkImagesAndCanvasesInView === 'function') {
+                window.__checkImagesAndCanvasesInView();
+            }
+        };
+        
+        if (projectDetail._detailScrollHandler) {
+            projectDetail.removeEventListener('scroll', projectDetail._detailScrollHandler);
+        }
+        projectDetail.addEventListener('scroll', detailScrollHandler);
+        projectDetail._detailScrollHandler = detailScrollHandler;
+    }
+    
+    function ensureProjectHistoryInitialized() {
+        // Only apply this routing behavior on pages that actually have a project overlay.
+        if (!getProjectDetailEl()) return;
+        
+        if (window.__projectHistoryInitialized) return;
+        window.__projectHistoryInitialized = true;
+        
+        const slug = getSlugFromHash();
+        const cleanUrl = window.location.pathname + window.location.search;
+        
+        // Always mark the current entry as the "list view" state.
+        // If we arrived with a hash (deep link), create a synthetic list-view entry
+        // so Back closes the overlay before leaving the page.
+        if (slug) {
+            window.history.replaceState({ projectOpen: false }, '', cleanUrl);
+            window.history.pushState({ projectOpen: true, projectSlug: slug }, '', `${cleanUrl}#${encodeURIComponent(slug)}`);
+        } else {
+            window.history.replaceState({ projectOpen: false }, '', cleanUrl);
+        }
+    }
+    
+    function syncProjectDetailToUrl(options = {}) {
+        const { skipAnimation = true } = options;
+        ensureProjectHistoryInitialized();
+        if (!getProjectDetailEl()) return;
+        
+        const slug = getSlugFromHash();
+        if (!slug) {
+            closeProjectDetailUI();
+            return;
+        }
+        
+        // Projects list not loaded yet — defer opening until the page script
+        // sets window.currentProjects, then calls sync again.
+        if (!Array.isArray(window.currentProjects)) {
+            return;
+        }
+        
+        const project = findProjectBySlug(slug);
+        if (!project) {
+            // Unknown hash — close UI and clean URL (avoid "stuck" back/forward).
+            closeProjectDetailUI();
+            const cleanUrl = window.location.pathname + window.location.search;
+            window.history.replaceState({ projectOpen: false }, '', cleanUrl);
+            return;
+        }
+        
+        openProjectDetailUI(project, { skipAnimation });
+    }
+    
+    function openProjectBySlug(slug, options = {}) {
+        const { pushHistory = true, skipAnimation = false } = options;
+        if (!slug) return;
+        
+        const project = findProjectBySlug(slug);
+        if (!project) return;
+        
+        if (pushHistory) {
+            ensureProjectHistoryInitialized();
+            const cleanUrl = window.location.pathname + window.location.search;
+            const targetHash = `#${encodeURIComponent(project.slug || project.id)}`;
+            const targetUrl = `${cleanUrl}${targetHash}`;
+            
+            // Avoid pushing duplicate entries
+            if ((window.location.pathname + window.location.search + window.location.hash) !== targetUrl) {
+                window.history.pushState(
+                    { projectOpen: true, projectSlug: project.slug || project.id },
+                    '',
+                    targetUrl
+                );
+            }
+        }
+        
+        // Render UI to match the URL (no further history changes)
+        syncProjectDetailToUrl({ skipAnimation });
+    }
+    
+    // Public API used by HTML templates (e.g. close button) and page scripts.
+    window.syncProjectDetailToUrl = syncProjectDetailToUrl;
+    window.openProjectBySlug = openProjectBySlug;
+    
+    // Backward compatibility (some pages call showProjectDetail(project, skipAnimation))
+    window.showProjectDetail = function(project, skipAnimation = false) {
+        if (!project) return;
+        const slug = project.slug || project.id;
+        openProjectBySlug(slug, { pushHistory: true, skipAnimation: !!skipAnimation });
+    };
+    
+    // The close button should behave like browser Back (so trackpad swipe matches).
+    window.closeProjectDetail = function() {
+        // If we have a hash, prefer going "Back" to the list-view state.
+        if (window.location.hash) {
+            window.history.back();
+            return;
+        }
+        
+        // Fallback (should be rare): just close UI.
+        closeProjectDetailUI();
+    };
+    
+    document.addEventListener('DOMContentLoaded', () => {
     // Set active navigation link based on current page
     const currentPage = window.location.pathname.split('/').pop() || 'index.html';
     const navLinks = document.querySelectorAll('.header-nav a');
@@ -76,101 +295,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const canvases = document.querySelectorAll('.cover-container canvas');
         checkElementsInView([...images, ...canvases]);
     }
-
-    // Setup project tile click handlers
-    function setupProjectTiles() {
-        const projectTiles = document.querySelectorAll('.project-tile');
-        projectTiles.forEach(tile => {
-            tile.addEventListener('click', () => {
-                const projectSlug = tile.dataset.projectSlug || tile.dataset.projectId;
-                if (projectSlug && window.currentProjects) {
-                    const project = window.currentProjects.find(p => (p.slug || p.id) === projectSlug);
-                    if (project) {
-                        showProjectDetail(project);
-                    }
-                }
-            });
-        });
-    }
-
-    // Show project detail in fullscreen panel
-    function showProjectDetail(project) {
-        const projectDetail = document.getElementById('project-detail');
-        const content = document.querySelector('.content');
-        const basePath = window.projectBasePath || 'content';
-        
-        if (!projectDetail || !window.markdownLoader) {
-            console.error('Project detail element or markdown loader not found');
-            return;
-        }
-
-        const detailHTML = window.markdownLoader.renderProjectDetail(project, basePath);
-        projectDetail.innerHTML = detailHTML;
-        
-        // Add active class to show fullscreen panel
-        projectDetail.classList.add('active');
-        
-        // Mark clicked tile as active
-        const projectTiles = document.querySelectorAll('.project-tile');
-        projectTiles.forEach(tile => {
-            const tileSlug = tile.dataset.projectSlug || tile.dataset.projectId;
-            const projectSlug = project.slug || project.id;
-            if (tileSlug === projectSlug) {
-                tile.classList.add('active');
-            } else {
-                tile.classList.remove('active');
-            }
-        });
-        
-        // Scroll panel to top
-        projectDetail.scrollTop = 0;
-        
-        // Update URL with hash and push to history
-        const projectSlug = project.slug || project.id;
-        const newUrl = window.location.pathname + window.location.search + '#' + projectSlug;
-        window.history.pushState({ projectOpen: true, projectSlug: projectSlug }, '', newUrl);
-        
-        // Recheck images in view after rendering
-        setTimeout(() => {
-            checkImagesAndCanvasesInView();
-        }, 150);
-        
-        // Add scroll listener to the detail panel for image effects
-        const detailScrollHandler = () => {
-            checkImagesAndCanvasesInView();
-        };
-        
-        // Remove any existing listener
-        projectDetail.removeEventListener('scroll', detailScrollHandler);
-        // Add new scroll listener
-        projectDetail.addEventListener('scroll', detailScrollHandler);
-        
-        // Store handler for cleanup if needed
-        projectDetail._detailScrollHandler = detailScrollHandler;
-    }
-
-    // Close project detail panel
-    window.closeProjectDetail = function() {
-        const projectDetail = document.getElementById('project-detail');
-        const content = document.querySelector('.content');
-        
-        if (projectDetail) {
-            projectDetail.classList.remove('active');
-        }
-        if (content) {
-            content.classList.remove('has-detail');
-        }
-        
-        // Remove active class from all tiles
-        const projectTiles = document.querySelectorAll('.project-tile');
-        projectTiles.forEach(tile => {
-            tile.classList.remove('active');
-        });
-        
-        // Update URL to remove hash
-        const urlWithoutHash = window.location.pathname + window.location.search;
-        window.history.replaceState(null, '', urlWithoutHash);
-    };
+    
+    // Expose for the router (best-effort re-check after rendering detail view)
+    window.__checkImagesAndCanvasesInView = checkImagesAndCanvasesInView;
 
     // Toggle fullscreen mode (kept for backward compatibility, but does nothing now)
     window.toggleProjectFullscreen = function() {
@@ -271,13 +398,26 @@ document.addEventListener('DOMContentLoaded', () => {
     // Make updateSidebarYears globally accessible
     window.updateSidebarYears = updateSidebarYears;
 
-    // Handle browser back button
-    window.addEventListener('popstate', (event) => {
-        const projectDetail = document.getElementById('project-detail');
-        if (projectDetail && projectDetail.classList.contains('active')) {
-            // If project is open and back button is pressed, close it
-            window.closeProjectDetail();
+    // Delegate tile clicks (works for dynamically rendered project lists)
+    document.addEventListener('click', (event) => {
+        const tile = event.target && event.target.closest ? event.target.closest('.project-tile') : null;
+        if (!tile) return;
+        
+        const grid = getProjectsGridEl();
+        if (grid && !grid.contains(tile)) return;
+        
+        const slug = tile.dataset.projectSlug || tile.dataset.projectId;
+        if (slug) {
+            openProjectBySlug(slug, { pushHistory: true, skipAnimation: false });
         }
+    });
+    
+    // Keep UI ↔ URL in sync for browser Back/Forward (including macOS trackpad swipe)
+    window.addEventListener('popstate', () => {
+        syncProjectDetailToUrl({ skipAnimation: true });
+    });
+    window.addEventListener('hashchange', () => {
+        syncProjectDetailToUrl({ skipAnimation: true });
     });
 
     // Handle swipe gestures on mobile
@@ -318,8 +458,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize
     checkImagesAndCanvasesInView();
-    setupProjectTiles();
     setupSidebarNavigation();
+    // If we landed with a hash, ensure history is initialized early and
+    // attempt to sync (may open later once projects are loaded).
+    ensureProjectHistoryInitialized();
+    syncProjectDetailToUrl({ skipAnimation: true });
 
     // Event listeners
     window.addEventListener('scroll', () => {
@@ -337,4 +480,5 @@ document.addEventListener('DOMContentLoaded', () => {
         updateSidebarYears();
     });
 });
+})();
 
