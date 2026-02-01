@@ -870,6 +870,21 @@ body.is-home-page .home-dot::after {
     border-bottom: none;
 }
 
+.project-detail-body blockquote.md-quote {
+    margin: 25px 0;
+    padding: 0 0 0 20px;
+    border-left: 1px solid var(--border-color);
+    color: #666;
+}
+
+.project-detail-body blockquote.md-quote p {
+    margin: 0 0 15px 0;
+}
+
+.project-detail-body blockquote.md-quote p:last-child {
+    margin-bottom: 0;
+}
+
 .project-resources {
     margin-top: 40px;
     padding-top: 30px;

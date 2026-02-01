@@ -247,8 +247,67 @@ function removeResourcesSection(markdown) {
 }
 
 // Simple markdown to HTML converter (basic implementation)
-function markdownToHTML(markdown) {
+function markdownToHTML(markdown, options = {}) {
+    const { enableBlockquotes = true } = options;
     let html = markdown;
+    const blockquoteBlocks = [];
+    
+    // Extract blockquotes (lines starting with ">") into placeholders so that
+    // our later "split into blocks" step can't break nested HTML.
+    function extractBlockquotePlaceholders(input) {
+        const lines = input.split('\n');
+        const out = [];
+        let i = 0;
+        
+        const isQuoteLine = (line) => line.trimStart().startsWith('>');
+        
+        while (i < lines.length) {
+            const line = lines[i];
+            
+            if (!isQuoteLine(line)) {
+                out.push(line);
+                i++;
+                continue;
+            }
+            
+            const quoteLines = [];
+            while (i < lines.length) {
+                const current = lines[i];
+                
+                if (isQuoteLine(current)) {
+                    quoteLines.push(current);
+                    i++;
+                    continue;
+                }
+                
+                // Allow blank lines *inside* a quote, but only if the quote continues.
+                if (current.trim() === '') {
+                    // Look ahead: if the next non-empty line is a quote line, keep the blank.
+                    let j = i + 1;
+                    while (j < lines.length && lines[j].trim() === '') {
+                        j++;
+                    }
+                    if (j < lines.length && isQuoteLine(lines[j])) {
+                        quoteLines.push('>');
+                        i++;
+                        continue;
+                    }
+                }
+                
+                break;
+            }
+            
+            const idx = blockquoteBlocks.length;
+            blockquoteBlocks.push(quoteLines);
+            out.push(`<blockquote data-md-quote="${idx}"></blockquote>`);
+        }
+        
+        return out.join('\n');
+    }
+    
+    if (enableBlockquotes) {
+        html = extractBlockquotePlaceholders(html);
+    }
     
     // Images - process first, before paragraphs
     // Support: ![alt](url) or ![alt](url "caption")
@@ -344,7 +403,7 @@ function markdownToHTML(markdown) {
         if (!block) return '';
         
         // Don't wrap if it's already an HTML tag (header, list, image, iframe, table, figure, etc.)
-        if (block.match(/^<(h[1-6]|ul|ol|li|img|p|iframe|table|tr|td|th|figure)/)) {
+        if (block.match(/^<(h[1-6]|ul|ol|li|img|p|iframe|table|tr|td|th|figure|blockquote)/)) {
             return block;
         }
         
@@ -356,6 +415,22 @@ function markdownToHTML(markdown) {
         // Otherwise wrap in paragraph
         return '<p>' + block + '</p>';
     }).filter(block => block).join('\n\n');
+    
+    // Replace blockquote placeholders with rendered blockquote HTML (done at the end so
+    // the placeholder can't be wrapped into <p> or split into multiple blocks).
+    if (enableBlockquotes && blockquoteBlocks.length > 0) {
+        blockquoteBlocks.forEach((quoteLines, idx) => {
+            const innerMarkdown = quoteLines
+                .map((line) => line.replace(/^\s*>\s?/, ''))
+                .join('\n')
+                .trim();
+            
+            const innerHTML = markdownToHTML(innerMarkdown, { enableBlockquotes: false });
+            const blockquoteHTML = `<blockquote class="md-quote">\n${innerHTML}\n</blockquote>`;
+            const placeholder = `<blockquote data-md-quote="${idx}"></blockquote>`;
+            html = html.split(placeholder).join(blockquoteHTML);
+        });
+    }
     
     return html;
 }
