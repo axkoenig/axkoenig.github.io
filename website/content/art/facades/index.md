@@ -3,34 +3,34 @@ title: Facades
 date: 2023-09-15
 short_description: A photographic exploration of architectural facades, focusing on the interplay between light, shadow, and geometric forms.
 tags: [photography, architecture, visual]
-cover_image: images/facades/1.jpeg
+cover_image: media/facades/1.jpeg
 highlight: false
 collaborators: []
 ---
 
 This series examines how buildings interact with their environment and how architectural elements create visual rhythm and texture. The facades become canvases for light and shadow, revealing the intricate details of modernist and brutalist architecture.
 
-![Facade 1](images/facades/1.jpeg)
+![Facade 1](media/facades/1.jpeg)
 
 Yusen Building, Tokyo  
 Jinzhong Lin Office, 1978
 
-![Facade 2](images/facades/2.jpeg)
+![Facade 2](media/facades/2.jpeg)
 
 Unité d'Habitation, Berlin  
 Le Corbusier, 1958
 
-![Facade 3](images/facades/3.jpeg)
+![Facade 3](media/facades/3.jpeg)
 
 Trakt Nord 1 Universitätsspital, Zurich  
 Hans Weideli, Willy Gattiker, Ernst Kuster, 1978
 
-![Facade 4](images/facades/4.jpeg)
+![Facade 4](media/facades/4.jpeg)
 
 Shakespeare Tower Barbican Estate, London  
 Chamberlin, Powell and Bon, 1976
 
-![Facade 5](images/facades/5.jpeg)
+![Facade 5](media/facades/5.jpeg)
 
 Turnagain Ln, London
 

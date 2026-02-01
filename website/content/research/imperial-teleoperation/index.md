@@ -3,7 +3,7 @@ title: Gesture-Based Teleoperation for Robotic Manipulation
 date: 2019-08-15
 short_description: A modular ROS platform for intuitive control of a robotic rig with gesture tracking, enabling remote teleoperation via virtual reality.
 tags: [research, robotics, teleoperation, human-robot-interaction, VR]
-cover_image: images/imperial.png
+cover_image: media/imperial.png
 highlight: false
 collaborators:
   - name: "R. Secoli"
@@ -41,7 +41,7 @@ papers:
 
 During my research internship at the [Mechatronics in Medicine Lab](http://www.imperial.ac.uk/mechatronics-in-medicine) at Imperial College London, I built a modular ROS platform to intuitively control a robotic rig with a gesture tracker. Visual feedback via a virtual reality headset allows for remote teleoperation of the robot. I also used data from an RGB-D camera to play with ideas regarding autonomous robotic grasping.
 
-![Imperial Teleoperation](images/imperial.png)
+![Imperial Teleoperation](media/imperial.png)
 
 The [IEEE RO-MAN](https://ro-man2021.org) conference 2021 accepted our paper on the educational use of this platform. The system demonstrates how gesture-based control can provide an intuitive interface for robotic manipulation tasks, making robotics more accessible for educational purposes.
 

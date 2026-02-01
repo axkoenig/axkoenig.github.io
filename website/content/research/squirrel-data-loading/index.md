@@ -3,7 +3,7 @@ title: Squirrel Data Loading Framework
 date: 2022-06-15
 short_description: Benchmarking and contributing to Squirrel, a high-performance data loading tool for machine learning pipelines that significantly improves throughput.
 tags: [research, machine-learning, data-loading, performance, open-source]
-cover_image: images/squirrel.png
+cover_image: media/squirrel.png
 highlight: false
 collaborators:
   - name: "T. Wollmann"
@@ -23,7 +23,7 @@ resources:
 
 At [Merantix Momentum](http://merantix-momentum.com), I'm benchmarking our data loading tool [Squirrel](https://hub.docker.com/repository/docker/axkoenig/reflex_stack). Preliminary results show that data loading pipelines can benefit greatly from Squirrel's improved throughput. Upon open-sourcing Squirrel, our VP of Engineering, Dr. Thomas Wollmann, showcased some of our initial results at the [PyData 2022](https://www.youtube.com/watch?v=pZPbi4EmqEo) conference in Berlin.
 
-![Squirrel](images/squirrel.png)
+![Squirrel](media/squirrel.png)
 
 I'm also an active code contributor to Squirrel. The framework addresses common bottlenecks in machine learning data loading pipelines, providing a more efficient way to handle large-scale datasets. Our benchmarking work demonstrates significant performance improvements compared to traditional data loading approaches.
 

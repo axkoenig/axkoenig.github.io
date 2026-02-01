@@ -3,7 +3,7 @@ title: BLINDHÆD
 date: 2025-03-08
 short_description: A multi-media artwork featuring event cameras, exploring the transformation of vision through technology.
 tags: [installation, audio]
-cover_image: images/red/1.jpg
+cover_image: media/red/1.jpg
 highlight: true
 collaborators:
   - name: "Justin Urbach"
@@ -15,7 +15,7 @@ collaborators:
   - name: "Oliver Brock"
     url: "https://www.tu.berlin/robotics/ueber-rbo/prof-dr-oliver-brock"
   - name: "William East"
-    url: "https://soundcloud.com/aquaveen"
+    url: "https://aquaveen.com/"
 resources:
   - label: "Press Release Max Goelitz"
     url: "https://www.maxgoelitz.com/en/news/110-exhibition-sindelfingen-de-die-erste-institutionelle-einzelausstellung-von-justin-urbach-eroffnet/"
@@ -33,30 +33,30 @@ Historically, human sight has been subject to optimization - from glasses to mic
 
 BLINDHÆD is the first institutional solo exhibition of Justin Urbach, on display at the [Galerie Stadt Sindelfingen](https://galerie-sindelfingen.de/?lang=en) from March 8 through May 25, 2025. The piece has since been shown in Nashville (USA) at the [AI Art Exhibition of the Conference on Computer Vision and Pattern Recognition (CVPR)](https://thecvf-art.com/project/blindhaed/), the leading research conference on machine vision, where we continued the piece's dialogue in the scientific community. BLINDHÆD was then shown at the DOK Leipzig film festival in October 2025, as part of the exhibition [DOK Neuland](https://www.dok-leipzig.de/dok-neuland) on Extended Reality.
 
-![First exhibition room, Photo by Wolfgang Günzel](images/green/1.jpg)
+![First exhibition room, Photo by Wolfgang Günzel](media/green/1.jpg)
 
-![Second exhibition room, Photo by Wolfgang Günzel](images/red/1.jpg)
+![Second exhibition room, Photo by Wolfgang Günzel](media/red/1.jpg)
 
-![Monitor wall as seen from back, Photo by Wolfgang Günzel](images/red/3.jpg)
+![Monitor wall as seen from back, Photo by Wolfgang Günzel](media/red/3.jpg)
 
 The first exhibition room presents an artistic rendering of laser eye surgery, while the second room symbolizes the post-enhancement sense of seeing. In room two, event-based vision serves as a metaphor for this transformation: abstract forms emerge from a sea of pixels on a large 2 × 1.2-meter monitor wall, representing a human navigating a new perceptual reality. The human interplay with a robotic arm further illustrates the merging of human and machine, depicting a haunting yet emotional symbiosis. The artwork paints an outlook into the continuation of the constant trend of technological enhancement of our senses. Elements in the exhibition, such as the engraved laser etchings on the surface of the monitors, allude to the irreversibility of such enhancements, further reinforcing our technological dependency.
 
 BLINDHÆD is an interdisciplinary collaboration between artists and researchers. The media artist [Justin Urbach](https://www.justinurbach.com/about) (*1995, Academy of Fine Arts Munich) teams up with scientists from TU Berlin's Robotic Interactive Perception group (PhD Student [Friedhelm Hamann](https://friedhelmhamann.github.io/) and [Prof. Guillermo Gallego](https://sites.google.com/view/guillermogallego)) and the Robotics and Biology Lab (PhD Student [Alexander Koenig](https://axkoenig.github.io/html/about.html) and [Prof. Oliver Brock](https://www.tu.berlin/robotics/ueber-rbo/prof-dr-oliver-brock)). The Berlin-based duo Aqua Veen ([William East](https://soundcloud.com/aquaveen) and [Alexander Koenig](https://axkoenig.github.io/html/about.html)) creates an immersive soundscape for the event-based video installation: computer vision algorithms extract shapes from the event video stream and control synthesizers to create an immersive and reactive sonic dimension of the futuristic visual signals.
 
-![Outside gallery view, Photo by Justin Urbach](images/justin/outside.jpg)
+![Outside gallery view, Photo by Justin Urbach](media/justin/outside.jpg)
 
-![Event camera mounted on a robot arm](images/robot/IMG_3162.JPG)
+![Event camera mounted on a robot arm](media/robot/IMG_3162.JPG)
 
 In BLINDHÆD, vision is no longer static or purely human. It is optimized, expanded, and intertwined with technology. The exhibition invites reflection on the limits of perception and the speculative future of seeing.
 
-![BRAIN ROT laser punching, Photo by Wolfgang Günzel](images/red/2.jpg)
-![BRAIN ROT laser punching, Photo by Wolfgang Günzel](images/green/2.jpg)
+![BRAIN ROT laser punching, Photo by Wolfgang Günzel](media/red/2.jpg)
+![BRAIN ROT laser punching, Photo by Wolfgang Günzel](media/green/2.jpg)
 
-![BRAIN ROT laser punching, Photo by Wolfgang Günzel](images/red/6.jpg)
+![BRAIN ROT laser punching, Photo by Wolfgang Günzel](media/red/6.jpg)
 
-![NANO DROP, Photo by Wolfgang Günzel](images/green/3.jpg)
+![NANO DROP, Photo by Wolfgang Günzel](media/green/3.jpg)
 
-![BLINDSPOT close-up, Photo by Justin Urbach](images/justin/P1014065_edited.avif)
+![BLINDSPOT close-up, Photo by Justin Urbach](media/justin/P1014065_edited.avif)
 
 ### Curatorial Text by Marisa Zeising
 

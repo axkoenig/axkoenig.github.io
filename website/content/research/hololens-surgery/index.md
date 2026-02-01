@@ -3,7 +3,7 @@ title: HoloLens Application for Orthopedic Trauma Surgery
 date: 2018-07-15
 short_description: An application for Microsoft HoloLens to support orthopedic trauma surgeons with intra-operative 3D visualizations of complex bone fractures.
 tags: [research, medical-imaging, augmented-reality, HoloLens, surgery]
-cover_image: images/bt.png
+cover_image: media/bt.png
 highlight: false
 collaborators:
   - name: "U. Eck"
@@ -23,7 +23,7 @@ citations:
 
 For my bachelor thesis at the [NARVIS Lab](http://campar.in.tum.de/Main/NarvisLabNew), I developed an application for the Microsoft HoloLens to support orthopedic trauma surgeons with intra-operative 3D visualizations of complex bone fractures. I conducted a user study with four trauma surgeons to evaluate my work.
 
-![HoloLens Surgery](images/bt.png)
+![HoloLens Surgery](media/bt.png)
 
 The application leverages augmented reality to overlay 3D reconstructions of bone fractures directly onto the surgical field, providing surgeons with enhanced spatial understanding during complex procedures. This technology addresses the challenge of visualizing internal bone structures that are not directly visible during surgery.
 
