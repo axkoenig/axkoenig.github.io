@@ -1,17 +1,21 @@
 ---
 title: Acoustic Sensing for Universal Jamming Grippers
-start_date: 2025-01-01
-end_date: 2025-01-01
-short_description: Using acoustic sensing to enable universal jamming grippers to detect and classify objects through sound.
+start_date: 2025-04-01
+end_date: 2026-04-01
+short_description: Using acoustic sensing to enable universal jamming grippers to feel objects through sound.
 tags: [research, robotics, manipulation, sensing, acoustics]
 cover_image: media/gripper-crop.png
 highlight: false
 collaborators:
-  - name: "L. Weber"
-  - name: "T. Wienert"
-  - name: "M. Splettstößer"
-  - name: "O. Brock"
+  - name: "Lion Weber"
+  - name: "Theodor Wienert"
+  - name: "Martin Splettstößer"
+  - name: "Oliver Brock"
 papers:
+  - authors: ["L. Weber", "T. Wienert", "M. Splettstößer", "A. Koenig", "O. Brock"]
+    year: 2026
+    title: "Acoustic Sensing for Universal Jamming Grippers"
+    venue: "IEEE International Conference on Robotics and Automation (ICRA)"
   - authors: ["L. Weber", "T. Wienert", "M. Splettstößer", "A. Koenig", "O. Brock"]
     year: 2025
     title: "Acoustic Sensing for Universal Jamming Grippers"
@@ -29,3 +33,8 @@ papers:
         url: "https://rbo.gitlab-pages.tu-berlin.de/pages/acoustic-jamming-page/static/pdfs/award.pdf"
 ---
 
+This project originated in our Master-level course Robotics: Project, where I supervised the participating students. We equipped a universal jamming gripper with an internal microphone and speaker to obtain tactile feedback by "listening" to gripper–object interactions. We call this sensing approach Morphological Sensing, in which the robot’s body itself acts as the sensor. The work was first published at an ICRA 2025 workshop, where it received the Best Paper Award, and later extended and published at ICRA 2026.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/V4h8ktTvn88?si=Zzl7fc3DvTfoPNYK" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Scyqc4L0-C8?si=JDN_p1VicWbO0QV8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
