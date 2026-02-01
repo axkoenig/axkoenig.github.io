@@ -930,7 +930,6 @@ body.is-home-page .home-dot::after {
     overflow-x: auto;
     overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x proximity;
     touch-action: pan-x;
     background-color: white;
     z-index: 10;
@@ -951,7 +950,6 @@ body.is-home-page .home-dot::after {
     margin-right: 0;
     cursor: pointer;
     overflow: hidden;
-    scroll-snap-align: start;
 }
 
 .carousel-item img {

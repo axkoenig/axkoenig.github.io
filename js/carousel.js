@@ -110,11 +110,13 @@
             let oneSetWidth = 0;
             let isAdjusting = false;
             let isPointerDown = false;
-            let lastInteractionTs = (typeof performance !== 'undefined' && performance.now) ? performance.now() : Date.now();
+            // Trackpad/touch should never "fight" the auto-scroll: we pause while the user
+            // is actively dragging, but otherwise the carousel moves immediately.
+            let lastInteractionTs = -1e15;
+            let autoCarryPx = 0;
             
             const prefersReducedMotion = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
-            const autoScrollSpeedPxPerSec = 35; // was ~50px/s in the old auto-animation; slightly gentler
-            const autoResumeIdleDelayMs = 1200;
+            const autoScrollSpeedPxPerSec = 50;
             
             const markInteraction = () => {
                 lastInteractionTs = (typeof performance !== 'undefined' && performance.now) ? performance.now() : Date.now();
@@ -141,7 +143,10 @@
             const jumpToMiddle = () => {
                 oneSetWidth = computeOneSetWidth();
                 if (oneSetWidth <= 0) return;
+                const prevBehavior = carouselContainer.style.scrollBehavior;
+                carouselContainer.style.scrollBehavior = 'auto';
                 carouselContainer.scrollLeft = oneSetWidth;
+                carouselContainer.style.scrollBehavior = prevBehavior;
             };
             
             // Initialize position after layout
@@ -208,14 +213,19 @@
                     lastTs = now;
                     
                     const isVisible = (typeof document === 'undefined') || document.visibilityState === 'visible';
-                    const isIdle = (now - lastInteractionTs) > autoResumeIdleDelayMs;
                     
-                    if (isVisible && !isPointerDown && isIdle) {
+                    if (isVisible && !isPointerDown) {
                         if (oneSetWidth <= 0) oneSetWidth = computeOneSetWidth();
                         if (oneSetWidth > 0) {
-                            const dx = autoScrollSpeedPxPerSec * (dtMs / 1000);
-                            carouselContainer.scrollLeft += dx;
-                            normalizeScrollPosition();
+                            // Accumulate sub-pixel movement to keep the speed constant
+                            // even when scrollLeft is quantized to integers.
+                            autoCarryPx += autoScrollSpeedPxPerSec * (dtMs / 1000);
+                            const step = Math.trunc(autoCarryPx);
+                            if (step !== 0) {
+                                autoCarryPx -= step;
+                                carouselContainer.scrollLeft += step;
+                                normalizeScrollPosition();
+                            }
                         }
                     }
                     
