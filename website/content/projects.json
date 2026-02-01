@@ -19,7 +19,12 @@
     "instance-general",
     "learning-or-compliance",
     "squirrel-data-loading",
-    "stego"
+    "stego",
+    "neuroprosthetics",
+    "grasp-refinement",
+    "reflex-stack",
+    "dl4mi",
+    "ml4cg"
   ]
 }
 

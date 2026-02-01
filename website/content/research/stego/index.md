@@ -1,14 +1,16 @@
 ---
-title: Uncovering the Inner Workings of STEGO
+title: Unsupervised Semantic Segmentation
 start_date: 2023-01-01
 end_date: 2023-01-01
-short_description: Analyzing STEGO for safe unsupervised semantic segmentation to understand its inner workings and failure modes.
-tags: [research, computer-vision, machine-learning, semantic-segmentation, safety]
-cover_image: 
+short_description: Analyzing STEGO's inner workings for safe unsupervised semantic segmentation.
+tags: [research, computer-vision, machine-learning, ]
+cover_image: "media/image.png"
 highlight: false
 collaborators:
-  - name: "M. Schambach"
-  - name: "J. Otterbach"
+  - name: "Maximilian Schambach"
+    url: "https://maxschambach.github.io/"
+  - name: "Johannes Otterbach"
+    url: "https://jotterbach.github.io/"
 papers:
   - authors: ["A. Koenig", "M. Schambach", "J. Otterbach"]
     year: 2023
@@ -27,3 +29,7 @@ papers:
         url: "../downloads/research/cvpr23_poster.pdf"
 ---
 
+![Image of a snake (Image: Wikipedia)](media/snake.jpg)
+![Similarity matrix of DINO features](media/image.png)
+
+At [Merantix Momentum](https://www.merantix-momentum.com/) I worked on the [safe.trAIn](https://safetrain-projekt.de/en/) research project spearheaded by Siemens. Within the project, I investigated reliable and label-efficient computer vision algorithms for semantic scene understanding. We published a follow-up study on STEGO, a self-supervised semantic segmentation method, in the [SAIAD Workshop](https://sites.google.com/view/saiad2023) at CVPR 2023 in Vancouver. 

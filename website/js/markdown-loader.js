@@ -904,7 +904,7 @@ function renderProjectDetail(project, basePath) {
                                         const href = resolveResourceUrl(resource);
                                         return href ? `<a class="resource-link" href="${href}" target="_blank">Link</a>` : '';
                                     } else if (resource && resource.url) {
-                                        const label = resource.label || 'Link';
+                                        const label = resource.label || resource.name || 'Link';
                                         const href = resolveResourceUrl(resource.url);
                                         return href ? `<a class="resource-link" href="${href}" target="_blank">${label}</a>` : '';
                                     }
@@ -964,7 +964,7 @@ function renderProjectDetail(project, basePath) {
     let resourcesHTML = '';
     if (project.resources && Array.isArray(project.resources) && project.resources.length > 0) {
         const resourceLinks = project.resources.map(resource => {
-            const label = typeof resource === 'string' ? resource : (resource.label || 'Link');
+            const label = typeof resource === 'string' ? resource : (resource.label || resource.name || 'Link');
             const url = typeof resource === 'string' ? resource : (resource.url || '');
             if (!url) return '';
             const href = resolveResourceUrl(url);

@@ -5,7 +5,9 @@ short_description: Collection of DJ sets by Aqua Veen over the years.
 tags: [audio]
 cover_image: image.png
 highlight: false
-collaborators: []
+collaborators:
+  - name: "William East"
+    url: "https://aquaveen.com/"
 resources:
   - label: "Aqua Veen Website"
     url: "https://aquaveen.com/"
