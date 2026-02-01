@@ -664,8 +664,7 @@ body.is-home-page .home-dot::after {
 }
 
 .project-short-description,
-.papers,
-.citations {
+.papers {
     margin: 0 -30px 30px -30px !important;
     padding: 0 0 20px 0 !important;
     width: calc(100% + 60px) !important;
@@ -870,6 +869,15 @@ body.is-home-page .home-dot::after {
     display: block;
 }
 
+/* Responsive video embeds (avoid pillarboxing from too-short iframes) */
+.project-detail-body iframe[src*="youtube.com/embed/"],
+.project-detail-body iframe[src*="youtube-nocookie.com/embed/"],
+.project-detail-body iframe[src*="youtu.be/"] {
+    aspect-ratio: 16 / 9;
+    height: auto;
+    border: 0;
+}
+
 .project-detail-body table {
     width: 100%;
     border-collapse: collapse;
@@ -948,37 +956,6 @@ body.is-home-page .home-dot::after {
 .sidebar .row.active {
     background-color: var(--color-primary);
     color: black;
-}
-
-.citations {
-    margin-bottom: 30px;
-    padding: 20px;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.citations h3 {
-    margin: 0 0 15px 0;
-    font-size: 18px;
-    text-transform: uppercase;
-}
-
-.citations ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.citations li {
-    margin-bottom: 10px;
-    padding-left: 20px;
-    position: relative;
-}
-
-.citations li:before {
-    content: "•";
-    position: absolute;
-    left: 0;
-    color: var(--color-link);
 }
 
 .landing-page {
@@ -1400,8 +1377,7 @@ body.is-home-page .home-dot::after {
     }
     
     .project-short-description,
-    .papers,
-    .citations {
+    .papers {
         margin: 0 -20px 30px -20px !important;
         padding: 0 20px 20px 20px !important;
         width: calc(100% + 40px) !important;

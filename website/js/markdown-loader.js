@@ -786,6 +786,25 @@ function renderProjectDetail(project, basePath) {
     };
     
     const pageBaseUrl = getBaseUrl();
+
+    const resolveResourceUrl = (url) => {
+        if (!url) return '';
+        const raw = String(url).trim();
+        if (!raw) return '';
+        
+        // Keep absolute URLs and special protocols as-is (http, https, mailto, etc.)
+        if (/^[a-zA-Z][a-zA-Z0-9+.-]*:/.test(raw)) return raw;
+        // Keep absolute paths as-is
+        if (raw.startsWith('/')) return raw;
+        // Keep explicit page-relative paths as-is
+        if (raw.startsWith('./') || raw.startsWith('../')) return raw;
+        
+        const projectPrefix = `${pageBaseUrl}${basePath}/${project.path}/`;
+        if (raw.startsWith(projectPrefix) || raw.startsWith(`${basePath}/${project.path}/`)) return raw;
+        
+        // Treat everything else as project-relative (e.g. "media/file.pdf")
+        return `${projectPrefix}${raw}`;
+    };
     
     const coverImage = (project.cover_image && 
                         typeof project.cover_image === 'string' && 
@@ -882,10 +901,12 @@ function renderProjectDetail(project, basePath) {
                                 ${paper.resources.map(resource => {
                                     if (typeof resource === 'string') {
                                         // Legacy format - just a URL
-                                        return `<a class="resource-link" href="${resource}" target="_blank">Link</a>`;
+                                        const href = resolveResourceUrl(resource);
+                                        return href ? `<a class="resource-link" href="${href}" target="_blank">Link</a>` : '';
                                     } else if (resource && resource.url) {
                                         const label = resource.label || 'Link';
-                                        return `<a class="resource-link" href="${resource.url}" target="_blank">${label}</a>`;
+                                        const href = resolveResourceUrl(resource.url);
+                                        return href ? `<a class="resource-link" href="${href}" target="_blank">${label}</a>` : '';
                                     }
                                     return '';
                                 }).filter(html => html).join('')}
@@ -907,19 +928,6 @@ function renderProjectDetail(project, basePath) {
                         </div>
                     `;
                 }).filter(html => html).join('')}
-            </div>
-        `;
-    }
-    
-    // Build citations section HTML (legacy format - for backward compatibility)
-    let citationsHTML = '';
-    if (project.citations && Array.isArray(project.citations) && project.citations.length > 0) {
-        citationsHTML = `
-            <div class="citations" style="margin: 0 -30px 30px -30px; padding: 0 0 20px 0; width: calc(100% + 60px); box-sizing: border-box;">
-                <h3 style="margin: 0 0 20px 0;">Citations</h3>
-                <ul style="margin: 0; padding-left: 20px;">
-                    ${project.citations.map(citation => `<li>${citation}</li>`).join('')}
-                </ul>
             </div>
         `;
     }
@@ -959,7 +967,8 @@ function renderProjectDetail(project, basePath) {
             const label = typeof resource === 'string' ? resource : (resource.label || 'Link');
             const url = typeof resource === 'string' ? resource : (resource.url || '');
             if (!url) return '';
-            return `<a href="${url}" class="resource-link" target="_blank" rel="noopener noreferrer">${label}</a>`;
+            const href = resolveResourceUrl(url);
+            return href ? `<a href="${href}" class="resource-link" target="_blank" rel="noopener noreferrer">${label}</a>` : '';
         }).filter(html => html).join('');
         
         if (resourceLinks) {
@@ -997,7 +1006,6 @@ function renderProjectDetail(project, basePath) {
                 ${shortDescriptionHTML}
                 ${resourcesHTML}
                 ${papersHTML}
-                ${citationsHTML}
                 <div class="project-detail-body">
                     ${processedHTML}
                 </div>
