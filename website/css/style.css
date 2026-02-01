@@ -635,6 +635,30 @@ body.is-home-page .home-dot::after {
     box-sizing: border-box;
 }
 
+/* Hide short description inside header on mobile (use separate one instead) */
+.project-short-description-in-header {
+    display: none;
+}
+
+/* Add border box around header on large screens */
+@media (min-width: 769px) {
+    .project-detail-header {
+        border: 1px solid var(--border-color);
+        padding: 20px 30px;
+    }
+    
+    /* Hide separate short description on large screens (it's now inside header) */
+    .project-short-description {
+        display: none !important;
+    }
+    
+    /* Show short description inside header on large screens */
+    .project-short-description-in-header {
+        display: block !important;
+        margin-top: 20px;
+    }
+}
+
 .project-short-description,
 .papers,
 .citations {
@@ -723,6 +747,48 @@ body.is-home-page .home-dot::after {
     display: inline-block;
     max-width: 100%;
     width: fit-content;
+}
+
+/* Side-by-side images when two images are on consecutive lines */
+.project-detail-body .image-pair {
+    display: flex;
+    gap: 15px;
+    margin: 25px auto;
+    max-width: 100%;
+    align-items: stretch;
+}
+
+.project-detail-body .image-pair figure {
+    flex: 1;
+    margin: 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.project-detail-body .image-pair figure img {
+    width: 100%;
+    height: 100%;
+    max-height: calc(100vh - 200px);
+    object-fit: cover;
+    margin: 0;
+    flex: 1;
+}
+
+.project-detail-body .image-pair figure figcaption {
+    flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+    .project-detail-body .image-pair {
+        flex-direction: column;
+        gap: 25px;
+    }
+    
+    .project-detail-body .image-pair figure img {
+        height: auto;
+        object-fit: contain;
+    }
 }
 
 .project-detail-body figure img {

@@ -252,7 +252,20 @@ function markdownToHTML(markdown) {
     
     // Images - process first, before paragraphs
     // Support: ![alt](url) or ![alt](url "caption")
-    // Always wrap in figure and use alt text as caption (or title if provided)
+    // Detect consecutive images (on adjacent lines without blank line) and wrap them side-by-side
+    
+    // First, handle pairs of consecutive images (no blank line between them)
+    // Match two images on consecutive lines
+    html = html.replace(/!\[([^\]]*)\]\(([^)]+)(?:\s+"([^"]+)")?\)\n!\[([^\]]*)\]\(([^)]+)(?:\s+"([^"]+)")?\)/g, 
+        (match, alt1, url1, title1, alt2, url2, title2) => {
+            const caption1 = title1 || alt1;
+            const caption2 = title2 || alt2;
+            const fig1 = `<figure><img src="${url1}" alt="${alt1}" loading="lazy" />${caption1 ? `<figcaption>${caption1}</figcaption>` : ''}</figure>`;
+            const fig2 = `<figure><img src="${url2}" alt="${alt2}" loading="lazy" />${caption2 ? `<figcaption>${caption2}</figcaption>` : ''}</figure>`;
+            return `<div class="image-pair">${fig1}${fig2}</div>`;
+        });
+    
+    // Then handle remaining single images
     html = html.replace(/!\[([^\]]*)\]\(([^)]+)(?:\s+"([^"]+)")?\)/g, (match, alt, url, title) => {
         const imgTag = `<img src="${url}" alt="${alt}" loading="lazy" />`;
         const caption = title || alt; // Use title if provided, otherwise use alt text
@@ -720,6 +733,7 @@ function renderProjectDetail(project, basePath) {
                         ${project.year ? `<div><span class="project-year">${project.year}</span>${collaboratorsHTML}</div>` : collaboratorsHTML}
                         <div class="project-tags">${tagsHTML}</div>
                     </div>
+                    ${project.short_description ? `<div class="project-short-description-in-header"><p style="font-size: 1em; line-height: 1.6; color: var(--text-color-secondary); margin: 20px 0 0 0;">${project.short_description}</p></div>` : ''}
                 </div>
                 ${shortDescriptionHTML}
                 ${resourcesHTML}

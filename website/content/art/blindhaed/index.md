@@ -3,7 +3,7 @@ title: BLINDHÆD
 date: 2024-01-15
 short_description: A multi-media artwork featuring event cameras, exploring the transformation of vision through technology and body enhancement.
 tags: [art, multimedia, event-cameras, installation]
-cover_image: images/compressed/DSC1664.jpg
+cover_image: images/red/1.jpg
 highlight: true
 collaborators:
   - name: "Justin Urbach"
@@ -20,11 +20,11 @@ collaborators:
 
 BLINDHÆD is the first multi-media artwork featuring event cameras. Event-based vision is a novel computer vision technique in which the imaging sensor only responds to local changes in brightness. Event cameras only react to movement in their visual field. Thereby, they produce radically different, otherworldly imagery that offers a novel artistic interpretation of vision itself.
 
-![Green Room](images/green/1.jpg)
+![Green Room, Photo by Wolfgang Günzel](images/green/1.jpg)
 
 BLINDHÆD is the first institutional solo exhibition of Justin Urbach, which is currently on display at the [Galerie Stadt Sindelfingen](https://galerie-sindelfingen.de/?lang=en), Germany, until May 25, 2025. Historically, human sight has been subject to optimization - from glasses to microscopes and telescopes. BLINDHÆD explores this ongoing transformation of seeing in a world increasingly shaped by technology and body enhancement.
 
-![Red Room](images/red/1.jpg)
+![Red Room, Photo by Wolfgang Günzel](images/red/1.jpg)
 
 The first exhibition room presents an artistic rendering of laser eye surgery, while the second room symbolizes the post-enhancement sense of seeing. In room two, event-based vision serves as a metaphor for this transformation: abstract forms emerge from a sea of pixels on a large 2 * 1,2-meter monitor wall, representing a human navigating a new perceptual reality. The human interplay with a robotic arm further illustrates the merging of human and machine, depicting a haunting yet emotional symbiosis. The artwork paints an outlook into the continuation of the constant trend of technological enhancement of our senses. Elements in the exhibition, such as the engraved laser etchings on the surface of the monitors, allude to the irreversibility of such enhancements, further reinforcing our technological dependency.
 
@@ -34,7 +34,11 @@ BLINDHÆD is an inter-disciplinary collaboration between artists and researchers
 
 In BLINDHÆD, vision is no longer static or purely human. It is optimized, expanded, and intertwined with technology. The exhibition invites reflection on the limits of perception and the speculative future of seeing.
 
-![Laser Punching](images/compressed/DSC7864.jpg)
+![Laser Punching, Photo by Wolfgang Günzel](images/red/2.jpg)
+![Laser Punching, Photo by Wolfgang Günzel](images/green/2.jpg)
+
+
+![Nanodrop, Photo by Wolfgang Günzel](images/green/3.jpg)
 
 BLINDHÆD consists of two central video installations, the one showing the laser surgery and the event-based video stream. The laser-etched screens are integral to the artwork and convey important messages. However, we are certainly open to showing our two videos on regular monitors or, if possible, on larger projections. Since both videos feature reactive sound, it would be great if we could use two speaker systems or headphones. The exhibition also includes further installation elements, such as a Cathode Ray Tube, lasers, and oxide crude steel laser punchings shown in the images.
 
