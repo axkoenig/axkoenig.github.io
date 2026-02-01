@@ -1,32 +1,17 @@
 ---
 title: Monoliths
-date: 2023-08-20
-short_description: A photographic series exploring architectural monoliths and their relationship with urban environments.
-tags: [photography, architecture, visual]
+date: 2020-01-01
+short_description: Photographs of monoliths in urban environments.
+tags: [photography]
 cover_image: media/1.jpeg
 highlight: true
 collaborators: []
 ---
 
-This series examines monumental architectural structures and their imposing presence in urban landscapes. The photographs capture the essence of these concrete and steel giants, revealing their geometric forms and the interplay between light and shadow.
+![Street Lamp Finsbury Health Centre, London, UK (2019)](media/1.jpeg)
 
-![Monolith 1](media/1.jpeg)
+![Hellisheiði Power Station, Selfoss, Iceland (2019)](media/2.jpeg)
 
-Street Lamp Finsbury Health Centre, London
+![Augsburger Hotelturm, Augsburg, Germany (2020)](media/3.jpeg)
 
-![Monolith 2](media/2.jpeg)
-
-Hellisheiði Power Station, Selfoss  
-Tark and Landslag Architects, 2011
-
-![Monolith 3](media/3.jpeg)
-
-Augsburger Hotelturm, Augsburg  
-Reinhard Brockel and Erich Müller, 1972
-
-![Monolith 4](media/4.jpeg)
-
-Colonius Telecommunications Tower, Cologne  
-Fritz Leonhardt and Erwin Heinle, 1981
-
-The work captures the essence of urban architecture through careful composition and attention to detail, revealing the beauty in everyday built environments. These structures stand as testaments to human ambition and engineering prowess, while simultaneously questioning their relationship with the spaces they inhabit.
+![Colonius Telecommunications Tower, Cologne, Germany (2020)](media/4.jpeg)
