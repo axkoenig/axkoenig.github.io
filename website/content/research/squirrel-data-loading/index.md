@@ -1,6 +1,7 @@
 ---
 title: Squirrel Data Loading Framework
-date: 2022-06-15
+start_date: 2022-06-15
+end_date: 2022-06-15
 short_description: Benchmarking and contributing to Squirrel, a high-performance data loading tool for machine learning pipelines that significantly improves throughput.
 tags: [research, machine-learning, data-loading, performance, open-source]
 cover_image: media/squirrel.png

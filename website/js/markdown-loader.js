@@ -689,7 +689,7 @@ function projectDateToTimestamp(project) {
     return Number.isFinite(yearFallback) && yearFallback > 0 ? Date.UTC(yearFallback, 0, 1) : 0;
 }
 
-// Sort projects newest-first by full date (then stable tie-breakers).
+// Sort projects newest-first by start date (then stable tie-breakers).
 function sortProjectsNewFirst(projects) {
     if (!Array.isArray(projects)) return projects;
     

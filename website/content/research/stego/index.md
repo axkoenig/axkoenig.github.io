@@ -1,6 +1,7 @@
 ---
 title: Uncovering the Inner Workings of STEGO
-date: 2023-01-01
+start_date: 2023-01-01
+end_date: 2023-01-01
 short_description: Analyzing STEGO for safe unsupervised semantic segmentation to understand its inner workings and failure modes.
 tags: [research, computer-vision, machine-learning, semantic-segmentation, safety]
 cover_image: 

@@ -1,6 +1,7 @@
 ---
 title: Stop Merging, Start Separating
-date: 2025-01-01
+start_date: 2025-01-01
+end_date: 2025-01-01
 short_description: Separating general from specific manipulation strategies to improve robotic manipulation performance.
 tags: [research, robotics, manipulation, machine-learning]
 cover_image: media/image.png

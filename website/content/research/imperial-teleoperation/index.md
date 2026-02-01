@@ -1,6 +1,7 @@
 ---
 title: Gesture-Based Teleoperation for Robotic Manipulation
-date: 2019-08-15
+start_date: 2019-08-15
+end_date: 2019-08-15
 short_description: A modular ROS platform for intuitive control of a robotic rig with gesture tracking, enabling remote teleoperation via virtual reality.
 tags: [research, robotics, teleoperation, human-robot-interaction, VR]
 cover_image: media/imperial.png

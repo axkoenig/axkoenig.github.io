@@ -1,6 +1,7 @@
 ---
 title: HoloLens Application for Orthopedic Trauma Surgery
-date: 2018-07-15
+start_date: 2018-07-15
+end_date: 2018-07-15
 short_description: An application for Microsoft HoloLens to support orthopedic trauma surgeons with intra-operative 3D visualizations of complex bone fractures.
 tags: [research, medical-imaging, augmented-reality, HoloLens, surgery]
 cover_image: media/bt.png
