@@ -785,13 +785,27 @@ body.is-home-page .home-dot::after {
 }
 
 @media (max-width: 768px) {
+    /* On mobile: image pairs should look like normal single images stacked */
     .project-detail-body .image-pair {
-        flex-direction: column;
-        gap: 25px;
+        display: block;
+        margin: 0;
+        gap: 0;
     }
-    
+
+    .project-detail-body .image-pair figure {
+        margin: 25px auto;
+        display: inline-block;
+        max-width: 100%;
+        width: fit-content;
+    }
+
     .project-detail-body .image-pair figure img {
+        width: auto;
+        max-width: 100%;
         height: auto;
+        max-height: calc(100vh - 200px);
+        margin: 0 auto;
+        display: block;
         object-fit: contain;
     }
 }

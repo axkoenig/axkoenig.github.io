@@ -1,8 +1,8 @@
 ---
 title: BLINDHÆD
-date: 2024-01-15
-short_description: A multi-media artwork featuring event cameras, exploring the transformation of vision through technology and body enhancement.
-tags: [art, multimedia, event-cameras, installation]
+date: 2025-03-08
+short_description: A multi-media artwork featuring event cameras, exploring the transformation of vision through technology.
+tags: [installation, audio]
 cover_image: images/red/1.jpg
 highlight: true
 collaborators:
@@ -39,6 +39,8 @@ In BLINDHÆD, vision is no longer static or purely human. It is optimized, expan
 
 
 ![Nanodrop, Photo by Wolfgang Günzel](images/green/3.jpg)
+
+![BLINDSPOT close-up, Photo by Justin Urbach](images/justin/P1014065_edited.avif)
 
 BLINDHÆD consists of two central video installations, the one showing the laser surgery and the event-based video stream. The laser-etched screens are integral to the artwork and convey important messages. However, we are certainly open to showing our two videos on regular monitors or, if possible, on larger projections. Since both videos feature reactive sound, it would be great if we could use two speaker systems or headphones. The exhibition also includes further installation elements, such as a Cathode Ray Tube, lasers, and oxide crude steel laser punchings shown in the images.
 
