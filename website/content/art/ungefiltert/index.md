@@ -3,12 +3,12 @@ title: Ungefilterte Schätze
 date: 2020-01-01
 short_description: Two vinyl recordings spanning ambient, IDM, and acid-house. Recorded from home.
 tags: [audio]
-cover_image: cover_2.jpg
+cover_image: cover-2.jpg
 highlight: false
 collaborators: []
 ---
 
-![Jean Arp at Centre Pompidou, Paris, France (2025)](cover_2.jpg)
+![Jean Arp at Centre Pompidou, Paris, France (2025)](cover-2.jpg)
 
 My first vinyl recording opens with warm sounds by Burial &ndash; one of my all-time favorite artists. With "Hall of Mirrors", we stay in the UK and dive into the early 1990s, an evolutionary era for IDM. B12's Electro-Soma in particular marks one of the foundations of contemporary electronic music in the UK. Tagwell Woods' self-titled track introduces us to darker yet peaceful sounds.
 

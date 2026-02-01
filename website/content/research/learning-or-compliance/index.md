@@ -18,7 +18,7 @@ papers:
       - label: "Paper"
         url: "https://www.static.tu.berlin/fileadmin/www/10002220/Publications/Sieler-Koenig-25-GRC.pdf"
       - label: "Slides"
-        url: "../downloads/research/2025-grc-compliance.pdf"
+        url: "media/2025-grc-compliance.pdf"
       - label: "Demo"
         url: "https://www.youtube.com/playlist?list=PLb-CNILz7vmtfNvvnbw58uElme1yGWYtL"
 ---

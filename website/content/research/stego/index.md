@@ -4,7 +4,7 @@ start_date: 2023-01-01
 end_date: 2023-01-01
 short_description: Analyzing STEGO's inner workings for safe unsupervised semantic segmentation.
 tags: [research, computer-vision, machine-learning, ]
-cover_image: "media/image.png"
+cover_image: "media/stego-image.png"
 highlight: false
 collaborators:
   - name: "Maximilian Schambach"
@@ -24,12 +24,12 @@ papers:
       - label: "Talk"
         url: "https://www.youtube.com/watch?v=vKadn3MF5BY"
       - label: "Slides"
-        url: "../downloads/research/cvpr23_slides.pdf"
+        url: "media/cvpr23_slides.pdf"
       - label: "Poster"
-        url: "../downloads/research/cvpr23_poster.pdf"
+        url: "media/cvpr23_poster.pdf"
 ---
 
 ![Image of a snake (Image: Wikipedia)](media/snake.jpg)
-![Similarity matrix of DINO features](media/image.png)
+![Similarity matrix of DINO features](media/stego-image.png)
 
 At [Merantix Momentum](https://www.merantix-momentum.com/) I worked on the [safe.trAIn](https://safetrain-projekt.de/en/) research project spearheaded by Siemens. Within the project, I investigated reliable and label-efficient computer vision algorithms for semantic scene understanding. We published a follow-up study on STEGO, a self-supervised semantic segmentation method, in the [SAIAD Workshop](https://sites.google.com/view/saiad2023) at CVPR 2023 in Vancouver. 

@@ -4,7 +4,7 @@ start_date: 2020-12-15
 end_date: 2022-02-15
 short_description: Master thesis research on tactile sensing for learning and deploying robotic grasping controllers.
 tags: [research, robotics, machine-learning]
-cover_image: media/grasp_refinement.png
+cover_image: media/grasp-refinement.png
 highlight: false
 collaborators:
   - name: "Zixi Liu"
@@ -55,7 +55,7 @@ For my master thesis in the [Harvard Biorobotics Lab](http://biorobotics.harvard
 
 Our work was first published at the [Workshop on Reinforcement Learning for Contact-Rich Manipulation](https://sites.google.com/view/icra2022-contactrich/) at [ICRA 2022](https://www.icra2022.org). An extended version was later accepted into [IROS 2022](https://iros2022.org/) as a full paper.
 
-![Tactile grasp refinement](media/grasp_refinement.png)
+![Tactile grasp refinement](media/grasp-refinement.png)
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/ko4iZgjomvY?si=131CVoJF63hkBQMI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 

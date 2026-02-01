@@ -4,7 +4,7 @@ start_date: 2025-03-01
 end_date: 2025-03-01
 short_description: Separating the general from instance-specific information yields improved manipulation.
 tags: [research, robotics, manipulation, machine-learning]
-cover_image: media/IMG_3050.JPG
+cover_image: media/instance-general.jpg
 highlight: false
 collaborators:
   - name: "Vito Mengers"
@@ -23,7 +23,7 @@ papers:
       - label: "Demo"
         url: "https://www.youtube.com/playlist?list=PLb-CNILz7vmuibtWGZuNZc8cP_3aCdBB-"
       - label: "Poster"
-        url: "../downloads/research/icra25_poster_general_specific.pdf"
+        url: "media/icra25_poster_general_specific.pdf"
 ---
 
 

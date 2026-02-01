@@ -4,7 +4,7 @@ start_date: 2026-03-01
 end_date: 2026-03-01
 short_description: Lessons from 15 years of applied co-design for soft manipulation.
 tags: [research, robotics, machine-learning, haptics, manipulation]
-cover_image: media/hand.JPG
+cover_image: media/hand.jpg
 highlight: true
 collaborators:
   - name: "Adrian Sieler"
@@ -23,4 +23,4 @@ Robotics is a co-design problem: behavior emerges from the interaction of body, 
 
 This is also the first work that features our new hand design with two thumbs.
 
-![Two-thumb version of the RBO Hand 3](media/hand.JPG)
+![Two-thumb version of the RBO Hand 3](media/hand.jpg)

@@ -840,6 +840,13 @@ body.is-home-page .home-dot::after {
     object-fit: contain;
 }
 
+/* Ensure figures with videos are properly centered like images */
+.project-detail-body figure:has(video) {
+    display: block;
+    margin: 25px auto;
+    text-align: center;
+}
+
 .project-detail-body figcaption {
     text-align: right;
     font-size: 0.85em;

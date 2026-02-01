@@ -326,7 +326,7 @@ function markdownToHTML(markdown, options = {}) {
         const caption = title || alt;
         
         if (isVideoUrl(url)) {
-            const videoTag = `<video src="${url}" controls playsinline preload="metadata"></video>`;
+            const videoTag = `<video src="${url}" controls playsinline autoplay muted loop preload="metadata"></video>`;
             return `<figure>${videoTag}${caption ? `<figcaption>${caption}</figcaption>` : ''}</figure>`;
         }
         

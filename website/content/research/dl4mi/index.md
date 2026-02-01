@@ -4,7 +4,7 @@ start_date: 2020-06-15
 end_date: 2020-09-15
 short_description: A uni-project implementing deep learning for COVID-19 detection from chest X-rays at the height of the pandemic.
 tags: [research, machine-learning, computer-vision, medical-imaging]
-cover_image: media/image.png
+cover_image: media/dl4mi-image.png
 highlight: false
 collaborators:
   - name: "Hayit Greenspan"
