@@ -68,14 +68,14 @@
 
             const projectUrl = `${project.category}.html#${project.slug}`;
             const shortDescription = project.short_description || '';
-            const year = project.year || (project.date ? new Date(project.date).getFullYear() : '');
+            const yearLabel = project.year_label || project.year || (project.date ? new Date(project.date).getFullYear() : '');
 
             return `
                 <div class="carousel-item" data-project-slug="${project.slug}" data-project-category="${project.category}">
                     <img src="${coverImage}" alt="${project.title || ''}" loading="lazy" />
                     <div class="carousel-overlay">
                         <h3>${project.title || 'Untitled'}</h3>
-                        ${year ? `<div class="carousel-year">${year}</div>` : ''}
+                        ${yearLabel ? `<div class="carousel-year">${yearLabel}</div>` : ''}
                         ${shortDescription ? `<p>${shortDescription}</p>` : ''}
                     </div>
                 </div>

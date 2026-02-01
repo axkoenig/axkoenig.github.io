@@ -517,12 +517,6 @@ async function loadProjects(basePath, projectList) {
                 project.highlight = project.highlight.toLowerCase() === 'true';
             }
             
-            // Convert date string to year if needed
-            if (project.date && !project.year) {
-                const date = new Date(project.date);
-                project.year = date.getFullYear();
-            }
-            
             // Ensure tags is an array
             if (typeof project.tags === 'string') {
                 project.tags = [project.tags];
@@ -532,6 +526,12 @@ async function loadProjects(basePath, projectList) {
             if (!Array.isArray(project.resources)) {
                 project.resources = [];
             }
+
+            // Normalize date fields (supports date ranges).
+            // - Preferred: start_date / end_date (snake_case, consistent with other frontmatter keys)
+            // - Backward compatible: date (single date), year (single year)
+            // - Optional for art projects: infer range from caption years like "(2019)" in the markdown body
+            normalizeProjectDates(project);
             
             console.log('Loaded project:', project.title);
             projects.push(project);
@@ -544,24 +544,145 @@ async function loadProjects(basePath, projectList) {
     return projects;
 }
 
-// Convert project date (YYYY-MM-DD) to a sortable timestamp.
-// Falls back to `year` if `date` is missing/unparseable.
-function projectDateToTimestamp(project) {
-    const raw = (project && project.date) ? String(project.date).trim() : '';
-    if (raw) {
-        // Robustly parse YYYY-M-D / YYYY-MM-DD without relying on Date.parse quirks.
-        const match = raw.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
-        if (match) {
-            const year = parseInt(match[1], 10);
-            const month = parseInt(match[2], 10);
-            const day = parseInt(match[3], 10);
-            if (Number.isFinite(year) && Number.isFinite(month) && Number.isFinite(day)) {
-                return Date.UTC(year, month - 1, day);
-            }
+function parseDateToUtcTimestamp(value) {
+    if (value === undefined || value === null) return null;
+    const raw = String(value).trim();
+    if (!raw) return null;
+    
+    // Accept YYYY, YYYY-MM, YYYY-MM-DD
+    const match = raw.match(/^(\d{4})(?:-(\d{1,2})(?:-(\d{1,2}))?)?$/);
+    if (match) {
+        const year = parseInt(match[1], 10);
+        const month = match[2] ? parseInt(match[2], 10) : 1;
+        const day = match[3] ? parseInt(match[3], 10) : 1;
+        if (
+            Number.isFinite(year) && year > 0 &&
+            Number.isFinite(month) && month >= 1 && month <= 12 &&
+            Number.isFinite(day) && day >= 1 && day <= 31
+        ) {
+            return Date.UTC(year, month - 1, day);
         }
-        
-        const parsed = Date.parse(raw);
-        if (!Number.isNaN(parsed)) return parsed;
+    }
+    
+    const parsed = Date.parse(raw);
+    return Number.isNaN(parsed) ? null : parsed;
+}
+
+function inferYearRangeFromMarkdownBody(body) {
+    if (!body) return null;
+    const text = String(body);
+    
+    // Most art captions are like: "..., Country (2019)"
+    const re = /\((\d{4})\)/g;
+    const years = [];
+    let m;
+    while ((m = re.exec(text)) !== null) {
+        const y = parseInt(m[1], 10);
+        if (Number.isFinite(y) && y >= 1900 && y <= 2100) years.push(y);
+    }
+    if (years.length === 0) return null;
+    
+    return { startYear: Math.min(...years), endYear: Math.max(...years) };
+}
+
+function normalizeProjectDates(project) {
+    if (!project || typeof project !== 'object') return;
+    
+    const hasStart = project.start_date !== undefined && project.start_date !== null && String(project.start_date).trim() !== '';
+    const hasEnd = project.end_date !== undefined && project.end_date !== null && String(project.end_date).trim() !== '';
+    
+    let startTs = null;
+    let endTs = null;
+    let isOngoing = false;
+    
+    if (hasStart) {
+        startTs = parseDateToUtcTimestamp(project.start_date);
+        if (hasEnd) {
+            endTs = parseDateToUtcTimestamp(project.end_date);
+        } else {
+            isOngoing = true;
+        }
+    } else if (hasEnd) {
+        // Allow specifying only an end date (treated as a single-year display).
+        endTs = parseDateToUtcTimestamp(project.end_date);
+    } else if (project.date !== undefined && project.date !== null && String(project.date).trim() !== '') {
+        // Backward compatible: single date means start=end
+        const ts = parseDateToUtcTimestamp(project.date);
+        startTs = ts;
+        endTs = ts;
+    } else if (project.year !== undefined && project.year !== null && String(project.year).trim() !== '') {
+        // Backward compatible: single year means start=end Jan 1st of that year
+        const y = parseInt(project.year, 10);
+        if (Number.isFinite(y) && y > 0) {
+            startTs = Date.UTC(y, 0, 1);
+            endTs = Date.UTC(y, 0, 1);
+        }
+    } else if (project.category === 'art') {
+        // Optional inference for art projects with caption years in the body
+        const inferred = inferYearRangeFromMarkdownBody(project.body);
+        if (inferred) {
+            startTs = Date.UTC(inferred.startYear, 0, 1);
+            endTs = Date.UTC(inferred.endYear, 0, 1);
+        }
+    }
+    
+    const startYear = startTs ? new Date(startTs).getUTCFullYear() : null;
+    const endYear = endTs ? new Date(endTs).getUTCFullYear() : null;
+    const currentYear = new Date().getFullYear();
+    
+    // Grouping year is a single year used for sidebar navigation & data-year.
+    // For ranges, we group by the end year; for ongoing ranges, by the current year.
+    const groupingYear = endYear || (isOngoing ? currentYear : startYear);
+    
+    let yearLabel = '';
+    if (startYear && endYear) {
+        yearLabel = (startYear === endYear) ? String(startYear) : `${startYear}–${endYear}`;
+    } else if (startYear && isOngoing) {
+        yearLabel = `${startYear}–now`;
+    } else if (startYear) {
+        yearLabel = String(startYear);
+    } else if (endYear) {
+        yearLabel = String(endYear);
+    }
+    
+    // Sorting:
+    // - Sort by start date/year (overview should reflect when it began)
+    // - If only an end date is provided → sort by end
+    let sortTs = 0;
+    if (startTs) sortTs = startTs;
+    else if (endTs) sortTs = endTs;
+    
+    project._start_ts = startTs || 0;
+    project._end_ts = endTs || 0;
+    project._sort_ts = sortTs || 0;
+    
+    if (groupingYear) project.year = String(groupingYear);
+    if (yearLabel) project.year_label = yearLabel;
+}
+
+// Convert project dates to a sortable timestamp.
+// Supports:
+// - start_date / end_date (range, ongoing if end_date missing)
+// - date (single date)
+// - year (single year)
+function projectDateToTimestamp(project) {
+    if (project && typeof project._sort_ts === 'number' && project._sort_ts > 0) {
+        return project._sort_ts;
+    }
+    
+    const rawEnd = (project && project.end_date) ? String(project.end_date).trim() : '';
+    const rawStart = (project && project.start_date) ? String(project.start_date).trim() : '';
+    const rawDate = (project && project.date) ? String(project.date).trim() : '';
+    
+    const startTs = rawStart ? parseDateToUtcTimestamp(rawStart) : null;
+    if (startTs) return startTs;
+    
+    const endTs = rawEnd ? parseDateToUtcTimestamp(rawEnd) : null;
+    if (endTs) return endTs;
+    
+    if (rawDate) {
+        const ts = parseDateToUtcTimestamp(rawDate);
+        if (ts) return ts;
     }
     
     const yearFallback = (project && project.year) ? parseInt(project.year, 10) : 0;
@@ -613,7 +734,7 @@ function renderProjectTile(project, basePath, projectIndex) {
     // The CSS should handle missing images gracefully
     
     // Extract metadata for display
-    const year = project.year || (project.date ? new Date(project.date).getFullYear() : '');
+    const yearLabel = project.year_label || project.year || (project.date ? new Date(project.date).getFullYear() : '');
     const location = project.location || project.gallery || '';
     const dimensions = project.dimensions || '';
     const gallery = project.gallery || project.location || '';
@@ -628,7 +749,7 @@ function renderProjectTile(project, basePath, projectIndex) {
             </div>` : '<div class="project-cover"></div>'}
             <div class="project-content">
                 <h3 class="project-title">${project.title || 'Untitled'}</h3>
-                ${year ? `<div class="project-year">${year}</div>` : ''}
+                ${yearLabel ? `<div class="project-year">${yearLabel}</div>` : ''}
                 ${description ? `<div class="project-description">${description}</div>` : ''}
                 ${location ? `<div class="project-location">${location}</div>` : ''}
                 ${itemName && itemName !== project.title ? `<div class="project-item-name">${itemName}</div>` : ''}
@@ -857,6 +978,8 @@ function renderProjectDetail(project, basePath) {
           </div>`
         : '';
     
+    const yearLabel = project.year_label || project.year || '';
+    
     return `
         <div class="project-detail-content">
             <div class="project-detail-buttons">
@@ -866,7 +989,7 @@ function renderProjectDetail(project, basePath) {
                 <div class="project-detail-header">
                     <h1>${project.title}</h1>
                     <div class="project-meta">
-                        ${project.year ? `<div><span class="project-year">${project.year}</span>${collaboratorsHTML}</div>` : collaboratorsHTML}
+                        ${yearLabel ? `<div><span class="project-year">${yearLabel}</span>${collaboratorsHTML}</div>` : collaboratorsHTML}
                         <div class="project-tags">${tagsHTML}</div>
                     </div>
                     ${project.short_description ? `<div class="project-short-description-in-header"><p style="font-size: 1em; line-height: 1.6; color: var(--text-color-secondary); margin: 20px 0 0 0;">${project.short_description}</p></div>` : ''}
