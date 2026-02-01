@@ -931,6 +931,9 @@ body.is-home-page .home-dot::after {
     overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
     touch-action: pan-x;
+    /* Prevent iOS Safari from auto-inflating text sizes inside the carousel */
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
     background-color: white;
     z-index: 10;
 }
@@ -978,6 +981,8 @@ body.is-home-page .home-dot::after {
     transition: opacity 0.3s ease;
     pointer-events: none;
     box-sizing: border-box;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
 }
 
 .carousel-item:hover .carousel-overlay {

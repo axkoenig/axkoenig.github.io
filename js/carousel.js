@@ -114,12 +114,19 @@
             // is actively dragging, but otherwise the carousel moves immediately.
             let lastInteractionTs = -1e15;
             let autoCarryPx = 0;
+            let lastAutoWriteTs = -1e15;
             
             const prefersReducedMotion = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
             const autoScrollSpeedPxPerSec = 50;
+            // Only pause auto-scroll after actual user/momentum scrolling.
+            // This prevents us from cancelling iOS momentum by writing scrollLeft too early.
+            const autoResumeAfterUserScrollMs = 250;
+            const treatScrollAsAutoWindowMs = 200;
             
-            const markInteraction = () => {
-                lastInteractionTs = (typeof performance !== 'undefined' && performance.now) ? performance.now() : Date.now();
+            const nowMs = () => ((typeof performance !== 'undefined' && performance.now) ? performance.now() : Date.now());
+            
+            const markInteraction = (t = nowMs()) => {
+                lastInteractionTs = t;
             };
             
             const computeOneSetWidth = () => {
@@ -145,6 +152,7 @@
                 if (oneSetWidth <= 0) return;
                 const prevBehavior = carouselContainer.style.scrollBehavior;
                 carouselContainer.style.scrollBehavior = 'auto';
+                lastAutoWriteTs = nowMs();
                 carouselContainer.scrollLeft = oneSetWidth;
                 carouselContainer.style.scrollBehavior = prevBehavior;
             };
@@ -168,6 +176,7 @@
                     isAdjusting = true;
                     const prevBehavior = carouselContainer.style.scrollBehavior;
                     carouselContainer.style.scrollBehavior = 'auto';
+                    lastAutoWriteTs = nowMs();
                     carouselContainer.scrollLeft = x + oneSetWidth;
                     carouselContainer.style.scrollBehavior = prevBehavior;
                     isAdjusting = false;
@@ -175,6 +184,7 @@
                     isAdjusting = true;
                     const prevBehavior = carouselContainer.style.scrollBehavior;
                     carouselContainer.style.scrollBehavior = 'auto';
+                    lastAutoWriteTs = nowMs();
                     carouselContainer.scrollLeft = x - oneSetWidth;
                     carouselContainer.style.scrollBehavior = prevBehavior;
                     isAdjusting = false;
@@ -182,6 +192,12 @@
             };
             
             carouselContainer.addEventListener('scroll', () => {
+                const t = nowMs();
+                // If the scroll event didn't come right after our own writes, treat it as
+                // user/momentum scrolling and pause auto until it settles.
+                if ((t - lastAutoWriteTs) > treatScrollAsAutoWindowMs) {
+                    markInteraction(t);
+                }
                 // Defer to the next frame so we don't fight the browser's scrolling.
                 requestAnimationFrame(normalizeScrollPosition);
             }, { passive: true });
@@ -205,16 +221,17 @@
             
             // Auto-scroll loop (keeps gesture scrolling intact)
             if (!prefersReducedMotion) {
-                let lastTs = (typeof performance !== 'undefined' && performance.now) ? performance.now() : Date.now();
+                let lastTs = nowMs();
                 
                 const tick = (nowRaw) => {
-                    const now = (typeof nowRaw === 'number') ? nowRaw : ((typeof performance !== 'undefined' && performance.now) ? performance.now() : Date.now());
+                    const now = (typeof nowRaw === 'number') ? nowRaw : nowMs();
                     const dtMs = Math.max(0, now - lastTs);
                     lastTs = now;
                     
                     const isVisible = (typeof document === 'undefined') || document.visibilityState === 'visible';
+                    const canAutoResume = (now - lastInteractionTs) > autoResumeAfterUserScrollMs;
                     
-                    if (isVisible && !isPointerDown) {
+                    if (isVisible && !isPointerDown && canAutoResume) {
                         if (oneSetWidth <= 0) oneSetWidth = computeOneSetWidth();
                         if (oneSetWidth > 0) {
                             // Accumulate sub-pixel movement to keep the speed constant
@@ -223,6 +240,7 @@
                             const step = Math.trunc(autoCarryPx);
                             if (step !== 0) {
                                 autoCarryPx -= step;
+                                lastAutoWriteTs = now;
                                 carouselContainer.scrollLeft += step;
                                 normalizeScrollPosition();
                             }
