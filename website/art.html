@@ -101,8 +101,8 @@
             
             window.currentProjects = await window.markdownLoader.loadProjects('content/art', projectList);
             
-            // Sort by year (newest first)
-            window.currentProjects.sort((a, b) => (b.year || 0) - (a.year || 0));
+            // Sort by full date (newest first). Dates are expected in YYYY-MM-DD (year-month-day).
+            window.markdownLoader.sortProjectsNewFirst(window.currentProjects);
             
             // Function to render projects based on filter
             window.renderFilteredProjects = function(filter = 'all') {

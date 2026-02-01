@@ -311,27 +311,42 @@ function markdownToHTML(markdown, options = {}) {
     
     // Images - process first, before paragraphs
     // Support: ![alt](url) or ![alt](url "caption")
-    // Detect consecutive images (on adjacent lines without blank line) and wrap them side-by-side
+    // Detect consecutive media (on adjacent lines without blank line) and wrap them side-by-side
     
-    // First, handle pairs of consecutive images (no blank line between them)
-    // Match two images on consecutive lines
+    const isVideoUrl = (url) => {
+        if (!url) return false;
+        const clean = String(url).split('#')[0].split('?')[0];
+        const dot = clean.lastIndexOf('.');
+        if (dot < 0) return false;
+        const ext = clean.slice(dot + 1).toLowerCase();
+        return ['mp4', 'webm', 'mov', 'm4v', 'ogv'].includes(ext);
+    };
+    
+    const renderMediaFigure = (alt, url, title) => {
+        const caption = title || alt;
+        
+        if (isVideoUrl(url)) {
+            const videoTag = `<video src="${url}" controls playsinline preload="metadata"></video>`;
+            return `<figure>${videoTag}${caption ? `<figcaption>${caption}</figcaption>` : ''}</figure>`;
+        }
+        
+        const imgTag = `<img src="${url}" alt="${alt}" loading="lazy" />`;
+        return `<figure>${imgTag}${caption ? `<figcaption>${caption}</figcaption>` : ''}</figure>`;
+    };
+    
+    // First, handle pairs of consecutive media (no blank line between them)
+    // Match two markdown "images" (can be image or video file) on consecutive lines
     html = html.replace(/!\[([^\]]*)\]\(([^)]+)(?:\s+"([^"]+)")?\)\n!\[([^\]]*)\]\(([^)]+)(?:\s+"([^"]+)")?\)/g, 
         (match, alt1, url1, title1, alt2, url2, title2) => {
-            const caption1 = title1 || alt1;
-            const caption2 = title2 || alt2;
-            const fig1 = `<figure><img src="${url1}" alt="${alt1}" loading="lazy" />${caption1 ? `<figcaption>${caption1}</figcaption>` : ''}</figure>`;
-            const fig2 = `<figure><img src="${url2}" alt="${alt2}" loading="lazy" />${caption2 ? `<figcaption>${caption2}</figcaption>` : ''}</figure>`;
+            const fig1 = renderMediaFigure(alt1, url1, title1);
+            const fig2 = renderMediaFigure(alt2, url2, title2);
+            // Keep existing class name for styling compatibility (now supports videos too).
             return `<div class="image-pair">${fig1}${fig2}</div>`;
         });
     
-    // Then handle remaining single images
+    // Then handle remaining single media
     html = html.replace(/!\[([^\]]*)\]\(([^)]+)(?:\s+"([^"]+)")?\)/g, (match, alt, url, title) => {
-        const imgTag = `<img src="${url}" alt="${alt}" loading="lazy" />`;
-        const caption = title || alt; // Use title if provided, otherwise use alt text
-        if (caption) {
-            return `<figure>${imgTag}<figcaption>${caption}</figcaption></figure>`;
-        }
-        return `<figure>${imgTag}</figure>`;
+        return renderMediaFigure(alt, url, title);
     });
     
     // Headers
@@ -526,6 +541,52 @@ async function loadProjects(basePath, projectList) {
     }
     
     console.log('Total projects loaded:', projects.length);
+    return projects;
+}
+
+// Convert project date (YYYY-MM-DD) to a sortable timestamp.
+// Falls back to `year` if `date` is missing/unparseable.
+function projectDateToTimestamp(project) {
+    const raw = (project && project.date) ? String(project.date).trim() : '';
+    if (raw) {
+        // Robustly parse YYYY-M-D / YYYY-MM-DD without relying on Date.parse quirks.
+        const match = raw.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+        if (match) {
+            const year = parseInt(match[1], 10);
+            const month = parseInt(match[2], 10);
+            const day = parseInt(match[3], 10);
+            if (Number.isFinite(year) && Number.isFinite(month) && Number.isFinite(day)) {
+                return Date.UTC(year, month - 1, day);
+            }
+        }
+        
+        const parsed = Date.parse(raw);
+        if (!Number.isNaN(parsed)) return parsed;
+    }
+    
+    const yearFallback = (project && project.year) ? parseInt(project.year, 10) : 0;
+    return Number.isFinite(yearFallback) && yearFallback > 0 ? Date.UTC(yearFallback, 0, 1) : 0;
+}
+
+// Sort projects newest-first by full date (then stable tie-breakers).
+function sortProjectsNewFirst(projects) {
+    if (!Array.isArray(projects)) return projects;
+    
+    projects.sort((a, b) => {
+        const dateA = projectDateToTimestamp(a);
+        const dateB = projectDateToTimestamp(b);
+        if (dateB !== dateA) return dateB - dateA; // newest first
+        
+        const titleA = (a && a.title) ? String(a.title) : '';
+        const titleB = (b && b.title) ? String(b.title) : '';
+        const titleCmp = titleA.localeCompare(titleB);
+        if (titleCmp !== 0) return titleCmp;
+        
+        const idA = (a && (a.slug || a.id)) ? String(a.slug || a.id) : '';
+        const idB = (b && (b.slug || b.id)) ? String(b.slug || b.id) : '';
+        return idA.localeCompare(idB);
+    });
+    
     return projects;
 }
 
@@ -830,8 +891,7 @@ async function loadHighlightedProjects(artProjectList, researchProjectList) {
     // Combine and filter for highlighted projects
     const allProjects = [...artProjects, ...researchProjects];
     const highlightedProjects = allProjects.filter(project => project.highlight === true);
-    
-    return highlightedProjects;
+    return sortProjectsNewFirst(highlightedProjects);
 }
 
 // Aggregate all publications from research projects
@@ -907,6 +967,7 @@ window.markdownLoader = {
     loadMarkdownFile,
     loadProjects,
     loadHighlightedProjects,
+    sortProjectsNewFirst,
     renderProjectTile,
     renderProjectDetail,
     markdownToHTML,

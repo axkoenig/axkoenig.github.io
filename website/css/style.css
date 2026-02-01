@@ -780,6 +780,15 @@ body.is-home-page .home-dot::after {
     flex: 1;
 }
 
+.project-detail-body .image-pair figure video {
+    width: 100%;
+    height: 100%;
+    max-height: calc(100vh - 200px);
+    object-fit: cover;
+    margin: 0;
+    flex: 1;
+}
+
 .project-detail-body .image-pair figure figcaption {
     flex-shrink: 0;
 }
@@ -808,11 +817,31 @@ body.is-home-page .home-dot::after {
         display: block;
         object-fit: contain;
     }
+
+    .project-detail-body .image-pair figure video {
+        width: auto;
+        max-width: 100%;
+        height: auto;
+        max-height: calc(100vh - 200px);
+        margin: 0 auto;
+        display: block;
+        object-fit: contain;
+    }
 }
 
 .project-detail-body figure img {
     margin: 0 auto;
     display: block;
+}
+
+.project-detail-body figure video {
+    max-width: 100%;
+    max-height: calc(100vh - 200px);
+    height: auto;
+    width: auto;
+    margin: 0 auto;
+    display: block;
+    object-fit: contain;
 }
 
 .project-detail-body figcaption {
