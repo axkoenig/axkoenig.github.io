@@ -3,7 +3,7 @@ title: Studies of BLINDHÆD
 date: 2025-03-08
 short_description: Analog photographs of BLINDHÆD, capturing the physical elements of the artwork.
 tags: [photography, analog, blindhead, visual]
-cover_image: media/analog/1.jpg
+cover_image: media/1.jpg
 highlight: true
 collaborators:
   - name: "Justin Urbach"
@@ -18,12 +18,12 @@ collaborators:
     url: "https://aquaveen.com/"
 ---
 
-![](media/analog/1.jpg)
+![](media/1.jpg)
 
-![](media/analog/2.jpg)
+![](media/2.jpg)
 
-![](media/analog/3.jpg)
+![](media/3.jpg)
 
-![](media/analog/4.jpg)
+![](media/4.jpg)
 
-![](media/analog/5.jpg)
+![](media/5.jpg)
