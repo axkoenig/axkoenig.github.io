@@ -1,7 +1,0 @@
-# About
-
-## Bio
-
-I am a researcher and artist based in Berlin. I'm currently working on my PhD in Robotics at TU Berlin's [Robotics and Biology Lab](https://www.tu.berlin/robotics) where I am advised by [Oliver Brock](https://www.tu.berlin/en/robotics/about-rbo/prof-dr-oliver-brock). My research studies new control and sensing paradigms for soft robotic manipulation. In my artistic practice with [Aqua Veen](https://aquaveen.com/), I create audio-visual experiences that gravitate between experimental installations, generative music synthesis, and DJ sets.
-
-Previously, I worked as a Research Fellow in the [Harvard Biorobotics Lab](http://biorobotics.harvard.edu) and the [Mechatronics in Medicine Lab](http://www.imperial.ac.uk/mechatronics-in-medicine) at Imperial College London, and as a Machine Learning Researcher at [Merantix](http://merantix-momentum.com) in Berlin. I did my master's in [Robotics, Cognition, Intelligence](https://www.in.tum.de/en/for-prospective-students/masters-programs/robotics-cognition-intelligence-msc/) and my bachelor's in [Engineering Science](https://www.mse.tum.de/en/prospective-students/engineering-science/#c3206), both at TU Munich.
