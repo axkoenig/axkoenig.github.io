@@ -16,6 +16,15 @@ collaborators:
     url: "https://www.tu.berlin/robotics/ueber-rbo/prof-dr-oliver-brock"
   - name: "William East"
     url: "https://soundcloud.com/aquaveen"
+resources:
+  - label: "Press Release Max Goelitz"
+    url: "https://www.maxgoelitz.com/en/news/110-exhibition-sindelfingen-de-die-erste-institutionelle-einzelausstellung-von-justin-urbach-eroffnet/"
+  - label: "Exhibition at Gallerie Stadt Sindelfingen"
+    url: "https://galerie-sindelfingen.de/justin-urbach-blindhaed/"
+  - label: "Exhibition at CVPR in Nashville, USA"
+    url: "https://thecvf-art.com/project/blindhaed/"
+  - label: "Exhibition at DOK Leipzig"
+    url: "https://www.dok-leipzig.de/film/blindspot/archive"
 ---
 
 BLINDHÆD is the first multi-media artwork featuring event cameras. Event-based vision is a novel computer vision technique in which the imaging sensor only responds to local changes in brightness. Event cameras only react to movement in their visual field. Thereby, they produce radically different, otherworldly imagery that offers a novel artistic interpretation of vision itself.
@@ -45,9 +54,3 @@ In BLINDHÆD, vision is no longer static or purely human. It is optimized, expan
 BLINDHÆD consists of two central video installations, the one showing the laser surgery and the event-based video stream. The laser-etched screens are integral to the artwork and convey important messages. However, we are certainly open to showing our two videos on regular monitors or, if possible, on larger projections. Since both videos feature reactive sound, it would be great if we could use two speaker systems or headphones. The exhibition also includes further installation elements, such as a Cathode Ray Tube, lasers, and oxide crude steel laser punchings shown in the images.
 
 For inquiries about BLINDHÆD, please contact us via E-Mail at [awckoenig@gmail.com](mailto:awckoenig@gmail.com).
-
-## Resources
-- [Press Release Max Goelitz](https://www.maxgoelitz.com/en/news/110-exhibition-sindelfingen-de-die-erste-institutionelle-einzelausstellung-von-justin-urbach-eroffnet/)
-- [Exhibition at Gallerie Stadt Sindelfingen](https://galerie-sindelfingen.de/justin-urbach-blindhaed/)
-- [Exhibition at CVPR in Nashville, USA](https://thecvf-art.com/project/blindhaed/)
-- [Exhibition at DOK Leipzig](https://www.dok-leipzig.de/film/blindspot/archive)

@@ -10,6 +10,21 @@ collaborators:
     url: "https://www.imperial.ac.uk/people/r.secoli"
   - name: "F. Rodriguez y Baena"
     url: "https://www.imperial.ac.uk/people/f.rodriguez"
+resources:
+  - label: "Paper"
+    url: "../../downloads/research/roman_paper.pdf"
+  - label: "IEEE Xplore"
+    url: "https://ieeexplore.ieee.org/document/9515390"
+  - label: "Talk"
+    url: "https://www.youtube.com/watch?v=fNvErR5eUpc"
+  - label: "Code Repository"
+    url: "https://github.com/axkoenig/leap_teleop"
+  - label: "Handbook"
+    url: "../../downloads/research/handbook_compressed.pdf"
+  - label: "Demo Video"
+    url: "https://www.youtube.com/watch?v=RDbpd9d7U2k"
+  - label: "Lab Blog"
+    url: "https://www.imperial.ac.uk/mechatronics-in-medicine/research/human-robot-interaction-for-object-manipulation/"
 papers:
   - authors: ["A. Koenig", "F. Rodriguez y Baena", "R. Secoli"]
     year: 2021
@@ -33,13 +48,3 @@ The [IEEE RO-MAN](https://ro-man2021.org) conference 2021 accepted our paper on 
 The platform combines Leap Motion gesture tracking with ROS-based robot control, creating a seamless interface between human intention and robotic action. The virtual reality feedback provides operators with an immersive view of the robot's workspace, enabling precise manipulation even from remote locations.
 
 This work was conducted in collaboration with [Dr. Secoli](https://www.imperial.ac.uk/people/r.secoli) and [Prof. Rodriguez y Baena](https://www.imperial.ac.uk/people/f.rodriguez).
-
-## Resources
-- [Paper](../../downloads/research/roman_paper.pdf)
-- [IEEE Xplore](https://ieeexplore.ieee.org/document/9515390)
-- [Talk](https://www.youtube.com/watch?v=fNvErR5eUpc)
-- [Code Repository](https://github.com/axkoenig/leap_teleop)
-- [Handbook](../../downloads/research/handbook_compressed.pdf)
-- [Demo Video](https://www.youtube.com/watch?v=RDbpd9d7U2k)
-- [Lab Blog](https://www.imperial.ac.uk/mechatronics-in-medicine/research/human-robot-interaction-for-object-manipulation/)
-

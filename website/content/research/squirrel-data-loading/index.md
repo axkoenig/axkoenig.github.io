@@ -8,6 +8,17 @@ highlight: false
 collaborators:
   - name: "T. Wollmann"
     url: "https://scholar.google.com/citations?user=H8tlV-oAAAAJ&hl=de&oi=ao"
+resources:
+  - label: "PyData Talk"
+    url: "https://www.youtube.com/watch?v=pZPbi4EmqEo"
+  - label: "Code Repository"
+    url: "https://github.com/merantix-momentum/squirrel-core"
+  - label: "Zenodo"
+    url: "https://zenodo.org/record/7158000#.Y1a1CexBzwM"
+  - label: "Siemens Talk"
+    url: "https://www.youtube.com/watch?v=Z7ziAp0mb-o"
+  - label: "Slides"
+    url: "../../downloads/research/squirrel_slides.pdf"
 ---
 
 At [Merantix Momentum](http://merantix-momentum.com), I'm benchmarking our data loading tool [Squirrel](https://hub.docker.com/repository/docker/axkoenig/reflex_stack). Preliminary results show that data loading pipelines can benefit greatly from Squirrel's improved throughput. Upon open-sourcing Squirrel, our VP of Engineering, Dr. Thomas Wollmann, showcased some of our initial results at the [PyData 2022](https://www.youtube.com/watch?v=pZPbi4EmqEo) conference in Berlin.
@@ -19,10 +30,3 @@ I'm also an active code contributor to Squirrel. The framework addresses common 
 The research focuses on optimizing data pipeline throughput, which is often a critical bottleneck in machine learning workflows. By improving data loading efficiency, we enable faster iteration cycles and more efficient use of computational resources.
 
 This work was conducted in collaboration with [Dr. Wollmann](https://scholar.google.com/citations?user=H8tlV-oAAAAJ&hl=de&oi=ao).
-
-## Resources
-- [PyData Talk](https://www.youtube.com/watch?v=pZPbi4EmqEo)
-- [Code Repository](https://github.com/merantix-momentum/squirrel-core)
-- [Zenodo](https://zenodo.org/record/7158000#.Y1a1CexBzwM)
-- [Siemens Talk](https://www.youtube.com/watch?v=Z7ziAp0mb-o)
-- [Slides](../../downloads/research/squirrel_slides.pdf)

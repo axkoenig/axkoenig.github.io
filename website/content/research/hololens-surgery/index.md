@@ -10,6 +10,13 @@ collaborators:
     url: "http://campar.in.tum.de/Main/UlrichEck"
   - name: "N. Navab"
     url: "https://www.professoren.tum.de/en/navab-nassir/"
+resources:
+  - label: "Thesis"
+    url: "../../downloads/research/bt_compressed.pdf"
+  - label: "Slides"
+    url: "../../downloads/research/bt_slides_compressed.pdf"
+  - label: "Demo Video"
+    url: "https://www.youtube.com/watch?v=WQMYF8R2ZdI"
 citations:
   - "Koenig, A. (2018). HoloLens Application for Orthopedic Trauma Surgery. Bachelor Thesis, Technical University of Munich."
 ---
@@ -23,9 +30,3 @@ The application leverages augmented reality to overlay 3D reconstructions of bon
 The system processes preoperative CT scans to generate 3D models of fractures, which are then registered and displayed in real-time through the HoloLens headset. The user study demonstrated the potential of AR technology to improve surgical precision and reduce procedure time for complex fracture cases.
 
 This work was conducted in collaboration with [Dr. Eck](http://campar.in.tum.de/Main/UlrichEck) and [Prof. Navab](https://www.professoren.tum.de/en/navab-nassir/).
-
-## Resources
-- [Thesis](../../downloads/research/bt_compressed.pdf)
-- [Slides](../../downloads/research/bt_slides_compressed.pdf)
-- [Demo Video](https://www.youtube.com/watch?v=WQMYF8R2ZdI)
-
