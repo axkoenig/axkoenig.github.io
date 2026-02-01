@@ -48,6 +48,12 @@
             console.error('Carousel track element not found');
             return;
         }
+        
+        const carouselContainer = document.getElementById('projects-carousel');
+        if (!carouselContainer) {
+            console.error('Carousel container element not found');
+            return;
+        }
 
         // Function to create a carousel item
         function createCarouselItem(project) {
@@ -82,20 +88,150 @@
             `;
         }
 
-        // Render items once (native horizontal scroll handles gestures)
-        carouselTrack.innerHTML = highlightedProjects.map(project => createCarouselItem(project)).join('');
+        // "Infinite" scroll:
+        // Render 3 copies, start in the middle, and when the user scrolls close to the
+        // edges, jump scrollLeft by one full set width back into the middle copy.
+        const baseItemsHTML = highlightedProjects.map(project => createCarouselItem(project)).join('');
+        carouselTrack.innerHTML = baseItemsHTML + baseItemsHTML + baseItemsHTML;
 
         // Setup click handlers for navigation
-        const carouselItems = document.querySelectorAll('.carousel-item');
-        carouselItems.forEach(item => {
-            item.addEventListener('click', () => {
-                const slug = item.getAttribute('data-project-slug');
-                const category = item.getAttribute('data-project-category');
-                if (slug && category) {
-                    window.location.href = `${category}.html#${slug}`;
-                }
-            });
+        carouselTrack.addEventListener('click', (event) => {
+            const item = event.target && event.target.closest ? event.target.closest('.carousel-item') : null;
+            if (!item) return;
+            const slug = item.getAttribute('data-project-slug');
+            const category = item.getAttribute('data-project-category');
+            if (slug && category) {
+                window.location.href = `${category}.html#${slug}`;
+            }
         });
+        
+        const uniqueCount = highlightedProjects.length;
+        if (uniqueCount > 0) {
+            let oneSetWidth = 0;
+            let isAdjusting = false;
+            let isPointerDown = false;
+            let lastInteractionTs = (typeof performance !== 'undefined' && performance.now) ? performance.now() : Date.now();
+            
+            const prefersReducedMotion = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+            const autoScrollSpeedPxPerSec = 35; // was ~50px/s in the old auto-animation; slightly gentler
+            const autoResumeIdleDelayMs = 1200;
+            
+            const markInteraction = () => {
+                lastInteractionTs = (typeof performance !== 'undefined' && performance.now) ? performance.now() : Date.now();
+            };
+            
+            const computeOneSetWidth = () => {
+                const items = carouselTrack.querySelectorAll('.carousel-item');
+                if (!items || items.length === 0) return 0;
+                
+                // Prefer layout-derived span (robust even if items vary in width)
+                if (items.length >= uniqueCount + 1) {
+                    const start = items[0].offsetLeft;
+                    const nextSetStart = items[uniqueCount].offsetLeft;
+                    const span = nextSetStart - start;
+                    if (span > 0) return span;
+                }
+                
+                // Fallback: assume uniform item widths
+                const firstItem = items[0];
+                const itemWidth = firstItem.getBoundingClientRect().width || firstItem.offsetWidth || 0;
+                return itemWidth * uniqueCount;
+            };
+            
+            const jumpToMiddle = () => {
+                oneSetWidth = computeOneSetWidth();
+                if (oneSetWidth <= 0) return;
+                carouselContainer.scrollLeft = oneSetWidth;
+            };
+            
+            // Initialize position after layout
+            requestAnimationFrame(() => {
+                jumpToMiddle();
+            });
+            
+            const normalizeScrollPosition = () => {
+                if (isAdjusting) return;
+                if (oneSetWidth <= 0) oneSetWidth = computeOneSetWidth();
+                if (oneSetWidth <= 0) return;
+                
+                // Middle copy spans [oneSetWidth, 2*oneSetWidth).
+                const leftEdge = oneSetWidth * 0.5;
+                const rightEdge = oneSetWidth * 2.5;
+                const x = carouselContainer.scrollLeft;
+                
+                if (x < leftEdge) {
+                    isAdjusting = true;
+                    const prevBehavior = carouselContainer.style.scrollBehavior;
+                    carouselContainer.style.scrollBehavior = 'auto';
+                    carouselContainer.scrollLeft = x + oneSetWidth;
+                    carouselContainer.style.scrollBehavior = prevBehavior;
+                    isAdjusting = false;
+                } else if (x > rightEdge) {
+                    isAdjusting = true;
+                    const prevBehavior = carouselContainer.style.scrollBehavior;
+                    carouselContainer.style.scrollBehavior = 'auto';
+                    carouselContainer.scrollLeft = x - oneSetWidth;
+                    carouselContainer.style.scrollBehavior = prevBehavior;
+                    isAdjusting = false;
+                }
+            };
+            
+            carouselContainer.addEventListener('scroll', () => {
+                // Defer to the next frame so we don't fight the browser's scrolling.
+                requestAnimationFrame(normalizeScrollPosition);
+            }, { passive: true });
+            
+            // Pause auto-scroll while user is interacting
+            carouselContainer.addEventListener('pointerdown', () => {
+                isPointerDown = true;
+                markInteraction();
+            }, { passive: true });
+            window.addEventListener('pointerup', () => {
+                if (isPointerDown) markInteraction();
+                isPointerDown = false;
+            }, { passive: true });
+            window.addEventListener('pointercancel', () => {
+                if (isPointerDown) markInteraction();
+                isPointerDown = false;
+            }, { passive: true });
+            carouselContainer.addEventListener('wheel', () => {
+                markInteraction();
+            }, { passive: true });
+            
+            // Auto-scroll loop (keeps gesture scrolling intact)
+            if (!prefersReducedMotion) {
+                let lastTs = (typeof performance !== 'undefined' && performance.now) ? performance.now() : Date.now();
+                
+                const tick = (nowRaw) => {
+                    const now = (typeof nowRaw === 'number') ? nowRaw : ((typeof performance !== 'undefined' && performance.now) ? performance.now() : Date.now());
+                    const dtMs = Math.max(0, now - lastTs);
+                    lastTs = now;
+                    
+                    const isVisible = (typeof document === 'undefined') || document.visibilityState === 'visible';
+                    const isIdle = (now - lastInteractionTs) > autoResumeIdleDelayMs;
+                    
+                    if (isVisible && !isPointerDown && isIdle) {
+                        if (oneSetWidth <= 0) oneSetWidth = computeOneSetWidth();
+                        if (oneSetWidth > 0) {
+                            const dx = autoScrollSpeedPxPerSec * (dtMs / 1000);
+                            carouselContainer.scrollLeft += dx;
+                            normalizeScrollPosition();
+                        }
+                    }
+                    
+                    requestAnimationFrame(tick);
+                };
+                
+                requestAnimationFrame(tick);
+            }
+            
+            window.addEventListener('resize', () => {
+                // Recompute widths and keep the user in the middle copy.
+                requestAnimationFrame(() => {
+                    jumpToMiddle();
+                });
+            });
+        }
     } catch (error) {
         console.error('Error initializing carousel:', error);
     }
