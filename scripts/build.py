@@ -153,12 +153,17 @@ def extract_papers_from_frontmatter(fm_text: str) -> list[dict[str, Any]]:
     papers: list[dict[str, Any]] = []
     in_papers = False
     current: dict[str, Any] = {}
-    for line in fm_text.split("\n"):
+    lines = fm_text.split("\n")
+    i = 0
+    while i < len(lines):
+        line = lines[i]
         stripped = line.strip()
         if stripped == "papers:":
             in_papers = True
+            i += 1
             continue
         if not in_papers:
+            i += 1
             continue
         # New paper: "  - authors: [...]" or "  - " at start of item
         if re.match(r"^\s{2}-\s+", line):
@@ -172,15 +177,24 @@ def extract_papers_from_frontmatter(fm_text: str) -> list[dict[str, Any]]:
                 if k == "authors" and "[" in v:
                     v = re.findall(r'"([^"]*)"', v)
                 current[k] = v
+            i += 1
+            continue
         # Indented key: value (4+ spaces)
-        elif re.match(r"^\s{4}\w", line) and ":" in line:
+        if re.match(r"^\s{4}\w", line) and ":" in line:
             k, _, v = line.strip().partition(":")
             k, v = k.strip(), v.strip().strip('"\'')
             if k == "authors" and "[" in v:
                 v = re.findall(r'"([^"]*)"', v)
+                current[k] = v
             elif k == "resources":
-                continue  # skip nested resources for now
-            current[k] = v
+                # Parse nested resources list (items at 6-space indent)
+                res_list, next_i = _parse_resources_list(lines, i + 1, 6)
+                current["resources"] = res_list
+                i = next_i
+                continue
+            else:
+                current[k] = v
+        i += 1
     if current:
         papers.append(current)
     return papers
@@ -224,8 +238,13 @@ def aggregate_publications_html(content_dir: Path, research_list: list[str], bas
         project_link = f'<a class="resource-link" href="research.html#{project_slug}">→ Project</a>' if project_slug else ""
         resources = paper.get("resources") or []
         if isinstance(resources, list):
+            def _resource_href(url: str) -> str:
+                if not url or url.startswith("http://") or url.startswith("https://"):
+                    return url
+                return f"{base_path}/{project_slug}/{url}"
+
             res_html = "".join(
-                f'<a class="resource-link" href="{r.get("url", r) if isinstance(r, dict) else r}" target="_blank">{r.get("label", "Link") if isinstance(r, dict) else "Link"}</a>'
+                f'<a class="resource-link" href="{_resource_href(r.get("url", r) if isinstance(r, dict) else r)}" target="_blank">{r.get("label", "Link") if isinstance(r, dict) else "Link"}</a>'
                 for r in resources if (r.get("url") if isinstance(r, dict) else r)
             )
         else:
