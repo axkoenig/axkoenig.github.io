@@ -19,6 +19,53 @@
     function getBasePath() {
         return window.projectBasePath || 'content';
     }
+
+    /** Max height used by CSS for project-detail images (100vh - 200px). */
+    const PROJECT_DETAIL_MAX_IMAGE_HEIGHT_PX = 200;
+
+    /**
+     * In project detail, make all vertical (portrait) single images and videos
+     * use the same width: the minimum of their would-be rendered widths when
+     * scaled to fit viewport height. Excludes images inside .image-pair.
+     */
+    function applyUniformVerticalImageWidths() {
+        const body = document.querySelector('.project-detail-body');
+        if (!body || !body.closest('#project-detail')?.classList.contains('active')) return;
+
+        const maxHeightPx = Math.max(100, window.innerHeight - PROJECT_DETAIL_MAX_IMAGE_HEIGHT_PX);
+        const minWidthFloor = 200;
+
+        const singleMedia = body.querySelectorAll(':scope > figure > img, :scope > figure > video, :scope > img');
+        const verticalMedia = [];
+        const widths = [];
+
+        singleMedia.forEach((el) => {
+            if (el.closest('.image-pair')) return;
+            const w = el.tagName === 'VIDEO' ? el.videoWidth : el.naturalWidth;
+            const h = el.tagName === 'VIDEO' ? el.videoHeight : el.naturalHeight;
+            if (!w || !h || h <= w) return;
+            verticalMedia.push(el);
+            const widthAtMaxHeight = (w / h) * maxHeightPx;
+            widths.push(widthAtMaxHeight);
+        });
+
+        const targetWidth = widths.length ? Math.max(minWidthFloor, Math.min(...widths)) : null;
+
+        singleMedia.forEach((el) => {
+            if (el.closest('.image-pair')) return;
+            const w = el.tagName === 'VIDEO' ? el.videoWidth : el.naturalWidth;
+            const h = el.tagName === 'VIDEO' ? el.videoHeight : el.naturalHeight;
+            if (!w || !h || h <= w) {
+                el.style.width = '';
+                return;
+            }
+            if (targetWidth != null) {
+                el.style.width = targetWidth + 'px';
+            } else {
+                el.style.width = '';
+            }
+        });
+    }
     
     function getSlugFromHash() {
         const raw = (window.location && window.location.hash) ? window.location.hash : '';
@@ -119,8 +166,21 @@
         }
         projectDetail.addEventListener('scroll', detailScrollHandler);
         projectDetail._detailScrollHandler = detailScrollHandler;
+
+        function runUniformWidthWhenReady() {
+            applyUniformVerticalImageWidths();
+        }
+        setTimeout(runUniformWidthWhenReady, 50);
+        const body = projectDetail.querySelector('.project-detail-body');
+        if (body) {
+            body.querySelectorAll('img, video').forEach((el) => {
+                if (el.closest('.image-pair')) return;
+                el.addEventListener('load', runUniformWidthWhenReady);
+                el.addEventListener('loadedmetadata', runUniformWidthWhenReady);
+            });
+        }
     }
-    
+
     function ensureProjectHistoryInitialized() {
         // Only apply this routing behavior on pages that actually have a project overlay.
         if (!getProjectDetailEl()) return;
@@ -479,6 +539,7 @@
     window.addEventListener('resize', () => {
         checkImagesAndCanvasesInView();
         updateSidebarHighlight();
+        applyUniformVerticalImageWidths();
     });
     
     window.addEventListener('load', () => {
