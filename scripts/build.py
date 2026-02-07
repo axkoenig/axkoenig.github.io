@@ -28,7 +28,7 @@ def parse_frontmatter(content: str) -> dict[str, Any]:
         key = key.strip()
         value = value.strip()
         if key in (
-            "title", "cover_image", "short_description", "date", "start_date", "end_date", "year",
+            "title", "cover_image", "short_description", "date_start", "date_end", "year",
             "location", "gallery", "dimensions", "copyright", "artist", "item_name",
         ):
             meta[key] = value.strip('"\'')
@@ -38,8 +38,8 @@ def parse_frontmatter(content: str) -> dict[str, Any]:
 
 
 def year_label(meta: dict[str, Any]) -> str:
-    start = meta.get("start_date") or meta.get("date") or meta.get("year") or ""
-    end = meta.get("end_date") or meta.get("date") or meta.get("year") or ""
+    start = meta.get("date_start") or meta.get("year") or ""
+    end = meta.get("date_end") or meta.get("year") or ""
     if not start and not end:
         return ""
     try:
@@ -49,16 +49,60 @@ def year_label(meta: dict[str, Any]) -> str:
         return start or end
     if y1 and y2:
         return str(y1) if y1 == y2 else f"{y1}–{y2}"
+    if y1 and not end:
+        return f"{y1}–now"
     return str(y1 or y2)
 
 
-def _sort_ts(meta: dict[str, Any]) -> int:
-    for k in ("start_date", "end_date", "date", "year"):
-        v = meta.get(k)
-        if not v:
-            continue
+def _grouping_year(meta: dict[str, Any]) -> str:
+    """Year for sidebar grouping: end year, or start year if ongoing (only date_start)."""
+    end = meta.get("date_end") or ""
+    if end:
         try:
-            return int(str(v)[:4]) * 10000
+            return str(int(str(end)[:4]))
+        except (ValueError, TypeError):
+            pass
+    start = meta.get("date_start") or ""
+    if start:
+        try:
+            return str(int(str(start)[:4]))
+        except (ValueError, TypeError):
+            pass
+    year = meta.get("year") or ""
+    return str(year)[:4] if year else ""
+
+
+def _parse_date_to_sort_key(d: str) -> int:
+    """Convert YYYY, YYYY-MM, or YYYY-MM-DD to comparable int (larger = more recent)."""
+    s = str(d).strip()
+    if not s:
+        return 0
+    parts = s.split("-")
+    try:
+        y = int(parts[0])
+        m = int(parts[1]) if len(parts) > 1 else 12
+        day = int(parts[2]) if len(parts) > 2 else 31
+        return y * 10000 + m * 100 + day
+    except (ValueError, TypeError, IndexError):
+        return 0
+
+
+def _sort_ts(meta: dict[str, Any]) -> int:
+    """Sort by end date (newest first). Ongoing (only date_start) sorts by start date among others."""
+    end = meta.get("date_end")
+    if end:
+        key = _parse_date_to_sort_key(end)
+        if key:
+            return key
+    start = meta.get("date_start")
+    if start:
+        key = _parse_date_to_sort_key(start)
+        if key:
+            return key
+    year = meta.get("year")
+    if year:
+        try:
+            return int(str(year)[:4]) * 10000 + 9999
         except (ValueError, TypeError):
             pass
     return 0
@@ -450,6 +494,7 @@ def load_projects(content_dir: Path, base_path: str, slugs: list[str], category:
         meta["path"] = slug
         meta["category"] = category
         meta["year_label"] = year_label(meta)
+        meta["year"] = _grouping_year(meta) or None
         projects.append(meta)
     projects.sort(key=lambda p: (-_sort_ts(p), (p.get("title") or p.get("slug") or "")))
     return projects

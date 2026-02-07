@@ -1,6 +1,6 @@
 ---
 title: Ungefilterte Schätze
-date: 2020-01-01
+date_end: 2020-01-01
 short_description: Two vinyl recordings spanning ambient, IDM, and acid-house. Recorded from home.
 cover_image: cover-2.jpg
 highlight: false

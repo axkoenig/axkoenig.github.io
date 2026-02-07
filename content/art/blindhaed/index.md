@@ -1,6 +1,6 @@
 ---
 title: BLINDHÆD
-date: 2025-03-08
+date_end: 2025-03-08
 short_description: A multi-media artwork featuring event cameras, exploring the transformation of vision through technology.
 cover_image: media/red/blindhaed-1.jpg
 highlight: true

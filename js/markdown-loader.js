@@ -523,9 +523,8 @@ async function loadProjects(basePath, projectList) {
             }
 
             // Normalize date fields (supports date ranges).
-            // - Preferred: start_date / end_date (snake_case, consistent with other frontmatter keys)
-            // - Backward compatible: date (single date), year (single year)
-            // - Optional for art projects: infer range from caption years like "(2019)" in the markdown body
+            // - date_start / date_end; only date_start → end = "now" (ongoing).
+            // - Legacy: start_date→date_start, end_date→date_end, date→date_end.
             normalizeProjectDates(project);
             
             console.log('Loaded project:', project.title);
@@ -616,55 +615,50 @@ function inferYearRangeFromMarkdownBody(body) {
 
 function normalizeProjectDates(project) {
     if (!project || typeof project !== 'object') return;
-    
-    const hasStart = project.start_date !== undefined && project.start_date !== null && String(project.start_date).trim() !== '';
-    const hasEnd = project.end_date !== undefined && project.end_date !== null && String(project.end_date).trim() !== '';
-    
+    const raw = (v) => (v !== undefined && v !== null && String(v).trim() !== '' ? String(v).trim() : '');
+    const startRaw = raw(project.date_start) || raw(project.start_date);
+    const endRaw = raw(project.date_end) || raw(project.end_date);
+    const singleRaw = raw(project.date);
+    const hasStart = startRaw !== '';
+    const hasEnd = endRaw !== '';
+
     let startTs = null;
     let endTs = null;
     let isOngoing = false;
-    
+
     if (hasStart) {
-        startTs = parseDateToUtcTimestamp(project.start_date);
+        startTs = parseDateToUtcTimestamp(startRaw);
         if (hasEnd) {
-            endTs = parseDateToUtcTimestamp(project.end_date);
+            endTs = parseDateToUtcTimestamp(endRaw);
         } else {
             isOngoing = true;
+            endTs = startTs;
         }
     } else if (hasEnd) {
-        // Allow specifying only an end date (treated as a single-year display).
-        endTs = parseDateToUtcTimestamp(project.end_date);
-    } else if (project.date !== undefined && project.date !== null && String(project.date).trim() !== '') {
-        // Backward compatible: single date means start=end
-        const ts = parseDateToUtcTimestamp(project.date);
-        startTs = ts;
-        endTs = ts;
+        endTs = parseDateToUtcTimestamp(endRaw);
+    } else if (singleRaw !== '') {
+        endTs = parseDateToUtcTimestamp(singleRaw);
     } else if (project.year !== undefined && project.year !== null && String(project.year).trim() !== '') {
-        // Backward compatible: single year means start=end Jan 1st of that year
         const y = parseInt(project.year, 10);
         if (Number.isFinite(y) && y > 0) {
             startTs = Date.UTC(y, 0, 1);
             endTs = Date.UTC(y, 0, 1);
         }
     } else if (project.category === 'art') {
-        // Optional inference for art projects with caption years in the body
         const inferred = inferYearRangeFromMarkdownBody(project.body);
         if (inferred) {
             startTs = Date.UTC(inferred.startYear, 0, 1);
             endTs = Date.UTC(inferred.endYear, 0, 1);
         }
     }
-    
+
     const startYear = startTs ? new Date(startTs).getUTCFullYear() : null;
     const endYear = endTs ? new Date(endTs).getUTCFullYear() : null;
     const currentYear = new Date().getFullYear();
-    
-    // Grouping year is a single year used for sidebar navigation & data-year.
-    // For ranges, we group by the end year; for ongoing ranges, by the current year.
-    const groupingYear = endYear || (isOngoing ? currentYear : startYear);
-    
+    const groupingYear = endYear || (isOngoing ? startYear : startYear);
+
     let yearLabel = '';
-    if (startYear && endYear) {
+    if (startYear && endYear && !isOngoing) {
         yearLabel = (startYear === endYear) ? String(startYear) : `${startYear}–${endYear}`;
     } else if (startYear && isOngoing) {
         yearLabel = `${startYear}–now`;
@@ -673,59 +667,47 @@ function normalizeProjectDates(project) {
     } else if (endYear) {
         yearLabel = String(endYear);
     }
-    
-    // Sorting:
-    // - Sort by start date/year (overview should reflect when it began)
-    // - If only an end date is provided → sort by end
-    let sortTs = 0;
-    if (startTs) sortTs = startTs;
-    else if (endTs) sortTs = endTs;
-    
+
     project._start_ts = startTs || 0;
     project._end_ts = endTs || 0;
-    project._sort_ts = sortTs || 0;
-    
+    project._sort_ts = endTs || startTs || 0;
+
     if (groupingYear) project.year = String(groupingYear);
     if (yearLabel) project.year_label = yearLabel;
 }
 
-// Convert project dates to a sortable timestamp.
-// Supports:
-// - start_date / end_date (range, ongoing if end_date missing)
-// - date (single date)
-// - year (single year)
-function projectDateToTimestamp(project) {
+// Return end-date timestamp for sorting (newest end first).
+function projectEndTimestamp(project) {
     if (project && typeof project._sort_ts === 'number' && project._sort_ts > 0) {
         return project._sort_ts;
     }
-    
-    const rawEnd = (project && project.end_date) ? String(project.end_date).trim() : '';
-    const rawStart = (project && project.start_date) ? String(project.start_date).trim() : '';
+    const rawEnd = (project && (project.date_end || project.end_date)) ? String(project.date_end || project.end_date).trim() : '';
     const rawDate = (project && project.date) ? String(project.date).trim() : '';
-    
-    const startTs = rawStart ? parseDateToUtcTimestamp(rawStart) : null;
-    if (startTs) return startTs;
-    
-    const endTs = rawEnd ? parseDateToUtcTimestamp(rawEnd) : null;
-    if (endTs) return endTs;
-    
+    if (rawEnd) {
+        const ts = parseDateToUtcTimestamp(rawEnd);
+        if (ts) return ts;
+    }
     if (rawDate) {
         const ts = parseDateToUtcTimestamp(rawDate);
         if (ts) return ts;
     }
-    
+    const rawStart = (project && (project.date_start || project.start_date)) ? String(project.date_start || project.start_date).trim() : '';
+    if (rawStart) {
+        const ts = parseDateToUtcTimestamp(rawStart);
+        if (ts) return ts;
+    }
     const yearFallback = (project && project.year) ? parseInt(project.year, 10) : 0;
     return Number.isFinite(yearFallback) && yearFallback > 0 ? Date.UTC(yearFallback, 0, 1) : 0;
 }
 
-// Sort projects newest-first by start date (then stable tie-breakers).
+// Sort projects newest-first by end date (then stable tie-breakers).
 function sortProjectsNewFirst(projects) {
     if (!Array.isArray(projects)) return projects;
     
     projects.sort((a, b) => {
-        const dateA = projectDateToTimestamp(a);
-        const dateB = projectDateToTimestamp(b);
-        if (dateB !== dateA) return dateB - dateA; // newest first
+        const dateA = projectEndTimestamp(a);
+        const dateB = projectEndTimestamp(b);
+        if (dateB !== dateA) return dateB - dateA; // newest end first
         
         const titleA = (a && a.title) ? String(a.title) : '';
         const titleB = (b && b.title) ? String(b.title) : '';
@@ -763,7 +745,7 @@ function renderProjectTile(project, basePath, projectIndex) {
     // The CSS should handle missing images gracefully
     
     // Extract metadata for display
-    const yearLabel = project.year_label || project.year || (project.date ? new Date(project.date).getFullYear() : '');
+    const yearLabel = project.year_label || project.year || '';
     const location = project.location || project.gallery || '';
     const dimensions = project.dimensions || '';
     const gallery = project.gallery || project.location || '';

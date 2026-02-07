@@ -1,7 +1,7 @@
 ---
 title: Robotic Hand Simulation Stack
-start_date: 2020-11-15
-end_date: 2021-12-15
+date_start: 2020-11-15
+date_end: 2021-12-15
 short_description: A ROS/Gazebo simulation stack for a robotic hand with grasp-analysis metrics, packaged as a pre-built Docker container.
 cover_image: media/hand.png
 highlight: false

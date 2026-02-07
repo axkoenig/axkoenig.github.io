@@ -1,7 +1,7 @@
 ---
 title: Unsupervised Semantic Segmentation
-start_date: 2023-01-01
-end_date: 2023-01-01
+date_start: 2023-01-01
+date_end: 2023-01-01
 short_description: Analyzing STEGO's inner workings for safe unsupervised semantic segmentation.
 cover_image: "media/stego-image.png"
 highlight: false

@@ -1,7 +1,7 @@
 ---
 title: Augmented Reality for Orthopedic Trauma Surgery
-start_date: 2018-07-15
-end_date: 2018-07-15
+date_start: 2018-07-15
+date_end: 2018-07-15
 short_description: My Bachelor thesis studying how Augmented Reality (AR) can support orthopedic trauma surgeons with 3D visualizations of complex bone fractures.
 cover_image: media/bt.png
 highlight: false

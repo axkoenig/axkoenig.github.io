@@ -1,7 +1,7 @@
 ---
 title: Monoliths
-start_date: 2019-01-01
-end_date: 2020-01-01
+date_start: 2019-01-01
+date_end: 2020-01-01
 short_description: Photographs of monoliths in urban environments.
 cover_image: media/monoliths-1.jpg
 highlight: false

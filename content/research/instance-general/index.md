@@ -1,7 +1,7 @@
 ---
 title: Stop Merging, Start Separating
-start_date: 2025-03-01
-end_date: 2025-03-01
+date_start: 2025-03-01
+date_end: 2025-03-01
 short_description: Separating the general from instance-specific information yields improved manipulation.
 cover_image: media/instance-general.jpg
 highlight: false

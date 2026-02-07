@@ -1,7 +1,7 @@
 ---
 title: Acoustic Sensing for Universal Jamming Grippers
-start_date: 2025-04-01
-end_date: 2026-04-01
+date_start: 2025-04-01
+date_end: 2026-04-01
 short_description: Using acoustic sensing to enable universal jamming grippers to feel objects through sound.
 cover_image: media/gripper-crop.png
 highlight: false

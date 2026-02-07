@@ -1,7 +1,7 @@
 ---
 title: Neuroprosthetics Course
-start_date: 2019-11-15
-end_date: 2019-12-15
+date_start: 2019-11-15
+date_end: 2019-12-15
 short_description: A uni-project implementing neural models, cochlear implant coding strategies, and auditory simulations.
 cover_image: media/neuroprosthetics-image.jpg
 highlight: false

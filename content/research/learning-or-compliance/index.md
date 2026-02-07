@@ -1,7 +1,7 @@
 ---
 title: Learning or Compliance?
-start_date: 2025-01-01
-end_date: 2025-01-01
+date_start: 2025-01-01
+date_end: 2025-01-01
 short_description: Investigating the role of learning and compliance in dexterous manipulation.
 cover_image: media/funnel.png
 highlight: false

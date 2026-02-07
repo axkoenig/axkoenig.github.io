@@ -1,7 +1,7 @@
 ---
 title: Sakral
-start_date: 2017-01-01
-end_date: 2022-01-01
+date_start: 2017-01-01
+date_end: 2022-01-01
 short_description: A photographic series documenting sacred architecture.
 cover_image: media/sakral-1.jpg
 highlight: false

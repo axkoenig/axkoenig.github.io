@@ -1,7 +1,7 @@
 ---
 title: Deep Learning for Medical Imaging
-start_date: 2020-06-15
-end_date: 2020-09-15
+date_start: 2020-06-15
+date_end: 2020-09-15
 short_description: A uni-project implementing deep learning for COVID-19 detection from chest X-rays at the height of the pandemic.
 cover_image: media/dl4mi-image.png
 highlight: false
