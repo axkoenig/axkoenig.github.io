@@ -477,6 +477,19 @@
     // Make updateSidebarYears globally accessible
     window.updateSidebarYears = updateSidebarYears;
 
+    // Half-screen: click on left (projects grid) closes the detail panel
+    document.addEventListener('click', (event) => {
+        const projectDetail = getProjectDetailEl();
+        const grid = getProjectsGridEl();
+        const inHalfScreen = projectDetail && projectDetail.classList.contains('active') && !projectDetail.classList.contains('expanded');
+        if (inHalfScreen && grid && grid.contains(event.target)) {
+            event.preventDefault();
+            event.stopPropagation();
+            window.closeProjectDetail();
+            return;
+        }
+    }, true);
+
     // Delegate tile clicks (works for dynamically rendered project lists)
     document.addEventListener('click', (event) => {
         const tile = event.target && event.target.closest ? event.target.closest('.project-tile') : null;

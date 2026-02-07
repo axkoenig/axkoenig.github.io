@@ -468,8 +468,8 @@ body.is-home-page .home-dot::after {
     width: 100%;
 }
 
-/* Large screens: project detail opens at half width; expand to full via button or M */
-@media (min-width: 1400px) {
+/* Large screens (> 16" MBP): project detail opens at half width; expand to full via button or M */
+@media (min-width: 1800px) {
     .project-detail-view.active {
         width: 50%;
         border-left: 1px solid black;
@@ -490,10 +490,11 @@ body.is-home-page .home-dot::after {
         filter: blur(6px);
         transition: filter 0.35s ease;
     }
-    /* Disable clicks on left so scroll/actions go to the detail panel */
-    body:has(#project-detail.active:not(.expanded)) #projects-grid {
-        pointer-events: none;
+    /* In split view, only the current project stays yellow; no hover on other tiles */
+    .content:has(#project-detail.active:not(.expanded)) #projects-grid .project-tile:hover:not(.active) {
+        background-color: transparent;
     }
+    /* Clicks on left close the panel (handled in JS) */
     /* Only the right panel scrolls; left side stays fixed */
     body:has(#project-detail.active:not(.expanded)) {
         overflow: hidden;
@@ -525,7 +526,7 @@ body.is-home-page .home-dot::after {
 /* Main content stays in place when detail panel is open (fullscreen overlay) */
 /* No special styles needed - detail view is always fullscreen */
 
-@media (max-width: 1399px) {
+@media (max-width: 1799px) {
     .project-detail-view.active {
         width: 100%;
     }
@@ -597,7 +598,7 @@ body.is-home-page .home-dot::after {
 }
 
 /* Show Expand (M) only on large screens where half-width is used */
-@media (min-width: 1400px) {
+@media (min-width: 1800px) {
     .project-fullscreen-button {
         display: flex;
     }
@@ -651,14 +652,19 @@ body.is-home-page .home-dot::after {
     }
 }
 
-.project-short-description,
-.papers,
-.publications {
+.project-short-description {
     margin: 0 -30px 30px -30px !important;
     padding: 0 0 20px 0 !important;
     width: calc(100% + 60px) !important;
     box-sizing: border-box !important;
     border-bottom: 1px solid var(--border-color);
+}
+
+.publications {
+    margin: 0 -30px 30px -30px !important;
+    padding: 0 0 20px 0 !important;
+    width: calc(100% + 60px) !important;
+    box-sizing: border-box !important;
 }
 
 .project-detail-body {
@@ -1362,7 +1368,6 @@ body.is-home-page .home-dot::after {
     }
     
     .project-short-description,
-    .papers,
     .publications {
         margin: 0 -20px 30px -20px !important;
         padding: 0 20px 20px 20px !important;
