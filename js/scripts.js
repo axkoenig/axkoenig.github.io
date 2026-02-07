@@ -100,6 +100,7 @@
         
         if (projectDetail) {
             projectDetail.classList.remove('active');
+            projectDetail.classList.remove('expanded');
         }
         if (content) {
             content.classList.remove('has-detail');
@@ -365,25 +366,37 @@
     // Expose for the router (best-effort re-check after rendering detail view)
     window.__checkImagesAndCanvasesInView = checkImagesAndCanvasesInView;
 
-    // Toggle fullscreen mode (kept for backward compatibility, but does nothing now)
     window.toggleProjectFullscreen = function() {
-        // Detail view is always fullscreen now
+        window.toggleProjectExpand();
+    };
+
+    window.toggleProjectExpand = function() {
+        const projectDetail = document.getElementById('project-detail');
+        if (!projectDetail || !projectDetail.classList.contains('active')) return;
+        projectDetail.classList.toggle('expanded');
+        const expanded = projectDetail.classList.contains('expanded');
+        const label = projectDetail.querySelector('.expand-label');
+        if (label) label.textContent = expanded ? 'Collapse' : 'Expand';
+        const btn = projectDetail.querySelector('.project-fullscreen-button');
+        if (btn) btn.setAttribute('aria-label', expanded ? 'Collapse (M)' : 'Expand (M)');
     };
 
     // Keyboard shortcuts for project detail navigation
     document.addEventListener('keydown', (event) => {
-        // Only trigger if project detail is open and not typing in an input/textarea
         const projectDetail = document.getElementById('project-detail');
-        const isInputFocused = document.activeElement && 
-            (document.activeElement.tagName === 'INPUT' || 
+        const isInputFocused = document.activeElement &&
+            (document.activeElement.tagName === 'INPUT' ||
              document.activeElement.tagName === 'TEXTAREA' ||
              document.activeElement.isContentEditable);
-        
+
         if (projectDetail && projectDetail.classList.contains('active') && !isInputFocused) {
-            // ESC key or Left arrow to close project detail
             if (event.key === 'Escape' || event.key === 'ArrowLeft') {
                 event.preventDefault();
                 window.closeProjectDetail();
+            }
+            if (event.key === 'm' || event.key === 'M') {
+                event.preventDefault();
+                window.toggleProjectExpand();
             }
         }
     });
@@ -546,6 +559,16 @@
         checkImagesAndCanvasesInView();
         updateSidebarYears();
     });
+
+    // When project detail is open (half-screen), scrolling over the left side scrolls the detail panel
+    document.addEventListener('wheel', (e) => {
+        const projectDetail = getProjectDetailEl();
+        if (!projectDetail || !projectDetail.classList.contains('active') || projectDetail.classList.contains('expanded')) return;
+        const rect = projectDetail.getBoundingClientRect();
+        if (e.clientX >= rect.left) return;
+        e.preventDefault();
+        projectDetail.scrollTop += e.deltaY;
+    }, { passive: false });
 });
 })();
 

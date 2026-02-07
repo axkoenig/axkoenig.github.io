@@ -12,7 +12,7 @@ collaborators:
     url: "https://profiles.imperial.ac.uk/f.tatti"
   - name: "Ferdinando Rodriguez y Baena"
     url: "https://www.imperial.ac.uk/people/f.rodriguez"
-papers:
+publications:
   - authors: ["A. Koenig", "F. Rodriguez y Baena", "R. Secoli"]
     year: 2021
     title: "Gesture-Based Teleoperated Grasping for Educational Robotics"

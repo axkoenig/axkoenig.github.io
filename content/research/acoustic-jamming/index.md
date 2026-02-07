@@ -10,7 +10,7 @@ collaborators:
   - name: "Theodor Wienert"
   - name: "Martin Splettstößer"
   - name: "Oliver Brock"
-papers:
+publications:
   - authors: ["L. Weber", "T. Wienert", "M. Splettstößer", "A. Koenig", "O. Brock"]
     year: 2026
     title: "Acoustic Sensing for Universal Jamming Grippers"

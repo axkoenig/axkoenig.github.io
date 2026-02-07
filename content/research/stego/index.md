@@ -10,7 +10,7 @@ collaborators:
     url: "https://maxschambach.github.io/"
   - name: "Johannes Otterbach"
     url: "https://jotterbach.github.io/"
-papers:
+publications:
   - authors: ["A. Koenig", "M. Schambach", "J. Otterbach"]
     year: 2023
     title: "Uncovering the Inner Workings of STEGO for Safe Unsupervised Semantic Segmentation"

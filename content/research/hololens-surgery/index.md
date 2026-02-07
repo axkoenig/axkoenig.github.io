@@ -10,7 +10,7 @@ collaborators:
     url: "https://www.cs.cit.tum.de/camp/members/ulrich-eck/"
   - name: "Nassir Navab"
     url: "https://www.professoren.tum.de/en/navab-nassir/"
-papers:
+publications:
   - authors: ["A. Koenig"]
     year: 2018
     title: "Visualization of Complex Bone Fractures in Augmented Reality during Reduction Surgery"

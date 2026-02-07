@@ -8,7 +8,7 @@ highlight: true
 collaborators:
   - name: "Adrian Sieler"
   - name: "Oliver Brock"
-papers:
+publications:
   - authors: ["A. Sieler", "A. Koenig", "O. Brock"]
     year: 2026
     title: "Trust the Hand: Lessons from 15 Years of Applied Co-Design for Soft Manipulation"

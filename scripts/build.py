@@ -148,27 +148,27 @@ def extract_bio_html(bio_md_path: Path) -> str:
     return minimal_md_to_html(body)
 
 
-def extract_papers_from_frontmatter(fm_text: str) -> list[dict[str, Any]]:
-    """Extract papers list from frontmatter (papers: then - authors: ... with indented key: value)."""
-    papers: list[dict[str, Any]] = []
-    in_papers = False
+def extract_publications_from_frontmatter(fm_text: str) -> list[dict[str, Any]]:
+    """Extract publications list from frontmatter (publications: then - authors: ... with indented key: value)."""
+    publications: list[dict[str, Any]] = []
+    in_publications = False
     current: dict[str, Any] = {}
     lines = fm_text.split("\n")
     i = 0
     while i < len(lines):
         line = lines[i]
         stripped = line.strip()
-        if stripped == "papers:":
-            in_papers = True
+        if stripped == "publications:":
+            in_publications = True
             i += 1
             continue
-        if not in_papers:
+        if not in_publications:
             i += 1
             continue
         # New paper: "  - authors: [...]" or "  - " at start of item
         if re.match(r"^\s{2}-\s+", line):
             if current:
-                papers.append(current)
+                publications.append(current)
             current = {}
             rest = line.lstrip()[2:].lstrip()  # after "  - "
             if ":" in rest:
@@ -200,12 +200,12 @@ def extract_papers_from_frontmatter(fm_text: str) -> list[dict[str, Any]]:
                 current[k] = v
         i += 1
     if current:
-        papers.append(current)
-    return papers
+        publications.append(current)
+    return publications
 
 
 def aggregate_publications_html(content_dir: Path, research_list: list[str], base_path: str) -> str:
-    papers: list[dict[str, Any]] = []
+    publications: list[dict[str, Any]] = []
     for slug in research_list:
         md_path = content_dir / "research" / slug / "index.md"
         if not md_path.exists():
@@ -215,10 +215,10 @@ def aggregate_publications_html(content_dir: Path, research_list: list[str], bas
         if not match:
             continue
         fm = match.group(1)
-        for p in extract_papers_from_frontmatter(fm):
+        for p in extract_publications_from_frontmatter(fm):
             p["projectSlug"] = slug
             p["projectTitle"] = parse_frontmatter(raw).get("title") or slug
-            papers.append(p)
+            publications.append(p)
     def _year_key(p: dict[str, Any]) -> int:
         y = p.get("year")
         if y is None:
@@ -227,10 +227,10 @@ def aggregate_publications_html(content_dir: Path, research_list: list[str], bas
             return int(y) if isinstance(y, (int, float)) else int(str(y).strip())
         except (ValueError, TypeError):
             return 0
-    papers.sort(key=lambda p: -_year_key(p))
-    papers = [p for p in papers if p.get("show_on_about", True)]
+    publications.sort(key=lambda p: -_year_key(p))
+    publications = [p for p in publications if p.get("show_on_about", True)]
     out = []
-    for paper in papers:
+    for paper in publications:
         authors = paper.get("authors") or ""
         if isinstance(authors, list):
             authors = ", ".join(authors)

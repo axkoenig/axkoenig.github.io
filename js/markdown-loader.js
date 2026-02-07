@@ -897,13 +897,13 @@ function renderProjectDetail(project, basePath) {
         return `<video src="${pageBaseUrl}${basePath}/${project.path}/${src}"`;
     });
     
-    // Build papers section HTML (structured papers)
-    let papersHTML = '';
-    if (project.papers && Array.isArray(project.papers) && project.papers.length > 0) {
-        papersHTML = `
-            <div class="papers" style="margin: 0 -30px 30px -30px; padding: 0 0 20px 0; width: calc(100% + 60px); box-sizing: border-box;">
+    // Build publications section HTML (structured publications)
+    let publicationsHTML = '';
+    if (project.publications && Array.isArray(project.publications) && project.publications.length > 0) {
+        publicationsHTML = `
+            <div class="publications" style="margin: 0 -30px 30px -30px; padding: 0 0 20px 0; width: calc(100% + 60px); box-sizing: border-box;">
                 <h3 style="margin: 0 0 20px 0;">Publications</h3>
-                ${project.papers.map(paper => {
+                ${project.publications.map(paper => {
                     if (!paper || typeof paper !== 'object') return '';
                     
                     const authors = Array.isArray(paper.authors) ? paper.authors.join(', ') : (paper.authors || '');
@@ -1020,6 +1020,10 @@ function renderProjectDetail(project, basePath) {
                 <button class="project-close-button" onclick="closeProjectDetail()">
                     <span class="project-close-arrow">← </span><span class="project-close-text">Close</span><span class="project-close-esc"> (ESC)</span>
                 </button>
+                <button type="button" class="project-fullscreen-button" onclick="toggleProjectExpand()" aria-label="Expand (M)">
+                    <span class="expand-label">Expand</span><span class="expand-shortcut"> (M)</span>
+                    <span class="expand-arrow" aria-hidden="true">→</span>
+                </button>
             </div>
             <div class="project-detail-inner">
                 <div class="project-detail-header">
@@ -1031,7 +1035,7 @@ function renderProjectDetail(project, basePath) {
                 </div>
                 ${shortDescriptionHTML}
                 ${resourcesHTML}
-                ${papersHTML}
+                ${publicationsHTML}
                 <div class="project-detail-body">
                     ${processedHTML}
                 </div>
@@ -1068,11 +1072,11 @@ async function aggregatePublications() {
         // Load all research projects
         const projects = await loadProjects('content/research', projectList);
         
-        // Extract all papers from all projects
-        const allPapers = [];
+        // Extract all publications from all projects
+        const allPublications = [];
         for (const project of projects) {
-            if (project.papers && Array.isArray(project.papers) && project.papers.length > 0) {
-                for (const paper of project.papers) {
+            if (project.publications && Array.isArray(project.publications) && project.publications.length > 0) {
+                for (const paper of project.publications) {
                     if (paper && typeof paper === 'object') {
                         // Get cover image path
                         let coverImagePath = '';
@@ -1088,7 +1092,7 @@ async function aggregatePublications() {
                         }
                         
                         // Add project reference to each paper
-                        allPapers.push({
+                        allPublications.push({
                             ...paper,
                             projectSlug: project.slug || project.id,
                             projectTitle: project.title || project.id,
@@ -1100,7 +1104,7 @@ async function aggregatePublications() {
         }
         
         // Sort by year (newest first), then by project title
-        allPapers.sort((a, b) => {
+        allPublications.sort((a, b) => {
             const yearA = a.year || 0;
             const yearB = b.year || 0;
             if (yearB !== yearA) {
@@ -1112,7 +1116,7 @@ async function aggregatePublications() {
             return titleA.localeCompare(titleB);
         });
         
-        return allPapers;
+        return allPublications;
     } catch (error) {
         console.error('Error aggregating publications:', error);
         return [];

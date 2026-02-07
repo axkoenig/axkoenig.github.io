@@ -14,7 +14,7 @@ collaborators:
     url: "https://hst.mit.edu/faculty-research/faculty/howe-robert"
   - name: "Björn Menze"
     url: "https://www.ias.tum.de/ias/menze-bjoern/"
-papers:
+publications:
   - authors: ["A. Koenig"]
     year: 2021
     title: "Tactile Grasp Refinement using Deep Reinforcement Learning and Analytic Grasp Stability Metrics"

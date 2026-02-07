@@ -11,7 +11,7 @@ collaborators:
   - name: "Adrian Sieler"
   - name: "Aravind Battaje"
   - name: "Oliver Brock"
-papers:
+publications:
   - authors: ["V. Mengers", "A. Koenig", "X. Li", "A. Sieler", "A. Battaje", "O. Brock"]
     year: 2025
     title: "Stop Merging, Start Separating: Why Merging Learning and Modeling Won't Solve Manipulation but Separating the General From the Specific Will"

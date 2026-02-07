@@ -178,8 +178,8 @@
                 return;
             }
             try {
-                const allPapers = await window.markdownLoader.aggregatePublications();
-                const papers = allPapers.filter(p => {
+                const allPublications = await window.markdownLoader.aggregatePublications();
+                const publications = allPublications.filter(p => {
                     const show = p.show_on_about;
                     if (show === false) return false;
                     if (show === true) return true;
@@ -187,13 +187,13 @@
                     return true;
                 });
                 
-                if (papers.length === 0) {
+                if (publications.length === 0) {
                     publicationsContainer.innerHTML = '<p>No publications found.</p>';
                     return;
                 }
                 
                 // Render each publication
-                publicationsContainer.innerHTML = papers.map(paper => {
+                publicationsContainer.innerHTML = publications.map(paper => {
                     const authors = Array.isArray(paper.authors) ? paper.authors.join(', ') : (paper.authors || '');
                     const title = paper.title || '';
                     const venue = paper.venue || '';

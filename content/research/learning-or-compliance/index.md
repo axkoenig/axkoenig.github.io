@@ -8,7 +8,7 @@ highlight: false
 collaborators:
   - name: "Adrian Sieler"
   - name: "Oliver Brock"
-papers:
+publications:
   - authors: ["A. Sieler", "A. Koenig", "O. Brock"]
     year: 2025
     title: "What Is the Key to Dexterous Manipulation: Learning or Compliance?"
