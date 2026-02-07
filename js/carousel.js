@@ -3,57 +3,40 @@
  */
 
 (async function() {
-    // Wait for markdown loader to be available
-    if (typeof window.markdownLoader === 'undefined') {
-        console.error('markdown-loader.js must be loaded before carousel.js');
-        return;
-    }
+    const carouselTrack = document.querySelector('.carousel-track');
+    const carouselContainer = document.getElementById('projects-carousel');
+    if (!carouselTrack || !carouselContainer) return;
 
-    // Load project lists from central configuration
-    let artProjectList = [];
-    let researchProjectList = [];
-    
-    try {
-        const response = await fetch('content/projects.json');
-        if (response.ok) {
-            const config = await response.json();
-            artProjectList = config.art || [];
-            researchProjectList = config.research || [];
-            console.log('Loaded project lists from config:', { art: artProjectList, research: researchProjectList });
-        } else {
-            console.error('Failed to load projects.json');
+    let uniqueCount = 0;
+    const existingItems = carouselTrack.querySelectorAll('.carousel-item');
+    if (existingItems.length > 0) {
+        uniqueCount = Math.floor(existingItems.length / 3);
+    } else {
+        if (typeof window.markdownLoader === 'undefined') {
+            console.error('markdown-loader.js must be loaded before carousel.js');
+            return;
         }
-    } catch (error) {
-        console.error('Error loading projects.json:', error);
-    }
-
-    try {
-        // Load highlighted projects from both categories
+        let artProjectList = [];
+        let researchProjectList = [];
+        try {
+            const response = await fetch('content/projects.json');
+            if (response.ok) {
+                const config = await response.json();
+                artProjectList = config.art || [];
+                researchProjectList = config.research || [];
+            }
+        } catch (e) {
+            console.error('Error loading projects.json:', e);
+        }
         const highlightedProjects = await window.markdownLoader.loadHighlightedProjects(
             artProjectList,
             researchProjectList
         );
-
         if (highlightedProjects.length === 0) {
-            console.log('No highlighted projects found');
-            const carousel = document.getElementById('projects-carousel');
-            if (carousel) {
-                carousel.style.display = 'none';
-            }
+            carouselContainer.style.display = 'none';
             return;
         }
-
-        const carouselTrack = document.querySelector('.carousel-track');
-        if (!carouselTrack) {
-            console.error('Carousel track element not found');
-            return;
-        }
-        
-        const carouselContainer = document.getElementById('projects-carousel');
-        if (!carouselContainer) {
-            console.error('Carousel container element not found');
-            return;
-        }
+        uniqueCount = highlightedProjects.length;
 
         // Function to create a carousel item
         function createCarouselItem(project) {
@@ -93,20 +76,20 @@
         // edges, jump scrollLeft by one full set width back into the middle copy.
         const baseItemsHTML = highlightedProjects.map(project => createCarouselItem(project)).join('');
         carouselTrack.innerHTML = baseItemsHTML + baseItemsHTML + baseItemsHTML;
+    }
 
-        // Setup click handlers for navigation
-        carouselTrack.addEventListener('click', (event) => {
-            const item = event.target && event.target.closest ? event.target.closest('.carousel-item') : null;
-            if (!item) return;
-            const slug = item.getAttribute('data-project-slug');
-            const category = item.getAttribute('data-project-category');
-            if (slug && category) {
-                window.location.href = `${category}.html#${slug}`;
-            }
-        });
-        
-        const uniqueCount = highlightedProjects.length;
-        if (uniqueCount > 0) {
+    // Setup click handlers for navigation
+    carouselTrack.addEventListener('click', (event) => {
+        const item = event.target && event.target.closest ? event.target.closest('.carousel-item') : null;
+        if (!item) return;
+        const slug = item.getAttribute('data-project-slug');
+        const category = item.getAttribute('data-project-category');
+        if (slug && category) {
+            window.location.href = `${category}.html#${slug}`;
+        }
+    });
+
+    if (uniqueCount > 0) {
             let oneSetWidth = 0;
             let isAdjusting = false;
             let isPointerDown = false;
@@ -259,9 +242,6 @@
                     jumpToMiddle();
                 });
             });
-        }
-    } catch (error) {
-        console.error('Error initializing carousel:', error);
     }
 })();
 

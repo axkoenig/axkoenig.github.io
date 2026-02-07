@@ -539,6 +539,40 @@ async function loadProjects(basePath, projectList) {
     return projects;
 }
 
+// Load a single project by slug (for lazy-loading detail when grid was pre-rendered).
+async function loadSingleProject(basePath, slug) {
+    const projectPath = `${basePath}/${slug}/index.md`;
+    const parsed = await loadMarkdownFile(projectPath);
+    if (!parsed) return null;
+    const category = basePath.includes('art') ? 'art' : 'research';
+    let resources = parsed.metadata.resources || [];
+    if (!resources || resources.length === 0) {
+        resources = extractResources(parsed.content);
+    }
+    const cleanedContent = removeResourcesSection(parsed.content);
+    const project = {
+        id: slug,
+        path: slug,
+        slug: slug,
+        category: category,
+        ...parsed.metadata,
+        resources: Array.isArray(parsed.metadata.resources) ? parsed.metadata.resources : resources,
+        body: cleanedContent,
+        html: markdownToHTML(cleanedContent)
+    };
+    if (project.highlight === undefined || project.highlight === null) {
+        project.highlight = false;
+    } else if (typeof project.highlight === 'string') {
+        project.highlight = project.highlight.toLowerCase() === 'true';
+    }
+    project.resources = resources;
+    if (!Array.isArray(project.resources)) {
+        project.resources = [];
+    }
+    normalizeProjectDates(project);
+    return project;
+}
+
 function parseDateToUtcTimestamp(value) {
     if (value === undefined || value === null) return null;
     const raw = String(value).trim();
@@ -1089,6 +1123,7 @@ async function aggregatePublications() {
 window.markdownLoader = {
     loadMarkdownFile,
     loadProjects,
+    loadSingleProject,
     loadHighlightedProjects,
     sortProjectsNewFirst,
     renderProjectTile,

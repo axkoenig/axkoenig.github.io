@@ -155,6 +155,9 @@ def resolve_ref_to_path(repo_root: Path, md_file: Path, url: str, content_dir: P
 
     if url.startswith("/"):
         return (repo_root / url.lstrip("/")).resolve()
+    # Paths starting with content/ are repo-root-relative (e.g. in content/about/talks.md).
+    if url.startswith("content/"):
+        return (repo_root / url).resolve()
 
     # Resolve relative paths from the markdown file location.
     return (md_file.parent / url).resolve()

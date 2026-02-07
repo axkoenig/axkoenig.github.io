@@ -33,17 +33,38 @@ def is_anchor_link(url: str) -> bool:
     return url.startswith('#')
 
 
+def is_skip_url(url: str) -> bool:
+    """Skip data:, javascript:, mailto:, tel:."""
+    u = url.strip().lower()
+    return u.startswith('data:') or u.startswith('javascript:') or u.startswith('mailto:') or u.startswith('tel:')
+
+
+def is_skip_external_check(url: str) -> bool:
+    """Skip external URLs that often block HEAD or return non-2xx for bots (preconnect, CDN roots)."""
+    u = url.strip().lower()
+    if not u.startswith('http'):
+        return False
+    parsed = urlparse(u)
+    host = (parsed.netloc or '').split(':')[0].lower()
+    # Preconnect/stylesheet hosts: HEAD to domain root often 404; link works in browser
+    if host in ('fonts.googleapis.com', 'fonts.gstatic.com', 'cdnjs.cloudflare.com'):
+        return True
+    return False
+
+
 def check_external_url(url: str, timeout: int = 5) -> tuple[bool, str]:
-    """Check if external URL is reachable."""
+    """Check if external URL is reachable. Treats 403/429/418 as OK (sites often block bots)."""
     if not HAS_REQUESTS:
         return True, "skipped (requests not installed)"
-    
+    if is_skip_external_check(url):
+        return True, "skipped (preconnect/CDN)"
     try:
         response = requests.head(url, timeout=timeout, allow_redirects=True)
         if response.status_code < 400:
             return True, f"OK ({response.status_code})"
-        else:
-            return False, f"HTTP {response.status_code}"
+        if response.status_code in (403, 418, 429):
+            return True, f"assumed OK ({response.status_code}, often bot-block)"
+        return False, f"HTTP {response.status_code}"
     except requests.exceptions.Timeout:
         return False, "timeout"
     except requests.exceptions.ConnectionError:
@@ -135,43 +156,56 @@ def extract_links_from_markdown(file_path: Path) -> list[dict]:
     return links
 
 
-def resolve_relative_path(base_path: Path, url: str, content_dir: Path) -> Optional[Path]:
-    """Resolve a relative URL to an absolute file path."""
-    if is_external_url(url) or is_anchor_link(url):
+def resolve_relative_path(base_path: Path, url: str, content_dir: Path, repo_root: Optional[Path] = None) -> Optional[Path]:
+    """Resolve a relative URL to an absolute file path. base_path is the file containing the link."""
+    if is_external_url(url) or is_anchor_link(url) or is_skip_url(url):
         return None
-    
-    # Handle relative paths
-    if url.startswith('../'):
-        # Relative to parent directories
+    url = url.split("#", 1)[0].split("?", 1)[0].strip()
+    if not url:
+        return None
+    root = repo_root or content_dir.parent
+    if url.startswith("../") or url.startswith("./"):
         resolved = (base_path.parent / url).resolve()
-    elif url.startswith('/'):
-        # Absolute from content root
-        resolved = (content_dir.parent / url.lstrip('/')).resolve()
+    elif url.startswith("/"):
+        resolved = (root / url.lstrip("/")).resolve()
+    elif url.startswith("content/"):
+        resolved = (root / url).resolve()
     else:
-        # Relative to current file
         resolved = (base_path.parent / url).resolve()
-    
     return resolved
 
 
-def check_file(
+def extract_links_from_html(html_path: Path) -> list[dict]:
+    """Extract href and src URLs from an HTML file."""
+    links = []
+    content = html_path.read_text(encoding="utf-8")
+    for pattern, link_type in [
+        (re.compile(r'\bhref=["\']([^"\']+)["\']'), 'href'),
+        (re.compile(r'\bsrc=["\']([^"\']+)["\']'), 'src'),
+    ]:
+        for m in pattern.finditer(content):
+            url = m.group(1).strip()
+            line = content[: m.start()].count('\n') + 1
+            links.append({'url': url, 'type': link_type, 'line': line})
+    return links
+
+
+def _check_links_list(
     file_path: Path,
+    links: list[dict],
     content_dir: Path,
-    check_external: bool = False,
-    verbose: bool = False
+    repo_root: Path,
+    base_path: Path,
+    check_external: bool,
+    verbose: bool,
 ) -> list[dict]:
-    """Check all links in a file and return broken ones."""
     broken = []
-    links = extract_links_from_markdown(file_path)
-    
     for link in links:
         url = link['url']
-        
-        # Skip anchor links
-        if is_anchor_link(url):
+        if is_anchor_link(url) or is_skip_url(url):
             continue
-        
-        # Check external URLs
+        if url.startswith("$") or "${" in url:
+            continue
         if is_external_url(url):
             if check_external:
                 ok, msg = check_external_url(url)
@@ -181,26 +215,51 @@ def check_file(
                         'url': url,
                         'type': link['type'],
                         'line': link.get('line', 0),
-                        'reason': msg
+                        'reason': msg,
                     })
                 elif verbose:
                     print(f"  OK: {url}")
             continue
-        
-        # Check local files
-        resolved = resolve_relative_path(file_path, url, content_dir)
+        resolved = resolve_relative_path(base_path, url, content_dir, repo_root)
         if resolved and not resolved.exists():
             broken.append({
                 'file': file_path,
                 'url': url,
                 'type': link['type'],
                 'line': link.get('line', 0),
-                'reason': 'file not found'
+                'reason': 'file not found',
             })
         elif verbose and resolved:
             print(f"  OK: {url}")
-    
     return broken
+
+
+def check_file(
+    file_path: Path,
+    content_dir: Path,
+    repo_root: Path,
+    check_external: bool = False,
+    verbose: bool = False,
+) -> list[dict]:
+    """Check all links in a markdown file and return broken ones."""
+    links = extract_links_from_markdown(file_path)
+    return _check_links_list(
+        file_path, links, content_dir, repo_root, file_path, check_external, verbose
+    )
+
+
+def check_html_file(
+    html_path: Path,
+    content_dir: Path,
+    repo_root: Path,
+    check_external: bool = False,
+    verbose: bool = False,
+) -> list[dict]:
+    """Check all links in an HTML file (href/src) and return broken ones."""
+    links = extract_links_from_html(html_path)
+    return _check_links_list(
+        html_path, links, content_dir, repo_root, html_path, check_external, verbose
+    )
 
 
 def main():
@@ -221,56 +280,62 @@ def main():
         script_dir = Path(__file__).parent
         content_dir = script_dir.parent / 'content'
     
+    repo_root = content_dir.parent
     if not content_dir.exists():
-        print(f"Error: Content directory not found: {content_dir}")
+        print(f"Error: Content directory not found: {content_dir}", file=sys.stderr)
         sys.exit(1)
-    
+    if args.check_external and not HAS_REQUESTS:
+        print("Error: --check-external requires 'requests'. Install with: pip install requests", file=sys.stderr)
+        sys.exit(1)
+
     print(f"{'=' * 60}")
     print("Link Checker")
     print(f"{'=' * 60}")
     print(f"Content directory: {content_dir}")
     print(f"Check external URLs: {args.check_external}")
     print(f"{'=' * 60}\n")
-    
-    # Find all markdown files
-    markdown_files = list(content_dir.glob('**/*.md'))
-    print(f"Found {len(markdown_files)} markdown files\n")
-    
+
     all_broken = []
-    
+
+    markdown_files = list(content_dir.glob("**/*.md"))
+    print(f"Checking {len(markdown_files)} markdown files")
     for md_file in sorted(markdown_files):
-        rel_path = md_file.relative_to(content_dir)
         if args.verbose:
-            print(f"Checking: {rel_path}")
-        
-        broken = check_file(md_file, content_dir, args.check_external, args.verbose)
+            print(f"  {md_file.relative_to(repo_root)}")
+        broken = check_file(md_file, content_dir, repo_root, args.check_external, args.verbose)
         all_broken.extend(broken)
-    
-    # Report results
+
+    html_files = [repo_root / n for n in ("index.html", "art.html", "research.html", "about.html") if (repo_root / n).exists()]
+    print(f"Checking {len(html_files)} HTML files")
+    for html_path in html_files:
+        if args.verbose:
+            print(f"  {html_path.name}")
+        broken = check_html_file(html_path, content_dir, repo_root, args.check_external, args.verbose)
+        all_broken.extend(broken)
+
     print(f"\n{'=' * 60}")
     if all_broken:
         print(f"BROKEN LINKS FOUND: {len(all_broken)}")
         print(f"{'=' * 60}\n")
-        
-        # Group by file
         by_file: dict[Path, list] = {}
         for b in all_broken:
-            if b['file'] not in by_file:
-                by_file[b['file']] = []
-            by_file[b['file']].append(b)
-        
+            if b["file"] not in by_file:
+                by_file[b["file"]] = []
+            by_file[b["file"]].append(b)
         for file_path, broken_list in sorted(by_file.items()):
-            print(f"{file_path.relative_to(content_dir)}:")
+            try:
+                rel = file_path.relative_to(repo_root)
+            except ValueError:
+                rel = file_path
+            print(f"{rel}:")
             for b in broken_list:
                 print(f"  Line {b['line']}: [{b['type']}] {b['url']}")
                 print(f"           -> {b['reason']}")
             print()
-        
         sys.exit(1)
-    else:
-        print("NO BROKEN LINKS FOUND")
-        print(f"{'=' * 60}")
-        sys.exit(0)
+    print("NO BROKEN LINKS FOUND")
+    print(f"{'=' * 60}")
+    sys.exit(0)
 
 
 if __name__ == '__main__':

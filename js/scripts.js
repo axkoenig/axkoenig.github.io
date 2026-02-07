@@ -142,32 +142,38 @@
         }
     }
     
-    function syncProjectDetailToUrl(options = {}) {
+    async function syncProjectDetailToUrl(options = {}) {
         const { skipAnimation = true } = options;
         ensureProjectHistoryInitialized();
         if (!getProjectDetailEl()) return;
-        
+
         const slug = getSlugFromHash();
         if (!slug) {
             closeProjectDetailUI();
             return;
         }
-        
-        // Projects list not loaded yet — defer opening until the page script
-        // sets window.currentProjects, then calls sync again.
+
         if (!Array.isArray(window.currentProjects)) {
             return;
         }
-        
-        const project = findProjectBySlug(slug);
+
+        let project = findProjectBySlug(slug);
         if (!project) {
-            // Unknown hash — close UI and clean URL (avoid "stuck" back/forward).
             closeProjectDetailUI();
             const cleanUrl = window.location.pathname + window.location.search;
             window.history.replaceState({ projectOpen: false }, '', cleanUrl);
             return;
         }
-        
+
+        if (!project.body && window.markdownLoader && typeof window.markdownLoader.loadSingleProject === 'function') {
+            const basePath = getBasePath();
+            const full = await window.markdownLoader.loadSingleProject(basePath, project.slug || project.id);
+            if (full) {
+                const idx = window.currentProjects.findIndex(p => (p.slug || p.id) === slug);
+                if (idx >= 0) window.currentProjects[idx] = full;
+                project = full;
+            }
+        }
         openProjectDetailUI(project, { skipAnimation });
     }
     
