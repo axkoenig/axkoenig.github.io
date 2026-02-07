@@ -487,12 +487,16 @@ body.is-home-page .home-dot::after {
     }
     /* Blur left content when half-screen panel is open */
     .content:has(#project-detail.active:not(.expanded)) #projects-grid {
-        filter: blur(6px);
+        filter: blur(12px);
         transition: filter 0.35s ease;
     }
     /* In split view, only the current project stays yellow; no hover on other tiles */
     .content:has(#project-detail.active:not(.expanded)) #projects-grid .project-tile:hover:not(.active) {
         background-color: transparent;
+    }
+    /* In split view, list thumbnails appear very light grey */
+    .content:has(#project-detail.active:not(.expanded)) #projects-grid .project-cover img {
+        filter: grayscale(1) brightness(1.6);
     }
     /* Clicks on left close the panel (handled in JS) */
     /* Only the right panel scrolls; left side stays fixed */
