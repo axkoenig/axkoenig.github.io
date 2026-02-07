@@ -15,6 +15,7 @@ papers:
     year: 2018
     title: "Visualization of Complex Bone Fractures in Augmented Reality during Reduction Surgery"
     venue: "Bachelor Thesis, Technical University of Munich"
+    show_on_about: false
     resources:
       - label: "Thesis"
         url: "media/bt_compressed.pdf"

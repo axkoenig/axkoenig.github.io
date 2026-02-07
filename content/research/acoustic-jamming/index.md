@@ -19,6 +19,7 @@ papers:
     year: 2025
     title: "Acoustic Sensing for Universal Jamming Grippers"
     venue: "[Workshop on Acoustic Sensing and Representations for Robotics](https://sites.google.com/view/roboacoustics) at IEEE International Conference on Robotics and Automation (ICRA)"
+    show_on_about: false
     resources:
       - label: "Paper"
         url: "https://www.static.tu.berlin/fileadmin/www/10002220/Publications/8_Acoustic_Sensing_for_Univers.pdf"

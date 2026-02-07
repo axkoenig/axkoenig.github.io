@@ -19,6 +19,7 @@ papers:
     year: 2021
     title: "Tactile Grasp Refinement using Deep Reinforcement Learning and Analytic Grasp Stability Metrics"
     venue: "Master Thesis, Technical University of Munich"
+    show_on_about: false
     resources:
       - label: "Thesis"
         url: "media/mt_compressed.pdf"
@@ -41,6 +42,7 @@ papers:
     year: 2022
     title: "Tactile Sensing and its Role in Learning and Deploying Robotic Grasping Controllers"
     venue: "[Workshop on Reinforcement Learning for Contact-Rich Manipulation](https://sites.google.com/view/icra2022-contactrich/) at IEEE International Conference on Robotics and Automation (ICRA)"
+    show_on_about: false
     resources:
       - label: "Paper"
         url: "https://openreview.net/forum?id=OqmWRIsvA4O"

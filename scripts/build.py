@@ -176,6 +176,8 @@ def extract_papers_from_frontmatter(fm_text: str) -> list[dict[str, Any]]:
                 k, v = k.strip(), v.strip().strip('"\'')
                 if k == "authors" and "[" in v:
                     v = re.findall(r'"([^"]*)"', v)
+                elif k == "show_on_about":
+                    v = v.lower() not in ("false", "no", "0")
                 current[k] = v
             i += 1
             continue
@@ -186,6 +188,8 @@ def extract_papers_from_frontmatter(fm_text: str) -> list[dict[str, Any]]:
             if k == "authors" and "[" in v:
                 v = re.findall(r'"([^"]*)"', v)
                 current[k] = v
+            elif k == "show_on_about":
+                current[k] = v.lower() not in ("false", "no", "0")
             elif k == "resources":
                 # Parse nested resources list (items at 6-space indent)
                 res_list, next_i = _parse_resources_list(lines, i + 1, 6)
@@ -224,6 +228,7 @@ def aggregate_publications_html(content_dir: Path, research_list: list[str], bas
         except (ValueError, TypeError):
             return 0
     papers.sort(key=lambda p: -_year_key(p))
+    papers = [p for p in papers if p.get("show_on_about", True)]
     out = []
     for paper in papers:
         authors = paper.get("authors") or ""
