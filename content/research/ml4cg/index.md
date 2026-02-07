@@ -10,7 +10,7 @@ collaborators:
   - name: "Ron Mokady"
     url: "https://rmokady.github.io/"
   - name: "Daniel Cohen-Or"
-    url: "https://www.cs.tau.ac.il/~dcor/"
+    url: "https://danielcohenor.com/"
 resources:
   - label: "Report"
     url: "media/ml4cg_report_compressed.pdf"

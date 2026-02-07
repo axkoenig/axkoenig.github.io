@@ -27,7 +27,7 @@ git add index.html art.html research.html about.html
 echo "Checking case (asset path casing)..."
 "$PYTHON" scripts/check_case.py
 
-echo "Checking links (internal only; use scripts/check_links.py --check-external to audit external)..."
+echo "Checking links (internal + external; external failures are warnings only)..."
 "$PYTHON" scripts/check_links.py
 
 echo "Checking media sizes (images <= 2 MB, videos <= 10 MB)..."

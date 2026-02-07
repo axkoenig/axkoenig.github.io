@@ -198,8 +198,11 @@ def _check_links_list(
     base_path: Path,
     check_external: bool,
     verbose: bool,
-) -> list[dict]:
+    external_as_warning: bool,
+) -> tuple[list[dict], list[dict]]:
+    """Return (broken, external_warnings). Internal failures go to broken; external failures go to broken or external_warnings depending on external_as_warning."""
     broken = []
+    external_warnings = []
     for link in links:
         url = link['url']
         if is_anchor_link(url) or is_skip_url(url):
@@ -210,13 +213,17 @@ def _check_links_list(
             if check_external:
                 ok, msg = check_external_url(url)
                 if not ok:
-                    broken.append({
+                    entry = {
                         'file': file_path,
                         'url': url,
                         'type': link['type'],
                         'line': link.get('line', 0),
                         'reason': msg,
-                    })
+                    }
+                    if external_as_warning:
+                        external_warnings.append(entry)
+                    else:
+                        broken.append(entry)
                 elif verbose:
                     print(f"  OK: {url}")
             continue
@@ -231,7 +238,7 @@ def _check_links_list(
             })
         elif verbose and resolved:
             print(f"  OK: {url}")
-    return broken
+    return broken, external_warnings
 
 
 def check_file(
@@ -240,11 +247,12 @@ def check_file(
     repo_root: Path,
     check_external: bool = False,
     verbose: bool = False,
-) -> list[dict]:
-    """Check all links in a markdown file and return broken ones."""
+    external_as_warning: bool = False,
+) -> tuple[list[dict], list[dict]]:
+    """Check all links in a markdown file. Return (broken, external_warnings)."""
     links = extract_links_from_markdown(file_path)
     return _check_links_list(
-        file_path, links, content_dir, repo_root, file_path, check_external, verbose
+        file_path, links, content_dir, repo_root, file_path, check_external, verbose, external_as_warning
     )
 
 
@@ -254,18 +262,21 @@ def check_html_file(
     repo_root: Path,
     check_external: bool = False,
     verbose: bool = False,
-) -> list[dict]:
-    """Check all links in an HTML file (href/src) and return broken ones."""
+    external_as_warning: bool = False,
+) -> tuple[list[dict], list[dict]]:
+    """Check all links in an HTML file (href/src). Return (broken, external_warnings)."""
     links = extract_links_from_html(html_path)
     return _check_links_list(
-        html_path, links, content_dir, repo_root, html_path, check_external, verbose
+        html_path, links, content_dir, repo_root, html_path, check_external, verbose, external_as_warning
     )
 
 
 def main():
     parser = argparse.ArgumentParser(description='Check for broken links in website')
-    parser.add_argument('--check-external', action='store_true', 
-                        help='Also check external URLs (slow)')
+    parser.add_argument('--check-external', action='store_true',
+                        help='Also check external URLs')
+    parser.add_argument('--warn-external', action='store_true',
+                        help='With --check-external: report failed external links as warnings only (do not fail)')
     parser.add_argument('--verbose', '-v', action='store_true',
                         help='Show all links, not just broken ones')
     parser.add_argument('--content-dir', type=str, default=None,
@@ -288,37 +299,43 @@ def main():
         print("Error: --check-external requires 'requests'. Install with: pip install requests", file=sys.stderr)
         sys.exit(1)
 
+    external_as_warning = bool(args.warn_external and args.check_external)
+
     print(f"{'=' * 60}")
     print("Link Checker")
     print(f"{'=' * 60}")
     print(f"Content directory: {content_dir}")
-    print(f"Check external URLs: {args.check_external}")
+    print(f"Check external URLs: {args.check_external}" + (" (warn only)" if external_as_warning else ""))
     print(f"{'=' * 60}\n")
 
     all_broken = []
+    all_external_warnings = []
 
     markdown_files = list(content_dir.glob("**/*.md"))
     print(f"Checking {len(markdown_files)} markdown files")
     for md_file in sorted(markdown_files):
         if args.verbose:
             print(f"  {md_file.relative_to(repo_root)}")
-        broken = check_file(md_file, content_dir, repo_root, args.check_external, args.verbose)
+        broken, warnings = check_file(md_file, content_dir, repo_root, args.check_external, args.verbose, external_as_warning)
         all_broken.extend(broken)
+        all_external_warnings.extend(warnings)
 
     html_files = [repo_root / n for n in ("index.html", "art.html", "research.html", "about.html") if (repo_root / n).exists()]
     print(f"Checking {len(html_files)} HTML files")
     for html_path in html_files:
         if args.verbose:
             print(f"  {html_path.name}")
-        broken = check_html_file(html_path, content_dir, repo_root, args.check_external, args.verbose)
+        broken, warnings = check_html_file(html_path, content_dir, repo_root, args.check_external, args.verbose, external_as_warning)
         all_broken.extend(broken)
+        all_external_warnings.extend(warnings)
 
-    print(f"\n{'=' * 60}")
-    if all_broken:
-        print(f"BROKEN LINKS FOUND: {len(all_broken)}")
+    def _print_link_list(items: list[dict], header: str) -> None:
+        if not items:
+            return
+        print(f"{header}: {len(items)}")
         print(f"{'=' * 60}\n")
         by_file: dict[Path, list] = {}
-        for b in all_broken:
+        for b in items:
             if b["file"] not in by_file:
                 by_file[b["file"]] = []
             by_file[b["file"]].append(b)
@@ -332,8 +349,17 @@ def main():
                 print(f"  Line {b['line']}: [{b['type']}] {b['url']}")
                 print(f"           -> {b['reason']}")
             print()
+
+    if all_external_warnings:
+        _print_link_list(all_external_warnings, "EXTERNAL LINK WARNINGS (non-fatal)")
+
+    print(f"{'=' * 60}")
+    if all_broken:
+        _print_link_list(all_broken, "BROKEN LINKS FOUND")
         sys.exit(1)
     print("NO BROKEN LINKS FOUND")
+    if all_external_warnings:
+        print("(External link warnings above are non-fatal.)")
     print(f"{'=' * 60}")
     sys.exit(0)
 

@@ -50,9 +50,9 @@ papers:
         url: "https://github.com/axkoenig/grasp_refinement"
 ---
 
-For my master thesis in the [Harvard Biorobotics Lab](http://biorobotics.harvard.edu), I investigated the role of tactile sensing in learning and deploying robotic grasping controllers. This research effort was sponsored through a full scholarship by the German Academic Exchange Service (DAAD) and by funding of the US National Science Foundation (NSF).
+For my master thesis in the [Harvard Biorobotics Lab](https://biorobotics.harvard.edu/), I investigated the role of tactile sensing in learning and deploying robotic grasping controllers. This research effort was sponsored through a full scholarship by the German Academic Exchange Service (DAAD) and by funding of the US National Science Foundation (NSF).
 
-Our work was first published at the [Workshop on Reinforcement Learning for Contact-Rich Manipulation](https://sites.google.com/view/icra2022-contactrich/) at [ICRA 2022](https://www.icra2022.org). An extended version was later accepted into [IROS 2022](https://iros2022.org/) as a full paper.
+Our work was first published at the [Workshop on Reinforcement Learning for Contact-Rich Manipulation](https://sites.google.com/view/icra2022-contactrich/) at ICRA 2022. An extended version was later accepted into IROS 2022 as a full paper.
 
 ![Tactile grasp refinement](media/grasp-refinement.png)
 
