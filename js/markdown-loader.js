@@ -901,7 +901,7 @@ function renderProjectDetail(project, basePath) {
     let publicationsHTML = '';
     if (project.publications && Array.isArray(project.publications) && project.publications.length > 0) {
         publicationsHTML = `
-            <div class="publications" style="margin: 0 -30px 30px -30px; padding: 0 0 20px 0; width: calc(100% + 60px); box-sizing: border-box;">
+            <div class="publications">
                 <h3 style="margin: 0 0 20px 0;">Publications</h3>
                 ${project.publications.map(paper => {
                     if (!paper || typeof paper !== 'object') return '';

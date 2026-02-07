@@ -479,6 +479,12 @@ body.is-home-page .home-dot::after {
         width: 100%;
         border-left: none;
     }
+    /* In half-screen mode, increase padding so child elements with negative margins
+       create symmetric 30px margins on both sides (60px padding - 30px negative margin = 30px visible margin) */
+    .project-detail-view.active:not(.expanded) .project-detail-inner {
+        padding-left: 60px;
+        padding-right: 60px;
+    }
     /* Blur left content when half-screen panel is open */
     .content:has(#project-detail.active:not(.expanded)) #projects-grid {
         filter: blur(6px);
@@ -646,7 +652,8 @@ body.is-home-page .home-dot::after {
 }
 
 .project-short-description,
-.papers {
+.papers,
+.publications {
     margin: 0 -30px 30px -30px !important;
     padding: 0 0 20px 0 !important;
     width: calc(100% + 60px) !important;
@@ -1355,7 +1362,8 @@ body.is-home-page .home-dot::after {
     }
     
     .project-short-description,
-    .papers {
+    .papers,
+    .publications {
         margin: 0 -20px 30px -20px !important;
         padding: 0 20px 20px 20px !important;
         width: calc(100% + 40px) !important;
