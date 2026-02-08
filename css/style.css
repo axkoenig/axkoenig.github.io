@@ -1590,3 +1590,38 @@ body:has(#project-detail.active) {
     }
 }
 
+/* 30.000 days – same layout as Life in Dots */
+.d30k-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.d30k-bar label {
+    font-weight: 400;
+}
+
+.d30k-bar input[type="date"] {
+    font-family: inherit;
+    font-size: 1rem;
+    padding: 6px 10px;
+    border: 1px solid var(--border-color);
+    background: #fff;
+}
+
+.d30k-grid-wrap {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#d30k-grid {
+    display: block;
+}
+
+@media (min-width: 768px) {
+    .project-detail-view.active:has(#d30k-app) {
+        overflow-y: hidden;
+    }
+}
+
