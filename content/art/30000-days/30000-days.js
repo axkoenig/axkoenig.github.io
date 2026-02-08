@@ -1,21 +1,21 @@
 /**
- * Life in Dots – interactive visualization
+ * 30.000 days – interactive visualization
  * Renders ~29,000 day-dots as SVG paths (vector) so they stay sharp when zooming.
  * Blue = past, Yellow = today, Light gray = future.
  */
 (function () {
     // Tear down any previous instance (re-opening the panel)
-    if (window._lifeDots) {
-        window._lifeDots.destroy();
-        window._lifeDots = null;
+    if (window._d30k) {
+        window._d30k.destroy();
+        window._d30k = null;
     }
 
     var TOTAL_DAYS = Math.ceil(80 * 365.25);
     var MS_PER_DAY = 86400000;
 
-    var gridEl = document.getElementById('life-dots-grid');
+    var gridEl = document.getElementById('d30k-grid');
     var wrap = gridEl && gridEl.parentElement;
-    var birthdayInput = document.getElementById('life-dots-birthday');
+    var birthdayInput = document.getElementById('d30k-birthday');
     if (!gridEl || !wrap || !birthdayInput) return;
 
     var resizeTimer;
@@ -48,6 +48,19 @@
     // Minimum width to accept (panel may be mid-transition otherwise)
     var MIN_WIDTH_CSS = Math.min(400, Math.max(300, window.innerWidth * 0.35));
 
+    /** Expected .project-detail-body width when the panel has finished its open transition. */
+    function getExpectedColumnWidth() {
+        var panel = document.getElementById('project-detail');
+        var panelWidth = window.innerWidth;
+        if (window.innerWidth >= 1800 && panel && !panel.classList.contains('expanded')) {
+            panelWidth = window.innerWidth * 0.5;
+        }
+        if (window.innerWidth <= 1024) {
+            return panelWidth - 40;
+        }
+        return Math.min(panelWidth, 900);
+    }
+
     function pathDataForRange(startIdx, endIdx, cols, stride, cellSize) {
         var parts = [];
         for (var i = startIdx; i < endIdx; i++) {
@@ -61,10 +74,11 @@
     function buildGrid(birthDate) {
         if (!birthDate || !gridEl || !wrap) return;
 
-        // Use full column width (same as header) so grid spans entire width on all screen sizes
+        // Use full column width (same as header) so grid spans entire width on all screen sizes.
+        // During the panel open transition, clientWidth is still small; use expected final width so we render once at the correct size.
         var column = wrap.closest('.project-detail-body');
-        var cssWidth = column ? column.clientWidth : wrap.clientWidth;
-        // Skip until panel has finished expanding (avoid rendering at 50–100px during transition)
+        var measuredWidth = column ? column.clientWidth : wrap.clientWidth;
+        var cssWidth = measuredWidth >= MIN_WIDTH_CSS ? measuredWidth : getExpectedColumnWidth();
         if (cssWidth < MIN_WIDTH_CSS) return;
 
         // Days lived via arithmetic — no per-day Date objects
@@ -120,7 +134,7 @@
         }
         if (!svgEl) {
             svgEl = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-            svgEl.setAttribute('id', 'life-dots-grid');
+            svgEl.setAttribute('id', 'd30k-grid');
             svgEl.setAttribute('role', 'img');
             svgEl.setAttribute('aria-label', 'Grid of days in an 80-year life. Lived days in blue, today in yellow, future days in light gray.');
             pathPastEl = document.createElementNS('http://www.w3.org/2000/svg', 'path');
@@ -174,13 +188,22 @@
     }
     window.addEventListener('resize', onResize);
 
-    // Wait for the detail panel's width transition to finish before first render.
-    // The panel animates from width:0 to width:100% over ~400ms.
+    // Defer first render until the panel's width transition has finished, so both width and height
+    // are correct and we render once at the final size (no half-height then expand).
     var detailPanel = document.getElementById('project-detail');
+    var firstRenderScheduled = false;
+    var firstRenderTimeout;
+
+    function scheduleFirstRender() {
+        if (firstRenderScheduled) return;
+        firstRenderScheduled = true;
+        clearTimeout(firstRenderTimeout);
+        update();
+    }
 
     function onTransitionEnd(e) {
         if (e.propertyName === 'width') {
-            update();
+            scheduleFirstRender();
         }
     }
 
@@ -195,28 +218,14 @@
         observer.observe(detailPanel, { attributes: true, attributeFilter: ['class'] });
     }
 
-    // First render: wait for panel to have full width (it animates from 0 to 100%).
-    // Run once immediately (reload / no-transition case), then retry until width is acceptable.
-    update();
-    if (!initialRenderDone) {
-        var retries = 0;
-        var maxRetries = 25; // 0ms, 100ms, 200ms, ... 2400ms
-        var retryInterval = setInterval(function () {
-            update();
-            if (initialRenderDone || ++retries >= maxRetries) {
-                clearInterval(retryInterval);
-            }
-        }, 100);
-        window._lifeDotsRetryInterval = retryInterval;
-    }
+    // First render only after panel has finished opening (transitionend), so layout is final.
+    // Fallback after 450ms for no-transition (e.g. reload with panel open) or if transitionend doesn't fire.
+    firstRenderTimeout = setTimeout(scheduleFirstRender, 450);
 
     // Cleanup function
-    window._lifeDots = {
+    window._d30k = {
         destroy: function () {
-            if (window._lifeDotsRetryInterval) {
-                clearInterval(window._lifeDotsRetryInterval);
-                window._lifeDotsRetryInterval = null;
-            }
+            clearTimeout(firstRenderTimeout);
             window.removeEventListener('resize', onResize);
             birthdayInput.removeEventListener('change', update);
             birthdayInput.removeEventListener('input', update);
