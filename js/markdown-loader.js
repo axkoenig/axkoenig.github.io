@@ -417,13 +417,13 @@ function markdownToHTML(markdown, options = {}) {
         block = block.trim();
         if (!block) return '';
         
-        // Don't wrap if it's already an HTML tag (header, list, image, iframe, table, figure, etc.)
-        if (block.match(/^<(h[1-6]|ul|ol|li|img|p|iframe|table|tr|td|th|figure|blockquote)/)) {
+        // Don't wrap if it's already an HTML tag (header, list, image, iframe, table, figure, div, canvas, etc.)
+        if (block.match(/^<(h[1-6]|ul|ol|li|img|p|div|canvas|iframe|table|tr|td|th|figure|blockquote)/)) {
             return block;
         }
         
         // If block contains HTML tags that shouldn't be wrapped, return as-is
-        if (block.includes('<img') || block.includes('<iframe') || block.includes('<table') || block.includes('<tr') || block.includes('<figure')) {
+        if (block.includes('<img') || block.includes('<iframe') || block.includes('<table') || block.includes('<tr') || block.includes('<figure') || block.includes('<div') || block.includes('<canvas')) {
             return block;
         }
         

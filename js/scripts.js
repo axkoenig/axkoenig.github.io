@@ -146,6 +146,19 @@
         setActiveTile(slug);
         projectDetail.scrollTop = 0;
         
+        // Load custom JS for interactive projects (e.g. life-dots)
+        if (project.custom_js) {
+            const basePath = getBasePath();
+            const scriptUrl = `${basePath}/${project.path}/${project.custom_js}`;
+            // Remove previous script instance if any
+            const prev = document.querySelector(`script[data-custom-js="${project.slug || project.id}"]`);
+            if (prev) prev.remove();
+            const script = document.createElement('script');
+            script.src = scriptUrl;
+            script.setAttribute('data-custom-js', project.slug || project.id);
+            document.body.appendChild(script);
+        }
+
         // Recheck images in view after rendering
         if (typeof window.requestAnimationFrame === 'function') {
             setTimeout(() => {
@@ -499,9 +512,8 @@
         if (grid && !grid.contains(tile)) return;
         
         const slug = tile.dataset.projectSlug || tile.dataset.projectId;
-        if (slug) {
-            openProjectBySlug(slug, { pushHistory: true, skipAnimation: false });
-        }
+        if (!slug) return;
+        openProjectBySlug(slug, { pushHistory: true, skipAnimation: false });
     });
     
     // Keep UI ↔ URL in sync for browser Back/Forward (including macOS trackpad swipe)

@@ -30,6 +30,7 @@ def parse_frontmatter(content: str) -> dict[str, Any]:
         if key in (
             "title", "cover_image", "short_description", "date_start", "date_end", "year",
             "location", "gallery", "dimensions", "copyright", "artist", "item_name",
+            "custom_js",
         ):
             meta[key] = value.strip('"\'')
         elif key == "highlight":
@@ -478,6 +479,7 @@ def metadata_only(project: dict[str, Any]) -> dict[str, Any]:
         "copyright": project.get("copyright"),
         "artist": project.get("artist"),
         "item_name": project.get("item_name"),
+        "custom_js": project.get("custom_js"),
     }
 
 

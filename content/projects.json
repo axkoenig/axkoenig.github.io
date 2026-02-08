@@ -1,6 +1,7 @@
 {
   "_comment": "This file lists all projects to be displayed. Add folder names to the respective arrays to show new projects. Each folder must contain an index.md file.",
   "art": [
+    "life-dots",
     "ungefiltert",
     "blindhaed",
     "blindhaed-analog",
@@ -26,4 +27,3 @@
     "ml4cg"
   ]
 }
-

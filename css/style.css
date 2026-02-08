@@ -235,30 +235,6 @@ button {
     position: relative;
 }
 
-/* Use box-shadow instead of blur filter for Safari compatibility */
-.dot::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 0;
-    height: 0;
-    border-radius: 50%;
-    background-color: transparent;
-    box-shadow: 0 0 15px 10px rgb(0, 0, 255);
-    animation: dotGlow 3s infinite alternate;
-}
-
-@keyframes dotGlow {
-    from {
-        box-shadow: 0 0 15px 10px rgb(0, 0, 255);
-    }
-    to {
-        box-shadow: 0 0 15px 8px rgba(0, 0, 255, 0.337);
-    }
-}
-
 .home-dot {
     position: fixed;
     top: 0;
@@ -466,6 +442,11 @@ body.is-home-page .home-dot::after {
 .project-detail-view.active {
     visibility: visible;
     width: 100%;
+}
+
+/* Prevent main page from scrolling when any project detail is open */
+body:has(#project-detail.active) {
+    overflow: hidden;
 }
 
 /* Large screens (> 16" MBP): project detail opens at half width; expand to full via button or M */
@@ -1543,6 +1524,45 @@ body.is-home-page .home-dot::after {
     /* Hide akoenig on very small screens */
     .header-name {
         display: none;
+    }
+}
+
+/* Life in Dots – interactive project styles */
+.life-dots-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.life-dots-bar label {
+    font-weight: 400;
+}
+
+.life-dots-bar input[type="date"] {
+    font-family: inherit;
+    font-size: 1rem;
+    padding: 6px 10px;
+    border: 1px solid var(--border-color);
+    background: #fff;
+}
+
+/* Grid wrapper: no extra negative margins needed because
+   .project-detail-body already extends to the header edges */
+.life-dots-grid-wrap {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#life-dots-grid {
+    display: block;
+}
+
+/* Life in Dots: prevent panel scroll on desktop where grid fits the viewport;
+   on mobile the grid overflows so scrolling is needed */
+@media (min-width: 768px) {
+    .project-detail-view.active:has(#life-dots-app) {
+        overflow-y: hidden;
     }
 }
 
