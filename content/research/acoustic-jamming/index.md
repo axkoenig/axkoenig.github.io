@@ -15,6 +15,13 @@ publications:
     year: 2026
     title: "Acoustic Sensing for Universal Jamming Grippers"
     venue: "IEEE International Conference on Robotics and Automation (ICRA)"
+    resources:
+      - label: "Paper"
+        url: "https://arxiv.org/abs/2603.00351"
+      - label: "Demo"
+        url: "https://www.youtube.com/watch?v=V4h8ktTvn88&list=PLb-CNILz7vmsjDjMogdJEh6z60XA-b5s2"
+      - label: "Website"
+        url: "https://rbo.gitlab-pages.tu-berlin.de/papers/acoustic-jamming-icra26/"
   - authors: ["L. Weber", "T. Wienert", "M. Splettstößer", "A. Koenig", "O. Brock"]
     year: 2025
     title: "Acoustic Sensing for Universal Jamming Grippers"
@@ -27,10 +34,8 @@ publications:
         url: "https://www.youtube.com/watch?v=Scyqc4L0-C8&list=PLb-CNILz7vmsjDjMogdJEh6z60XA-b5s2&index=5"
       - label: "Demo"
         url: "https://www.youtube.com/watch?v=V4h8ktTvn88&list=PLb-CNILz7vmsjDjMogdJEh6z60XA-b5s2"
-      - label: "Website"
-        url: "https://rbo.gitlab-pages.tu-berlin.de/pages/acoustic-jamming-page/"
       - label: "Award"
-        url: "https://rbo.gitlab-pages.tu-berlin.de/pages/acoustic-jamming-page/static/pdfs/award.pdf"
+        url: "https://rbo.gitlab-pages.tu-berlin.de/papers/acoustic-jamming-icra26/static/pdfs/award.pdf"
 ---
 
 This project originated in our Master-level course Robotics: Project, where I supervised the participating students. We equipped a universal jamming gripper with an internal microphone and speaker to obtain tactile feedback by "listening" to gripper–object interactions. We call this sensing approach Morphological Sensing, in which the robot’s body itself acts as the sensor. The work was first published at an ICRA 2025 workshop, where it received the Best Paper Award, and later extended and published at ICRA 2026.
