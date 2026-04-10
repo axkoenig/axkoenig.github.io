@@ -2,7 +2,7 @@
 
 Personal site (art, research, about). Pre-rendered static HTML from markdown in `content/`; built files are committed.
 
-## Setup
+## Setup 
 
 ```bash
 ./scripts/install-hooks.sh   # optional: build + format + checks on every commit
