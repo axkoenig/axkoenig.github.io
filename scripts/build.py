@@ -539,8 +539,8 @@ def build_art(repo: Path, content_dir: Path, art_list: list[str]) -> None:
     # Replace grid placeholder or existing pre-rendered grid
     if 'id="projects-data"' in html:
         html = re.sub(
-            r'(<div id="projects-grid" class="projects-grid">)\s*[\s\S]*?(\s*</div>\s*<script type="application/json" id="projects-data">)[\s\S]*?(</script>)',
-            rf'\1\n{grid_html}\n        \2\n{data_json}\n        \3',
+            r'(<div id="projects-grid" class="projects-grid">)\s*[\s\S]*?</div>\s*(<script type="application/json" id="projects-data">)[\s\S]*?(</script>)',
+            rf'\1\n{grid_html}\n                </div>\n                \2\n{data_json}\n                \3',
             html,
             count=1,
             flags=re.DOTALL,
@@ -566,8 +566,8 @@ def build_research(repo: Path, content_dir: Path, research_list: list[str]) -> N
     html = research_path.read_text(encoding="utf-8")
     if 'id="projects-data"' in html:
         html = re.sub(
-            r'(<div id="projects-grid" class="projects-grid">)\s*[\s\S]*?(\s*</div>\s*<script type="application/json" id="projects-data">)[\s\S]*?(</script>)',
-            rf'\1\n{grid_html}\n        \2\n{data_json}\n        \3',
+            r'(<div id="projects-grid" class="projects-grid">)\s*[\s\S]*?</div>\s*(<script type="application/json" id="projects-data">)[\s\S]*?(</script>)',
+            rf'\1\n{grid_html}\n                </div>\n                \2\n{data_json}\n                \3',
             html,
             count=1,
             flags=re.DOTALL,
