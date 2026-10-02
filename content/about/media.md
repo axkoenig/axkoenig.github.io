@@ -9,7 +9,7 @@ media:
         url: "https://www.tu.berlin/news/newsletter/soft-robotics"
       - label: "Newsletter"
         url: "https://archiv.pressestelle.tu-berlin.de/newsletter/forschung_september_2026"
-  - description: "Interview for Podcast \"Hey Roboter, mach die Betten und räum die Wohnung auf!\""
+  - description: "Interview for podcast \"Hey Roboter, mach die Betten und räum die Wohnung auf!\""
     outlet_name: "ZEIT WISSEN"
     outlet_url: "https://www.zeit.de/wissen"
     date: "April 13, 2026"
